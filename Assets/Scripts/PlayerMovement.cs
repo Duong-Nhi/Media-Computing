@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private float correctPosition = 0;
 
     public int beatsPerLine = 4; //Should be defined elsewhere... Other objects might also need access to this information (e.g. TileSpawner) Maybe other solution
-    private bool riding = false;
 
     void Awake()
     {
@@ -28,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
