@@ -7,8 +7,10 @@ public class RateInput : MonoBehaviour
     private float playerPosition;
     public GameObject player;
     public GameObject tiles;
+    // TODO Save the whole tile here later to check for events
     private float upcomingEvent;
     private float lastEvent;
+    public int rating;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,22 +22,20 @@ public class RateInput : MonoBehaviour
     void Update()
     {
         playerPosition = player.transform.position.z;
-        // These don't have to be updated each frame necessarily -> adjust later perhaps
-        if (playerPosition > upcomingEvent) { 
-            upcomingEvent = tiles.transform.GetChild(1).gameObject.transform.position.z;
+        if (playerPosition > upcomingEvent) 
+        {
             lastEvent = tiles.transform.GetChild(0).gameObject.transform.position.z;
+            upcomingEvent = tiles.transform.GetChild(1).gameObject.transform.position.z;
         }
-        //Debug.Log("Next:" + upcomingEvent);
-        //Debug.Log("Player:" + playerPosition);
-        //Debug.Log("Last:" + lastEvent);
+        // TODO Replace this with our 4 input keys
         if (Input.GetKeyDown("space")) 
         {
             OnKeyPress();
-            Debug.Log("space key was pressed");
+            //Debug.Log("space key was pressed");
         }
     }
 
-    // TODO Adjust this later with input parameter package/letter and left/right
+    // TODO Adjust this later with input parameter package/letter and left/right and which key was pressed
     public void OnKeyPress() 
     {
         string rating;
@@ -61,30 +61,37 @@ public class RateInput : MonoBehaviour
 
     private string RatingHelper(double distance) 
     {
-        string rating;
+        string feedback;
         switch (distance) 
         {
             case <= 1.0:
-                rating = "Perfect";
+                //Add bonuspoints for streaks?
+                feedback = "Perfect";
+                rating += 1000;
                 break;
             case <= 2.5:
-                rating = "Great";
+                feedback = "Great";
+                rating += 800;
                 break;
             case <= 4.0:
-                rating = "Good";
+                feedback = "Good";
+                rating += 500;
                 break;
             case <= 5.5:
-                rating = "OK";
+                feedback = "OK";
+                rating += 0;
                 break;
             case <= 7.0:
-                rating = "Bad";
+                feedback = "Bad";
+                rating -= 500;
                 break;
             default:
-                rating = "You big Noob";
+                feedback = "You big Noob";
+                rating -= 1000;
                 break;
         }
 
-        return rating;
+        return feedback;
     }
 
 
