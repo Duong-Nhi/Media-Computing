@@ -7,7 +7,7 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     public Transform player;
     
-    public Vector3 offset = new Vector3 (0,40,-5);
+    public Vector3 offset;
     void Start()
     {
         
