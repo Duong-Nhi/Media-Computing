@@ -12,6 +12,9 @@ public class TileSpawner : MonoBehaviour
     public bool everyBeat = false;
     private int nextTileNumber = 5;
     
+    //
+    private int currentBeat;
+
 
     public Vector3 lastTilePos = new Vector3 (0,-1,100); //-1 only to fix displacement of the tiles (for some unknown? reason they spawn at y=1 instead of the original tile at y=0)
     void Start()
@@ -48,6 +51,7 @@ public class TileSpawner : MonoBehaviour
 
     void spawnTile()
     {
+        currentBeat++;
         Vector3 nextPosition = lastTilePos + new Vector3(0, 0, 25);
         GameObject newTile = Instantiate(objectToSpawn, nextPosition, Quaternion.identity);
         newTile.transform.SetParent(parentObject);

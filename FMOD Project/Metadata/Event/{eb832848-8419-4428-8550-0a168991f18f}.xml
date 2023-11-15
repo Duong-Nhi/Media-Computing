@@ -30,6 +30,7 @@
 		</relationship>
 		<relationship name="parameters">
 			<destination>{5d6ec2b1-6380-4322-b730-05462933b7b3}</destination>
+			<destination>{18e1bd1e-7a4c-4889-8ce1-451e48753016}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{1460e480-0f3e-425b-87de-5008b8741490}</destination>
@@ -74,6 +75,11 @@
 			<destination>{fba3c39c-4620-4b5d-88e0-c6215251d0d6}</destination>
 		</relationship>
 	</object>
+	<object class="ParameterProxy" id="{18e1bd1e-7a4c-4889-8ce1-451e48753016}">
+		<relationship name="preset">
+			<destination>{ad47cc9f-934e-4838-abf0-7c68c2cea14c}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{604c35b8-9cc8-4855-b761-2b2e17dc3696}">
 		<relationship name="effectChain">
 			<destination>{9e57318d-4901-45f5-ae5b-c34f74919153}</destination>
@@ -87,7 +93,7 @@
 	</object>
 	<object class="SingleSound" id="{4f027502-0b68-4201-a9b1-f54d5120807e}">
 		<property name="length">
-			<value>300.12</value>
+			<value>300.83728825763706</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{15fcfab2-5717-49cb-bad6-02c7a4e6331f}</destination>

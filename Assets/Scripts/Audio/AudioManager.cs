@@ -9,7 +9,8 @@ public class AudioManager : MonoBehaviour
 {   
     // Song information
     public float bpm;           //think if i can replace with a scriptable object to store the data... but singleton is fine for audio manager
-    public float startTime;     // replace with start beat ? Or remove
+    public float nBeats;    //Maybe removed, not used yet
+
 
 
     // Struct for storing timeline information (using FMOD Callbacks)
@@ -61,12 +62,6 @@ public class AudioManager : MonoBehaviour
         }
         
         eventInstances = new List<EventInstance>();
-    }
-
-
-    private void Start()
-    {   
-
         timelineInfo = new TimelineInfo();
         beatCallback = new EVENT_CALLBACK(BeatEventCallback);
         playingSongEventInstance = CreateInstance(FMODEvents.instance.playingSong);
@@ -84,7 +79,31 @@ public class AudioManager : MonoBehaviour
         
         // get bpm and start by accessing parameters of the instance
         playingSongEventInstance.getParameterByName("bpm", out bpm);
-        playingSongEventInstance.getParameterByName("start", out startTime);
+        playingSongEventInstance.getParameterByName("nBeats", out nBeats);
+    }
+
+
+    private void Start()
+    {   
+
+        /*timelineInfo = new TimelineInfo();
+        beatCallback = new EVENT_CALLBACK(BeatEventCallback);
+        playingSongEventInstance = CreateInstance(FMODEvents.instance.playingSong);
+
+        // Beat and Marker Callbacks
+        // pin in memory to prevent it from being garbage collected (actually needed in our case? - We should have a reference to that object in unity while native code (FMOD) accesses the object)
+        timelineHandle = GCHandle.Alloc(timelineInfo, GCHandleType.Pinned);
+
+        // pass object pointer through userdata of instance
+        playingSongEventInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
+
+        // set callback
+        playingSongEventInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
+
+        
+        // get bpm and start by accessing parameters of the instance
+        playingSongEventInstance.getParameterByName("bpm", out bpm);
+        playingSongEventInstance.getParameterByName("nBeats", out nBeats);*/
 
         // start song
         playingSongEventInstance.start();
