@@ -5,7 +5,7 @@
 			<value>bpm</value>
 		</property>
 		<relationship name="folder">
-			<destination>{3559683a-bd96-4e7b-9653-2ad5e1cbdefc}</destination>
+			<destination>{d44575fd-0f33-4ae4-b04a-c1215c6aa580}</destination>
 		</relationship>
 		<relationship name="parameter">
 			<destination>{9ebcbeba-ec97-4a45-a270-97b2988f496d}</destination>

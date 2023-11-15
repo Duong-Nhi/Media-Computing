@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="ParameterPreset" id="{fbdeaacb-a986-49d0-9146-86a973208d05}">
+	<object class="ParameterPreset" id="{7bf59308-bc70-40f8-abfd-d04f4fe79c9f}">
 		<property name="name">
-			<value>ThroughTheFireAndFlames</value>
+			<value>nBeats</value>
 		</property>
 		<relationship name="folder">
-			<destination>{3559683a-bd96-4e7b-9653-2ad5e1cbdefc}</destination>
+			<destination>{d44575fd-0f33-4ae4-b04a-c1215c6aa580}</destination>
 		</relationship>
 		<relationship name="parameter">
-			<destination>{6161ac90-0dec-4f67-99b3-b94579249459}</destination>
+			<destination>{588d73f0-74db-49d8-8ba9-c0423c5848d4}</destination>
 		</relationship>
 	</object>
-	<object class="GameParameter" id="{6161ac90-0dec-4f67-99b3-b94579249459}">
+	<object class="GameParameter" id="{588d73f0-74db-49d8-8ba9-c0423c5848d4}">
 		<property name="maximum">
-			<value>360</value>
+			<value>9999</value>
 		</property>
 		<property name="isReadOnly">
 			<value>true</value>
 		</property>
 		<property name="initialValue">
-			<value>200</value>
+			<value>508</value>
 		</property>
 	</object>
 </objects>
