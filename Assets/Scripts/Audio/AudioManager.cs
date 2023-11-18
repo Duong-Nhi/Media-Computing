@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     {
         public int currentBeat = 0;
         public int currentBar = 0;
+        public int elapsedBeats = 0;
         public FMOD.StringWrapper currentMarker = new FMOD.StringWrapper();
     }
 
@@ -198,6 +199,7 @@ public class AudioManager : MonoBehaviour
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentBeat = parameter.beat;
                         timelineInfo.currentBar = parameter.bar;
+                        timelineInfo.elapsedBeats += 1;
                         //parameter.bar also possible -> maybe becomes interesting for later features
                     }
                     break;
