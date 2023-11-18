@@ -50,9 +50,6 @@ Corridor/Library/metadata/
 # FMOD  #
 # ===== #
 
-Assets/Plugins/FMOD
-FMOD Project/.cache
-FMOD Project/.unsaved
 
 ### FMOD Unity Integration ###
 # Never ignore DLLs in the FMOD subfolder, so make sure that the 
