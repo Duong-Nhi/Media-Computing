@@ -7,12 +7,11 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed=0;
     public AudioManager audioManager;
+    public LevelManager levelManager;
 
     private float syncError = 0;
     private float currentPosition = 0;
     private float correctPosition = 0;
-
-    public int beatsPerLine = 4; //Should be defined elsewhere... Other objects might also need access to this information (e.g. TileSpawner) Maybe other solution
 
     void Awake()
     {
@@ -42,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
      void OnGUI()
     {   
-        GUILayout.BeginArea(new Rect(0, 30, 375, 400));
-        GUILayout.Box(String.Format("SyncError = {0}, current = {1}, correct = {2}", syncError, currentPosition, correctPosition));
+        GUILayout.BeginArea(new Rect(500, 0, 475, 900));
+        GUILayout.Box(String.Format("SyncError = {0}, current = {1}, correct = {2}, beats = {3}", syncError, currentPosition, correctPosition, audioManager.timelineInfo.elapsedBeats));
         GUILayout.EndArea();
     }
 
@@ -51,15 +50,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (speed == 0)
         {
-            speed = ((audioManager.bpm * 25)/60)/beatsPerLine;
+            speed = ((audioManager.bpm * levelManager.distancePerBeat)/60);
         }
     }
 
     // For debug purposes
     private void checkSync()
     {
-        float elapsed_beats = ((audioManager.timelineInfo.currentBar-1)*4+audioManager.timelineInfo.currentBeat-1);
-        correctPosition = elapsed_beats * 25.0f/beatsPerLine;
+        correctPosition = (audioManager.timelineInfo.elapsedBeats-1) * levelManager.distancePerBeat;
 
         currentPosition = transform.position.z;
         syncError = currentPosition - correctPosition;
