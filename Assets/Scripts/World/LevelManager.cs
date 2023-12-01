@@ -8,13 +8,11 @@ public class LevelManager : MonoBehaviour
 {
 
     public (int, int)[] levelSequence;
-    public float distancePerBeat;
-    public float beatsPerTile;
+    public float distancePerBeat = 10;
+    public float beatsPerTile = 2;
 
     private void Start()
     {
-        distancePerBeat = 10;//25f/4
-        beatsPerTile = 2;
 
         //easy
         /*
