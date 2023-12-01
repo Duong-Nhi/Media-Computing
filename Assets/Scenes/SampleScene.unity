@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!1 &149959182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!114 &331141304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2802,7 +2802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!65 &482433525
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3622,7 +3622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!65 &620585052
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4248,6 +4248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756655910}
   - component: {fileID: 756655911}
+  - component: {fileID: 756655912}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -4279,11 +4280,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 756655909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aafaccf5635ac547986ac5cbd273244, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c71ed451c7eee944a963bd203a0e9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distancePerBeat: 2
-  beatsPerTile: 4
+  audioManager: {fileID: 1716581794}
+--- !u!114 &756655912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756655909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d2d4b66c13d9e4cb3f529f499e8618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distancePerBeat: 4
+  beatsPerTile: 2
 --- !u!1 &771784967
 GameObject:
   m_ObjectHideFlags: 0
@@ -5332,7 +5346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   audioManager: {fileID: 1716581794}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 756655912}
 --- !u!1 &919940865
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,7 +6492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!23 &1177312730
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8437,7 +8451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!65 &1450408485
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10269,7 +10283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
 --- !u!1 &1653498137
 GameObject:
   m_ObjectHideFlags: 0
@@ -10363,7 +10377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 1716581794}
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 0}
   inputManager: {fileID: 793777720}
   player: {fileID: 901853278}
   scoreText: {fileID: 0}
@@ -10534,8 +10548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866ff97a9cbd2664eb0076ae31993120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 0
-  nBeats: 0
+  bpm: 4
+  nBeats: 2
 --- !u!4 &1716581795
 Transform:
   m_ObjectHideFlags: 0
@@ -11473,7 +11487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d799acd610fe53e41a3afc3de6eeccd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 756655911}
+  levelManager: {fileID: 756655912}
   tileHouses:
   - {fileID: 2163027694565526665}
   tileScenery:
