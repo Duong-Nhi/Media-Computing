@@ -46,6 +46,7 @@ public class TileSpawner : MonoBehaviour
     {   
         //subscribe to events
         AudioManager.beatUpdated += onBeat;
+        road.transform.localPosition = Vector3.zero;
 
         //init distances (TODO: Set all to inf unless they should not spawn close to start of the map)
         currHouseDistances = new int[tileHouses.Length];
@@ -174,6 +175,7 @@ public class TileSpawner : MonoBehaviour
         Vector3 nextPosition = new Vector3(0, 0, (currentBeat-1) * levelManager.distancePerBeat) + offset;
         GameObject newTile = Instantiate(toSpawn, nextPosition, Quaternion.identity);
         newTile.transform.SetParent(parentObject);
+        newTile.transform.rotation = toSpawn.transform.rotation;
     }
 
     bool canSpawnSpecialTile(int tileIdx)
