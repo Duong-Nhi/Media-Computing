@@ -75,3 +75,4 @@ fmod_editor.log
 /Assets/FMODStudioCache.meta
 !/FMOD Project/Build/*
 Logs/shadercompiler-UnityShaderCompiler.exe0.log
+.vscode/settings.json
