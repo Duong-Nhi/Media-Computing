@@ -133,12 +133,14 @@ public class TileSpawner : MonoBehaviour
 
             // for left and right: choose random tile with distance > min distance
             bool sceneryLeft = true;
+            bool houseLeft = false;
             bool sceneryRight = true;
             for(int i=0; i<levelManager.beatsPerTile; i++)
             {
                 if (levelManager.levelSequence[currentBeat-1+i].Item1 != 0)
                 {
                     sceneryLeft = false;
+                    houseLeft = true;
                     break;
                 }
             }
@@ -156,7 +158,7 @@ public class TileSpawner : MonoBehaviour
                 spawnGameObject(tileScenery[0], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
             }
             else{
-                spawnGameObject(tileHouses[0], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
+                spawnGameObject(tileHouses[0], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat), houseLeft); //replace index 0 with random index
             }
             if (sceneryRight)
             {
@@ -170,12 +172,20 @@ public class TileSpawner : MonoBehaviour
         }
     }
 
-    void spawnGameObject(GameObject toSpawn, Vector3 offset)
+    void spawnGameObject(GameObject toSpawn, Vector3 offset, bool left = false)
     {
+        GameObject newTile;
         Vector3 nextPosition = new Vector3(0, 0, (currentBeat-1) * levelManager.distancePerBeat) + offset;
-        GameObject newTile = Instantiate(toSpawn, nextPosition, Quaternion.identity);
+        if (left)
+        {
+            newTile = Instantiate(toSpawn, nextPosition, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+        }
+        else
+        {
+            newTile = Instantiate(toSpawn, nextPosition, Quaternion.identity);
+        }
         newTile.transform.SetParent(parentObject);
-        newTile.transform.rotation = toSpawn.transform.rotation;
+        //newTile.transform.rotation = toSpawn.transform.rotation;
     }
 
     bool canSpawnSpecialTile(int tileIdx)
