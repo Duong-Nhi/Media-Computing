@@ -1,10 +1,8 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class NormalizeSize : MonoBehaviour
+public class scaleNormalizer : MonoBehaviour
 {
     public GameObject reference;
     // Start is called before the first frame update
@@ -18,7 +16,7 @@ public class NormalizeSize : MonoBehaviour
         float resizeY = refSize.y / GetComponent<Renderer>().bounds.size.y;
         float resizeZ = refSize.z / GetComponent<Renderer>().bounds.size.z;
 
-        resizeX = transform.localScale.x;
+        resizeX *= transform.localScale.x;
         resizeY = transform.localScale.y;
         resizeZ *= transform.localScale.z;
 
@@ -27,3 +25,4 @@ public class NormalizeSize : MonoBehaviour
 
     }
 }
+

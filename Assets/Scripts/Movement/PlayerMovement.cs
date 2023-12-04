@@ -41,9 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
      void OnGUI()
     {   
-        GUILayout.BeginArea(new Rect(500, 0, 475, 900));
-        GUILayout.Box(String.Format("SyncError = {0}, current = {1}, correct = {2}, beats = {3}", syncError, currentPosition, correctPosition, audioManager.timelineInfo.elapsedBeats));
-        GUILayout.EndArea();
+        //GUILayout.BeginArea(new Rect(500, 0, 475, 900));
+        //GUILayout.Box(String.Format("SyncError = {0}, current = {1}, correct = {2}, beats = {3}", syncError, currentPosition, correctPosition, audioManager.timelineInfo.elapsedBeats));
+        //GUILayout.EndArea();
     }
 
     private void startMoving()

@@ -161,14 +161,14 @@ public class TileSpawner : MonoBehaviour
                 spawnGameObject(tileScenery[0], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat), true); //replace index 0 with random index
             }
             else{
-                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat), houseLeft); //replace index 0 with random index
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-15,-1.1F,tileBeatOffset * levelManager.distancePerBeat), houseLeft); //replace index 0 with random index
             }
             if (sceneryRight)
             {
                 spawnGameObject(tileScenery[0], new Vector3(15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
             }
             else{
-                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(15,-1.1F,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
             }
 
 
@@ -189,6 +189,15 @@ public class TileSpawner : MonoBehaviour
         }
         newTile.transform.SetParent(parentObject);
         //newTile.transform.rotation = toSpawn.transform.rotation;
+
+        //Disable Scale to plane script for houses
+        ScaleToPlane scaleToPlaneScript = newTile.GetComponent<ScaleToPlane>();
+        if (scaleToPlaneScript != null)
+        {
+            // Disable the script component
+            scaleToPlaneScript.enabled = false;
+        }
+        newTile.transform.SetParent(parentObject);
     }
 
     bool canSpawnSpecialTile(int tileIdx)
@@ -229,19 +238,19 @@ public class TileSpawner : MonoBehaviour
         switch (indicators.Item1)
         {
             case 1:
-                Instantiate(LetterObject, nextPosition + new Vector3(-4, -0.8F, 0), Quaternion.identity);
+                Instantiate(LetterObject, nextPosition + new Vector3(-4, -1.8F, 0), Quaternion.identity);
                 break;
             case 2:
-                Instantiate(PackageObject, nextPosition + new Vector3(-4, -0.8F, 0), Quaternion.identity);
+                Instantiate(PackageObject, nextPosition + new Vector3(-4, -1.8F, 0), Quaternion.identity);
                 break;
         }
         switch (indicators.Item2)
         {
             case 1:
-                Instantiate(LetterObject, nextPosition + new Vector3(4, -0.8F, 0), Quaternion.identity);
+                Instantiate(LetterObject, nextPosition + new Vector3(4, -1.8F, 0), Quaternion.identity);
                 break;
             case 2:
-                Instantiate(PackageObject, nextPosition + new Vector3(4, -0.8F, 0), Quaternion.identity);
+                Instantiate(PackageObject, nextPosition + new Vector3(4, -1.8F, 0), Quaternion.identity);
                 break;
         }
         //TODO: Set parent object so that scene does not get cluttered
