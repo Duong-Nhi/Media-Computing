@@ -5,9 +5,11 @@ using UnityEngine;
 public class scaleNormalizer : MonoBehaviour
 {
     public GameObject reference;
+    public GameObject roadAsset;
     // Start is called before the first frame update
     void Start()
     {
+        
 
         Vector3 refSize = reference.GetComponent<Renderer>().bounds.size;
 
