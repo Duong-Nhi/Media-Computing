@@ -111,15 +111,15 @@ public class TileSpawner : MonoBehaviour
             if (canSpawnSpecialTile(i))
             {
                 // Spawn tile with probability
-                Debug.Log("special tile fits");
+                //Debug.Log("special tile fits");
                 System.Random rand = new System.Random();
                 double randomValue = rand.NextDouble();
-                Debug.Log($"Random Value: {randomValue}, SpawnProbability: {spawnProbability(currSpecialDistances[i], minSpecialDistances[i], 5)}");
+                //Debug.Log($"Random Value: {randomValue}, SpawnProbability: {spawnProbability(currSpecialDistances[i], minSpecialDistances[i], 5)}");
                 if (randomValue < spawnProbability(currSpecialDistances[i], minSpecialDistances[i], 5))
                 {
                     toSpawn = specialTiles[i];
                     currSpecialDistances[i] = 0;
-                    Debug.Log("spawned");
+                    //Debug.Log("spawned");
                 }
                 break;
             }
@@ -206,10 +206,10 @@ public class TileSpawner : MonoBehaviour
         bool canSpawn = true;
         for (int i=0; i<mask.Length; i++)
         {
-            Debug.Log("Here comes a new check if crossroad fits");
+            //Debug.Log("Here comes a new check if crossroad fits");
             if (levelManager.levelSequence[currentBeat-1+i] != mask[i])
             {  
-                Debug.Log($"Tile {i}: {levelManager.levelSequence[currentBeat-1+i]}");
+                //Debug.Log($"Tile {i}: {levelManager.levelSequence[currentBeat-1+i]}");
                 canSpawn = false;
                 break;
             }
@@ -221,13 +221,13 @@ public class TileSpawner : MonoBehaviour
     double spawnProbability(int currDistance, int minDistance, int halfValueDist)
     {
         double spawnProbability = 0;
-        Debug.Log($"currDist = {currDistance}, minDist = {minDistance}");
+        //Debug.Log($"currDist = {currDistance}, minDist = {minDistance}");
         if (currDistance > minDistance)
         {
             //After reaching threshold of minimal distance we have a curve starting from 0 and slowly approaching 100%
             double delta = (currDistance-minDistance);
             spawnProbability = (delta/halfValueDist)/(delta/halfValueDist+1);
-            Debug.Log($"Reached. Probability calculated: {spawnProbability}");
+            //Debug.Log($"Reached. Probability calculated: {spawnProbability}");
         }
         return spawnProbability;
     }

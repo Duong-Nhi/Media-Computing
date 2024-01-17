@@ -2285,7 +2285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 94961863}
-  roadAsset: {fileID: 317578026}
 --- !u!1 &333589673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4855,7 +4854,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 756655910}
-  - component: {fileID: 756655911}
   - component: {fileID: 756655912}
   m_Layer: 0
   m_Name: LevelManager
@@ -4879,19 +4877,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1820669331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &756655911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756655909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c71ed451c7eee944a963bd203a0e9be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioManager: {fileID: 1716581794}
 --- !u!114 &756655912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4906,6 +4891,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distancePerBeat: 5
   beatsPerTile: 4
+  hitsPerPackage: 4
+  hitsPerLetter: 2
 --- !u!1 &771784967
 GameObject:
   m_ObjectHideFlags: 0
@@ -8603,7 +8590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -769.8147}
+  m_AnchoredPosition: {x: 960, y: -693.94324}
   m_SizeDelta: {x: 1920, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1318978601
@@ -10633,7 +10620,6 @@ GameObject:
   - component: {fileID: 1589226266}
   - component: {fileID: 1589226265}
   - component: {fileID: 1589226264}
-  - component: {fileID: 1589226263}
   - component: {fileID: 1589226262}
   m_Layer: 0
   m_Name: ReferenceRoad
@@ -10664,7 +10650,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589226260}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 418d8bbd99b0f6d49860a962445be4d4, type: 3}
   m_Name: 
@@ -10673,18 +10659,6 @@ MonoBehaviour:
   scaleZ: 1
   scaleX: 0
   scaleY: 0
---- !u!114 &1589226263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1589226260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a72a5c59f219f49947b64e788a1865, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1589226264
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10998,7 +10972,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -561.3147}
+  m_AnchoredPosition: {x: 960, y: -485.44324}
   m_SizeDelta: {x: 1920, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1624963449
