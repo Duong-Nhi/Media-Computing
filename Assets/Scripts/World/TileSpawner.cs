@@ -158,14 +158,14 @@ public class TileSpawner : MonoBehaviour
 
             if (sceneryLeft)
             {
-                spawnGameObject(tileScenery[0], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat), true); //replace index 0 with random index
+                spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat), true); //replace index 0 with random index
             }
             else{
                 spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-15,-1.1F,tileBeatOffset * levelManager.distancePerBeat), houseLeft); //replace index 0 with random index
             }
             if (sceneryRight)
             {
-                spawnGameObject(tileScenery[0], new Vector3(15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
+                spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
             }
             else{
                 spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(15,-1.1F,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
