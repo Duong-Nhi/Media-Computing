@@ -8,10 +8,12 @@ public class TileSpawner : MonoBehaviour
     public GameObject[] tileHouses;
 
     public GameObject[] tileScenery;
+    public GameObject[] tileScenery2;
 
     public GameObject[] specialTiles;
 
     public GameObject road;
+    public GameObject roadFlipped;
     public GameObject LetterObject;
     public GameObject PackageObject;
 
@@ -128,6 +130,12 @@ public class TileSpawner : MonoBehaviour
         if (toSpawn != null)
         {
             spawnGameObject(toSpawn, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));
+            spawnGameObject(roadFlipped, new Vector3(-20,-0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
+            spawnGameObject(roadFlipped, new Vector3(-40, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
+            spawnGameObject(roadFlipped, new Vector3(-60, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
+            spawnGameObject(roadFlipped, new Vector3(20, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
+            spawnGameObject(roadFlipped, new Vector3(40, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
+            spawnGameObject(roadFlipped, new Vector3(60, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
         }
         else
         {
@@ -158,30 +166,42 @@ public class TileSpawner : MonoBehaviour
 
             if (sceneryLeft)
             {
-                spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(-15,-1,tileBeatOffset * levelManager.distancePerBeat), true); //replace index 0 with random index
+                spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), true);
+                spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(-35F, -1F, tileBeatOffset * levelManager.distancePerBeat), true);
+                spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(-52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat), true);
             }
             else{
-                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-15,-1.1F,tileBeatOffset * levelManager.distancePerBeat), houseLeft); //replace index 0 with random index
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), houseLeft);
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-35F, -1F, tileBeatOffset * levelManager.distancePerBeat));
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat));
             }
             if (sceneryRight)
             {
-                spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(15,-1,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
+                spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
+                spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(35F, -1F, tileBeatOffset * levelManager.distancePerBeat));
+                spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat));
             }
             else{
-                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(15,-1.1F,tileBeatOffset * levelManager.distancePerBeat)); //replace index 0 with random index
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(35F, -1F, tileBeatOffset * levelManager.distancePerBeat));
+                spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat));
             }
 
 
         }
     }
 
-    void spawnGameObject(GameObject toSpawn, Vector3 offset, bool left = false)
+    void spawnGameObject(GameObject toSpawn, Vector3 offset, bool left = false, bool flipped = false)
     {
         GameObject newTile;
         Vector3 nextPosition = new Vector3(0, 0, (currentBeat-1) * levelManager.distancePerBeat) + offset;
         if (left)
         {
             newTile = Instantiate(toSpawn, nextPosition, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+        }
+        else if (flipped) 
+        {
+            newTile = Instantiate(toSpawn, nextPosition, transform.rotation * Quaternion.Euler(0f, 90f, 0f));
         }
         else
         {
