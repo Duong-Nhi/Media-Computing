@@ -27,14 +27,50 @@ public class RateUserInput : MonoBehaviour
         public int totalHits;
         public int[] scores; //Array of size totalHits?
 
-
+        public bool finished;
     }
     // On each input check closest beat -> Add score accordingly (Maybe penalty if its not the right one )
 
     private Task currentLeftTask;
     private Task currentRightTask;
 
-    // Events for scoring
+    // EVENTS
+    public delegate void TaskDoneLeftEventDelegate();
+    public static event TaskDoneLeftEventDelegate taskDoneLeft;
+
+    public delegate void TaskDoneRightEventDelegate();
+    public static event TaskDoneRightEventDelegate taskDoneRight;
+
+    public delegate void TaskStartPackageLeftEventDelegate();
+    public static event TaskStartPackageLeftEventDelegate taskStartPackageLeft;
+
+    public delegate void TaskStartPackageRightEventDelegate();
+    public static event TaskStartPackageRightEventDelegate taskStartPackageRight;
+
+    public delegate void TaskStartLetterLeftEventDelegate();
+    public static event TaskStartLetterLeftEventDelegate taskStartLetterLeft;
+
+    public delegate void TaskStartLetterRightEventDelegate();
+    public static event TaskStartLetterRightEventDelegate taskStartLetterRight;
+
+    public delegate void TaskNextLeftEventDelegate();
+    public static event TaskNextLeftEventDelegate taskNextLeft;
+
+    public delegate void TaskNextRightEventDelegate();
+    public static event TaskNextRightEventDelegate taskNextRight;
+
+    public delegate void DropPackageLeftEventDelegate();
+    public static event DropPackageLeftEventDelegate dropPackageLeft;
+
+    public delegate void DropLetterLeftEventDelegate();
+    public static event DropLetterLeftEventDelegate dropLetterLeft;
+
+    public delegate void DropPackageRightEventDelegate();
+    public static event DropPackageRightEventDelegate dropPackageRight;
+
+    public delegate void DropLetterRightEventDelegate();
+    public static event DropLetterRightEventDelegate dropLetterRight;
+
 
     int currentBeat = 0;
 
@@ -51,7 +87,7 @@ public class RateUserInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scoreText = GetComponent<Text>();
+        //scoreText = GetComponent<Text>();
         scoreText.text = "0 Points";
         
         currentLeftTask = null;
@@ -74,7 +110,30 @@ public class RateUserInput : MonoBehaviour
             if(currentBeat >= currentLeftTask.startBeat + currentLeftTask.totalHits)
             {
                 // Do some event, as package has to be dropped here
-                // Some logic with the score :/
+                //EVENT: DROP PACKAGE LEFT -> Left arm should subscribe here and go back to idle; NPC Spawner should spawn package on the ground left of player
+                if(taskDoneLeft!=null)
+                {
+                    taskDoneLeft();
+                }
+                // Drop event
+                if(!currentLeftTask.finished && currentLeftTask.type == 1 && dropLetterLeft != null)
+                {
+                    dropLetterLeft();
+                }
+                else
+                {
+                    if(!currentLeftTask.finished && currentLeftTask.type == 2 && dropPackageLeft != null)
+                    {
+                        dropPackageLeft();
+                    }
+                    else
+                    {
+                        //Add new types here
+                    }
+                }
+                
+
+                // Some logic with the score (dropped letter)
                 currentLeftTask = null;
             }
         }
@@ -84,7 +143,29 @@ public class RateUserInput : MonoBehaviour
         if(currentBeat >= currentRightTask.startBeat + currentRightTask.totalHits)
             {
                 // Do some event, as package has to be dropped here
-                // Some logic with the score :/
+                //EVENT: DROP PACKAGE RIGHT -> Left arm should subscribe here and go back to idle; NPC Spawner should spawn package on the ground left of player
+                if(taskDoneRight!=null)
+                {
+                    taskDoneRight();
+                }
+                // Drop event
+                if(!currentRightTask.finished && currentRightTask.type == 1 && dropLetterRight != null)
+                {
+                    dropLetterRight();
+                }
+                else
+                {
+                    if(!currentRightTask.finished && currentRightTask.type == 2 && dropPackageRight != null)
+                    {
+                        dropPackageRight();
+                    }
+                    else
+                    {
+                        //Add new types here
+                    }
+                }
+
+                // Some logic with the score (droppped package)
                 currentRightTask = null;
             }
         }
@@ -102,9 +183,26 @@ public class RateUserInput : MonoBehaviour
                 type = taskLeftId,
                 startBeat = currentBeat,
                 totalHits = leftHits,
-                scores = new int[leftHits-1]
+                scores = new int[leftHits-1],
+                finished = false
             };
             currentLeftTask = newLeftTask;
+            //check for what type
+            if(taskLeftId == 1 && taskDoneLeft!=null)
+            {
+                taskStartLetterLeft();
+            }
+            else
+            {
+                if(taskLeftId == 2 && taskStartPackageLeft!=null)
+                {
+                    taskStartPackageLeft();
+                }
+                else{
+                    // add events for new task types here
+                }
+            }
+
         }
 
         int rightHits = levelManager.idToHits(taskRightId);
@@ -117,19 +215,37 @@ public class RateUserInput : MonoBehaviour
                 type = taskRightId,
                 startBeat = currentBeat,
                 totalHits = rightHits,
-                scores = new int[rightHits-1]
+                scores = new int[rightHits-1],
+                finished = false
             };
             currentRightTask = newRightTask;
+            //check for what type
+            if(taskRightId == 1 && taskStartLetterRight!=null)
+            {
+                taskStartLetterRight();
+            }
+            else
+            {
+                if(taskRightId == 2 && taskStartPackageRight!=null)
+                {
+                    taskStartPackageRight();
+                }
+                else{
+                    // add events for new task types here
+                }
+            }
+
         }
 
     }
 
 
     // HandleTasks -> If task completed return true and the scoring of task
-    private (bool, int) handleEvents(Task task, int eventType)
+    private (bool, int, bool) handleEvents(Task task, int eventType)
     {
         bool completed = false;
         int score = 0;
+        bool animation = false;
 
         (float distance, int beat) = distanceToClosestBeat();
         int hitIndex = beat - task.startBeat - 1;
@@ -138,8 +254,8 @@ public class RateUserInput : MonoBehaviour
         if (!(task.type == eventType)){
             // some event ? Incorrect input type, maybe sound or visual error
 
-            //extra custom penalty
-            score -= 100;
+            //extra custom penalty for thowing wrong thing
+            score -= 100; 
         }
         else {
             // Only update if that beat not scored already -> First input counts
@@ -151,12 +267,18 @@ public class RateUserInput : MonoBehaviour
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
                     task.scores[0] = rating;
                     // do something with feedback? Event? 
+
+                    animation = true;
+
+                    
                 }
                 if (0 == task.totalHits-2){
-                    // throw package event as task is done
+                    // throw package event as task is already done
+
+                    animation = true;
                     completed = true;
-                    Debug.Log("thrown");
                 }
+                
             }
             else if (hitIndex >= task.totalHits-1) {
 
@@ -167,9 +289,12 @@ public class RateUserInput : MonoBehaviour
                     task.scores[hitIndex-1] = rating;
                     // do something with feedback? Event? 
                     // throw package event
+                    animation = true;
                     completed = true;
-                    Debug.Log("thrown");
+                    Debug.Log("late");
                 }
+
+                
             }
             else {
                 // Check if this beat is already scored
@@ -177,14 +302,22 @@ public class RateUserInput : MonoBehaviour
                 {
                     (string feedback, int rating) = RatingHelper(distance);
                     task.scores[hitIndex] = rating;
+                    animation = true;
+                    Debug.Log("middle");
                     // do something with feedback? Event? 
+                }
+                else
+                {
+                    // HERE FEEDBACK FOR WRONG INPUT -> EVENT?
+                    task.scores[hitIndex] -= 100;
                 }
 
                 if(hitIndex == task.totalHits-2)
                 {
                     // throw package event as this was the last action
-                    Debug.Log("thrown");
+                    //EVENT: TASK DONE LEFT -> LeftArm: Back to idle position left
                     completed = true;
+                    animation = true;
                 }
             }
         }
@@ -195,20 +328,35 @@ public class RateUserInput : MonoBehaviour
             {
                 score += task.scores[i];
             }
+            
         }
-        return (completed, score);
+        return (completed, score, animation);
     }
 
     void onMailLeft()
     {
         if(currentLeftTask != null)
         {
-            (bool completed, int score) = handleEvents(currentLeftTask, 1);
+            (bool completed, int score, bool animation) = handleEvents(currentLeftTask, 1);
 
-            if (completed)
+            if (completed && !currentLeftTask.finished)
             {
-                currentLeftTask = null;
+                //currentLeftTask = null;
                 currentScore += score;
+                //EVENT: TASK DONE LEFT -> LeftArm: Back to idle position left
+                if(animation && taskDoneLeft != null)
+                {
+                    taskNextLeft();
+                }
+                currentLeftTask.finished = true;
+            }
+            else
+            {
+                if(animation && taskNextLeft != null)
+                {
+                    taskNextLeft();
+                }
+                
             }
             scoreText.text = currentScore.ToString();
         }
@@ -221,12 +369,26 @@ public class RateUserInput : MonoBehaviour
     {
         if (currentRightTask != null)
         {
-            (bool completed, int score) = handleEvents(currentRightTask, 1);
+            (bool completed, int score, bool animation) = handleEvents(currentRightTask, 1);
 
-            if (completed)
+            if (completed && !currentRightTask.finished)
             {
-                currentRightTask = null;
+                //currentRightTask = null;
                 currentScore += score;
+
+                if(animation && taskDoneRight!= null)
+                {
+                    taskNextRight();
+                }
+                currentRightTask.finished = true;
+                //Throw EVENT??
+            }
+            else
+            {
+                if(animation && taskNextRight != null)
+                {
+                    taskNextRight();
+                }
             }
             scoreText.text = currentScore.ToString();
         }
@@ -236,11 +398,25 @@ public class RateUserInput : MonoBehaviour
     {   
         if (currentLeftTask != null)
         {
-            (bool completed, int score) = handleEvents(currentLeftTask, 2);
-            if (completed)
+            (bool completed, int score, bool animation) = handleEvents(currentLeftTask, 2);
+            if (completed && !currentLeftTask.finished)
             {
-                currentLeftTask = null;
+                //currentLeftTask = null;
                 currentScore += score;
+
+                if(animation && taskDoneLeft != null)
+                {
+                    taskNextLeft();
+                }
+                currentLeftTask.finished = true;
+            }
+            else
+            {
+                if(animation && taskNextLeft != null)
+                {
+                    taskNextLeft();
+                }
+                
             }
             scoreText.text = currentScore.ToString();
         }
@@ -250,11 +426,24 @@ public class RateUserInput : MonoBehaviour
     {
         if (currentRightTask != null)
         {
-            (bool completed, int score) = handleEvents(currentRightTask, 2);
-            if (completed)
+            (bool completed, int score, bool animation) = handleEvents(currentRightTask, 2);
+            if (completed && !currentRightTask.finished)
             {
-                currentRightTask = null;
+                //currentRightTask = null;
                 currentScore += score;
+                if(animation && taskDoneRight!= null)
+                {
+                    taskNextRight();
+                }
+                currentRightTask.finished = true;
+                //Throw EVENT??
+            }
+            else
+            {
+                if(animation && taskNextRight != null)
+                {
+                    taskNextRight();
+                }
             }
             scoreText.text = currentScore.ToString();
         }

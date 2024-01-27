@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
     public delegate void PackageRightEventDelegate();
     public static event PackageRightEventDelegate onPackageRight;
-
+    
     //Singleton pattern
     public static InputManager instance { get; private set;}
     private void Awake()
