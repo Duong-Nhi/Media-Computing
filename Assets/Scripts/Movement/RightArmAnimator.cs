@@ -13,6 +13,8 @@ public class RightArmAnimator : MonoBehaviour
     private int taskId = 0;
     private SpriteRenderer spriteRenderer;
 
+    private bool throwingIsInvoked = false;
+
     //Test
     private int currentBeat = 0;
 
@@ -25,6 +27,10 @@ public class RightArmAnimator : MonoBehaviour
         RateUserInput.taskStartPackageRight += onTaskStartPackageRight;
         RateUserInput.taskDoneRight += onTaskDoneRight;
         RateUserInput.taskNextRight += onTaskNextRight;
+
+        RateUserInput.autoAttackRightLetter += onAutoAttackRightLetter;
+        RateUserInput.autoAttackRightPackage += onAutoAttackRightPackage;
+
 
     }
 
@@ -59,12 +65,14 @@ public class RightArmAnimator : MonoBehaviour
         spriteRenderer.sprite = letterArmSprites[0];
         currentSpriteIdx = 0;
         taskId = 1;
+        CancelInvoke("BackToIdle");
     }
 
     void onTaskStartPackageRight(){
         spriteRenderer.sprite = packageArmSprites[0];
         currentSpriteIdx = 0;
         taskId = 2;
+        CancelInvoke("BackToIdle");
     }
 
     void onTaskNextRight(){
@@ -91,4 +99,45 @@ public class RightArmAnimator : MonoBehaviour
         taskId = 0;
     }
     
+    void onAutoAttackRightLetter()
+    {
+        spriteRenderer.sprite = letterArmSprites[letterArmSprites.Length-1];
+        if (!throwingIsInvoked)
+        {
+            // Call YourFunction and set isFunctionInvoked to true
+            Invoke("BackToIdle", 0.5f);
+            throwingIsInvoked = true;
+        }
+        else
+        {
+            // If the function is already invoked, reset the timer
+            CancelInvoke("BackToIdle");
+            Invoke("BackToIdle", 0.5f);
+        }
+        
+    }
+
+    void onAutoAttackRightPackage()
+    {
+        spriteRenderer.sprite = packageArmSprites[packageArmSprites.Length-1];
+        if (!throwingIsInvoked)
+        {
+            // Call YourFunction and set isFunctionInvoked to true
+            Invoke("BackToIdle", 0.5f);
+            throwingIsInvoked = true;
+        }
+        else
+        {
+            // If the function is already invoked, reset the timer
+            CancelInvoke("BackToIdle");
+            Invoke("BackToIdle", 0.5f);
+        }
+    }
+
+    void BackToIdle()
+    {
+        spriteRenderer.sprite = idleSprite;
+        throwingIsInvoked = false;
+    }
+
 }

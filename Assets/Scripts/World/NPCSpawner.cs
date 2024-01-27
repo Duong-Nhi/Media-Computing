@@ -31,21 +31,21 @@ public class NPCSpawner : MonoBehaviour
 
     private void onDropLetterLeft()
     {
-        Instantiate(letter, player.transform.position - new Vector3(2f,0f,-2f), Quaternion.Euler(0f, 0f, 0f));
+        Instantiate(letter, player.transform.position - new Vector3(2f,1f,-1f), Quaternion.Euler(0f, 0f, 0f));
     }
 
     private void onDropPackageLeft()
     {
-        Instantiate(package, player.transform.position - new Vector3(2f,0f,-2f), Quaternion.Euler(0f, 0f, 0f));
+        Instantiate(package, player.transform.position - new Vector3(2f,1f,-1f), Quaternion.Euler(0f, 0f, 0f));
     }
 
     private void onDropPackageRight()
     {
-        Instantiate(package, player.transform.position - new Vector3(-2f,0f,-2f), Quaternion.Euler(0f, 0f, 0f));
+        Instantiate(package, player.transform.position - new Vector3(-2f,1f,-1f), Quaternion.Euler(0f, 0f, 0f));
     }
 
     private void onDropLetterRight()
     {
-        Instantiate(letter, player.transform.position - new Vector3(-2f,0f,-2f), Quaternion.Euler(0f, 0f, 0f));
+        Instantiate(letter, player.transform.position - new Vector3(-2f,1f,-1f), Quaternion.Euler(0f, 0f, 0f));
     }
 }

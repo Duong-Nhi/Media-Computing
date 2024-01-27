@@ -71,6 +71,18 @@ public class RateUserInput : MonoBehaviour
     public delegate void DropLetterRightEventDelegate();
     public static event DropLetterRightEventDelegate dropLetterRight;
 
+    public delegate void AutoAttackLeftLetterEventDelegate();
+    public static event AutoAttackLeftLetterEventDelegate autoAttackLeftLetter;
+
+    public delegate void AutoAttackLeftPackageEventDelegate();
+    public static event AutoAttackLeftPackageEventDelegate autoAttackLeftPackage;
+
+    public delegate void AutoAttackRightLetterEventDelegate();
+    public static event AutoAttackRightLetterEventDelegate autoAttackRightLetter;
+
+    public delegate void AutoAttackRightPackageEventDelegate();
+    public static event AutoAttackRightPackageEventDelegate autoAttackRightPackage;
+
 
     int currentBeat = 0;
 
@@ -335,11 +347,11 @@ public class RateUserInput : MonoBehaviour
 
     void onMailLeft()
     {
-        if(currentLeftTask != null)
+        if(currentLeftTask != null && !currentLeftTask.finished)
         {
             (bool completed, int score, bool animation) = handleEvents(currentLeftTask, 1);
 
-            if (completed && !currentLeftTask.finished)
+            if (completed)
             {
                 //currentLeftTask = null;
                 currentScore += score;
@@ -362,16 +374,20 @@ public class RateUserInput : MonoBehaviour
         }
         else {
             // Idea is to implement some kind of auto attacks to trigger events in scene
+            if(autoAttackLeftLetter != null)
+            {
+                autoAttackLeftLetter();
+            }
         }
     }
 
     void onMailRight()
     {
-        if (currentRightTask != null)
+        if (currentRightTask != null && !currentRightTask.finished)
         {
             (bool completed, int score, bool animation) = handleEvents(currentRightTask, 1);
 
-            if (completed && !currentRightTask.finished)
+            if (completed)
             {
                 //currentRightTask = null;
                 currentScore += score;
@@ -392,14 +408,21 @@ public class RateUserInput : MonoBehaviour
             }
             scoreText.text = currentScore.ToString();
         }
+        else {
+            // Idea is to implement some kind of auto attacks to trigger events in scene
+            if(autoAttackRightLetter != null)
+            {
+                autoAttackRightLetter();
+            }
+        }
     }
 
     void onPackageLeft()
     {   
-        if (currentLeftTask != null)
+        if (currentLeftTask != null && !currentLeftTask.finished) 
         {
             (bool completed, int score, bool animation) = handleEvents(currentLeftTask, 2);
-            if (completed && !currentLeftTask.finished)
+            if (completed)
             {
                 //currentLeftTask = null;
                 currentScore += score;
@@ -420,14 +443,21 @@ public class RateUserInput : MonoBehaviour
             }
             scoreText.text = currentScore.ToString();
         }
+        else {
+            // Idea is to implement some kind of auto attacks to trigger events in scene
+            if(autoAttackLeftPackage != null)
+            {
+                autoAttackLeftPackage();
+            }
+        }
     }
 
     void onPackageRight()
     {
-        if (currentRightTask != null)
+        if (currentRightTask != null && !currentRightTask.finished)
         {
             (bool completed, int score, bool animation) = handleEvents(currentRightTask, 2);
-            if (completed && !currentRightTask.finished)
+            if (completed)
             {
                 //currentRightTask = null;
                 currentScore += score;
@@ -446,6 +476,13 @@ public class RateUserInput : MonoBehaviour
                 }
             }
             scoreText.text = currentScore.ToString();
+        }
+        else {
+            // Idea is to implement some kind of auto attacks to trigger events in scene
+            if(autoAttackRightPackage != null)
+            {
+                autoAttackRightPackage();
+            }
         }
     }
 
@@ -532,8 +569,39 @@ public class RateUserInput : MonoBehaviour
     // Rename? With task i mean the elements of the level i.e. (1,0)
     private (int, int) getTaskFromLevel(int beat)
     {
+        int leftTask = 0;
+        int rightTask = 0;
+
+        // fist check for task id 1
+        int taskHitCount = levelManager.idToHits(1);
+        //beat -1 because we index beats starting from 1, array from 0; taskHitCount-1 as the current beat counts as first hit and taskhitcount-1 as last
+        (int left, int right) = levelManager.levelSequence[beat-1 + taskHitCount-1];
+        if (left == 1)
+        {
+            leftTask = 1;
+        }
+        if (right == 1)
+        {
+            rightTask = 1;
+        }
+        //-------------------------
+        // next check for task id 2
+        taskHitCount = levelManager.idToHits(2);
+        //beat -1 because we index beats starting from 1, array from 0; taskHitCount-1 as the current beat counts as first hit and taskhitcount-1 as last
+        (left, right) = levelManager.levelSequence[beat-1 + taskHitCount-1];
+        if (left == 2 && leftTask == 0)
+        {
+            leftTask = 2;
+        }
+        if (right == 2 && rightTask == 0)
+        {
+            rightTask = 2;
+        }
+
+        return (leftTask, rightTask);
+
         // -1 because we index beats starting from 1, array from 0
-        return levelManager.levelSequence[beat-1];
+        //return levelManager.levelSequence[beat-1];
 
     }
 

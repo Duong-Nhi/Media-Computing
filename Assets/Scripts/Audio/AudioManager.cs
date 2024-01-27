@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using FMODUnity;
+
 using FMOD.Studio;
 public class AudioManager : MonoBehaviour
 {   
@@ -171,6 +172,11 @@ public class AudioManager : MonoBehaviour
         GUILayout.Box(String.Format("Current Bar = {0}, Current Beat = {1}, Last Marker = {2}", timelineInfo.currentBar, timelineInfo.currentBeat, (string)timelineInfo.currentMarker));
     }
 
+
+    public void playBreakingGlass(Vector3 worldPos)
+    {
+        RuntimeManager.PlayOneShot(FMODEvents.instance.glassBreak, worldPos);
+    }
 
     // FMOD Callbacks (Source: https://www.fmod.com/docs/2.00/unity/examples-timeline-callbacks.html)
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]

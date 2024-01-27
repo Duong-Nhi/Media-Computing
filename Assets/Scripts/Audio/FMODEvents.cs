@@ -8,6 +8,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header("PlayingSong")]
     [field: SerializeField] public EventReference playingSong { get; private set; }
 
+    [field: Header("GlassBreak Sound")]
+    [field: SerializeField] public EventReference glassBreak { get; private set; }
+
     // Singleton pattern
     public static FMODEvents instance { get; private set; }
 
