@@ -291,6 +291,24 @@ public class TileSpawner : MonoBehaviour
         }
         newTile.transform.SetParent(parentObject);
 
+        // enable spawn npc script for houses
+        if(newTile.transform.Find("NPC") != null)
+        {
+            GameObject npc = newTile.transform.Find("NPC").gameObject;
+            if (npc != null)
+            {
+                SpawnNPC spawnNPC = npc.GetComponent<SpawnNPC>();
+                if (spawnNPC != null)
+                {
+                    spawnNPC.enabled = true;
+                }
+            }
+        }
+        
+
+
+
+
         return newTile;
     }
 
