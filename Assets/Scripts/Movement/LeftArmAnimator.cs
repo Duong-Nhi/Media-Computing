@@ -82,7 +82,6 @@ public class LeftArmAnimator : MonoBehaviour
         else{
             if(taskId == 2){
                 spriteRenderer.sprite = packageArmSprites[Mathf.Min(currentSpriteIdx+1, packageArmSprites.Length-1)];
-                Debug.Log("Rendered index " + currentSpriteIdx);
                 currentSpriteIdx ++;
             }
             else

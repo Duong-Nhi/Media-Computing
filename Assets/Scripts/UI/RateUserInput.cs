@@ -83,6 +83,18 @@ public class RateUserInput : MonoBehaviour
     public delegate void AutoAttackRightPackageEventDelegate();
     public static event AutoAttackRightPackageEventDelegate autoAttackRightPackage;
 
+    public delegate void DeliverPackageLeftEventDelegate();
+    public static event DeliverPackageLeftEventDelegate deliverPackageLeft;
+
+    public delegate void DeliverLetterLeftEventDelegate();
+    public static event DeliverLetterLeftEventDelegate deliverLetterLeft;
+
+    public delegate void DeliverPackageRightEventDelegate();
+    public static event DeliverPackageRightEventDelegate deliverPackageRight;
+
+    public delegate void DeliverLetterRightEventDelegate();
+    public static event DeliverLetterRightEventDelegate deliverLetterRight;
+
 
     int currentBeat = 0;
 
@@ -303,7 +315,6 @@ public class RateUserInput : MonoBehaviour
                     // throw package event
                     animation = true;
                     completed = true;
-                    Debug.Log("late");
                 }
 
                 
@@ -315,7 +326,6 @@ public class RateUserInput : MonoBehaviour
                     (string feedback, int rating) = RatingHelper(distance);
                     task.scores[hitIndex] = rating;
                     animation = true;
-                    Debug.Log("middle");
                     // do something with feedback? Event? 
                 }
                 else
@@ -361,6 +371,11 @@ public class RateUserInput : MonoBehaviour
                     taskNextLeft();
                 }
                 currentLeftTask.finished = true;
+                //Deliver Event
+                if(deliverLetterLeft != null)
+                {
+                    deliverLetterLeft();
+                }
             }
             else
             {
@@ -397,7 +412,11 @@ public class RateUserInput : MonoBehaviour
                     taskNextRight();
                 }
                 currentRightTask.finished = true;
-                //Throw EVENT??
+                //Deliver Event
+                if(deliverLetterRight != null)
+                {
+                    deliverLetterRight();
+                }
             }
             else
             {
@@ -432,6 +451,11 @@ public class RateUserInput : MonoBehaviour
                     taskNextLeft();
                 }
                 currentLeftTask.finished = true;
+                //Deliver Event
+                if(deliverPackageLeft != null)
+                {
+                    deliverPackageLeft();
+                }
             }
             else
             {
@@ -466,7 +490,11 @@ public class RateUserInput : MonoBehaviour
                     taskNextRight();
                 }
                 currentRightTask.finished = true;
-                //Throw EVENT??
+                //Deliver Event
+                if(deliverPackageRight != null)
+                {
+                    deliverPackageRight();
+                }
             }
             else
             {
