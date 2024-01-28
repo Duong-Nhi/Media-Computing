@@ -24,6 +24,11 @@ public class PlayerDelivery : MonoBehaviour
         RateUserInput.deliverLetterRight += onDeliverLetterRight;
         RateUserInput.deliverPackageLeft += onDeliverPackageLeft;
         RateUserInput.deliverPackageRight += onDeliverPackageRight;
+
+        RateUserInput.deliverLetterLeftBad += onDeliverLetterLeftBad;
+        RateUserInput.deliverLetterRightBad += onDeliverLetterRightBad;
+        RateUserInput.deliverPackageLeftBad += onDeliverPackageLeftBad;
+        RateUserInput.deliverPackageRightBad += onDeliverPackageRightBad;
     }
 
     void onBeat()
@@ -32,9 +37,6 @@ public class PlayerDelivery : MonoBehaviour
     }
     void onDeliverLetterLeft()
     {
-        // Welcher beat is das wirklich?? was wenn früh gedrückt dann ggf am rand und eins zu früh bedeutet haus davor
-        // Primitive lösung einfach +1 machen. dann wird tendenziell eher weiter nach vorne geworfen als nach hinten
-        // neee aber was wenn das kein valides ziel ist. Beide nehmen und zum nächsten immmer schicken falls das valides ziel ist
         GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
         if(currObjLeft.CompareTag("House"))
         {
@@ -121,6 +123,101 @@ public class PlayerDelivery : MonoBehaviour
         }
     }
 
+    // Same but bad events
+
+    void onDeliverLetterLeftBad()
+    {
+        GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
+        if(currObjLeft.CompareTag("House"))
+        {
+            GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
+            deliverObject(letter, deliveryLoc.transform.position);
+        }
+        else{
+            currObjLeft = tileSpawner.getObjectLeft(currBeat);
+            if(currObjLeft.CompareTag("House"))
+            {
+               
+                GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
+                deliverObject(letter, deliveryLoc.transform.position);
+            }
+            else{
+                Debug.Log("Incorrect Delivery");
+            }
+        }
+
+    }
+
+    void onDeliverLetterRightBad()
+    {
+
+        GameObject currObjRight = tileSpawner.getObjectRight(currBeat+1);
+        if(currObjRight.CompareTag("House"))
+        {
+            GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
+            deliverObject(letter, deliveryLoc.transform.position);
+        }
+        else{
+            currObjRight = tileSpawner.getObjectRight(currBeat);
+            if(currObjRight.CompareTag("House"))
+            {
+                GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
+                deliverObject(letter, deliveryLoc.transform.position);
+            }
+            else{
+                Debug.Log("Incorrect Delivery");
+            }
+        }
+
+    }
+
+    void onDeliverPackageLeftBad()
+    {
+        GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
+        if(currObjLeft.CompareTag("House"))
+        {
+            GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
+            deliverObject(package, deliveryLoc.transform.position);
+        }
+        else{
+            currObjLeft = tileSpawner.getObjectLeft(currBeat);
+            if(currObjLeft.CompareTag("House"))
+            {
+                GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
+                deliverObject(package, deliveryLoc.transform.position);
+            }
+            else{
+                Debug.Log("Incorrect Delivery");
+            }
+        }
+    }
+
+    void onDeliverPackageRightBad()
+    {
+        GameObject currObjRight = tileSpawner.getObjectRight(currBeat+1);
+        if(currObjRight.CompareTag("House"))
+        {
+            GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
+            deliverObject(package, deliveryLoc.transform.position);
+        }
+        else{
+            currObjRight = tileSpawner.getObjectRight(currBeat);
+            if(currObjRight.CompareTag("House"))
+            {
+                GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
+                deliverObject(package, deliveryLoc.transform.position);
+            }
+            else{
+                Debug.Log("Incorrect Delivery");
+            }
+        }
+    }
+
+
+
+
+
+
     void deliverObject(GameObject projectile, Vector3 deliveryPosition)
     {
         if(projectile != null)
@@ -128,7 +225,8 @@ public class PlayerDelivery : MonoBehaviour
             
             //spawns projectile at player position; slightly elevated
             GameObject projectileObj = Instantiate(projectile, transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
-
+            // Set to delivery layer -> does not collide with other objects other than delivery marked 
+            projectileObj.layer = 6;
             //set the projectile to delivery state (only detect colisions with delivery collision box)
             ProjectileController projectileController = projectileObj.GetComponent<ProjectileController>();
             if(projectileController != null)

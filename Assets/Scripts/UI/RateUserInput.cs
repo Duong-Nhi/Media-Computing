@@ -95,6 +95,20 @@ public class RateUserInput : MonoBehaviour
     public delegate void DeliverLetterRightEventDelegate();
     public static event DeliverLetterRightEventDelegate deliverLetterRight;
 
+    //Same in Bad
+
+    public delegate void DeliverPackageLeftBadEventDelegate();
+    public static event DeliverPackageLeftBadEventDelegate deliverPackageLeftBad;
+
+    public delegate void DeliverLetterLeftBadEventDelegate();
+    public static event DeliverLetterLeftBadEventDelegate deliverLetterLeftBad;
+
+    public delegate void DeliverPackageRightBadEventDelegate();
+    public static event DeliverPackageRightBadEventDelegate deliverPackageRightBad;
+
+    public delegate void DeliverLetterRightBadEventDelegate();
+    public static event DeliverLetterRightBadEventDelegate deliverLetterRightBad;
+
 
     int currentBeat = 0;
 
@@ -279,7 +293,7 @@ public class RateUserInput : MonoBehaviour
             // some event ? Incorrect input type, maybe sound or visual error
 
             //extra custom penalty for thowing wrong thing
-            score -= 100; 
+            score -= 200; 
         }
         else {
             // Only update if that beat not scored already -> First input counts
@@ -331,7 +345,7 @@ public class RateUserInput : MonoBehaviour
                 else
                 {
                     // HERE FEEDBACK FOR WRONG INPUT -> EVENT?
-                    task.scores[hitIndex] -= 100;
+                    task.scores[hitIndex] -= 200;
                 }
 
                 if(hitIndex == task.totalHits-2)
@@ -371,10 +385,20 @@ public class RateUserInput : MonoBehaviour
                     taskNextLeft();
                 }
                 currentLeftTask.finished = true;
-                //Deliver Event
-                if(deliverLetterLeft != null)
+
+                //Deliver Event depending on score
+                if(score > 0)
                 {
-                    deliverLetterLeft();
+                    if(deliverLetterLeft != null)
+                    {
+                        deliverLetterLeft();
+                    }
+                }
+                else{
+                    if(deliverLetterLeftBad != null)
+                    {
+                        deliverLetterLeftBad();
+                    }
                 }
             }
             else
@@ -412,10 +436,20 @@ public class RateUserInput : MonoBehaviour
                     taskNextRight();
                 }
                 currentRightTask.finished = true;
-                //Deliver Event
-                if(deliverLetterRight != null)
+
+                //Deliver events
+                if(score > 0)
                 {
-                    deliverLetterRight();
+                    if(deliverLetterRight != null)
+                    {
+                        deliverLetterRight();
+                    }
+                }
+                else{
+                    if(deliverLetterRightBad != null)
+                    {
+                        deliverLetterRightBad();
+                    }
                 }
             }
             else
@@ -451,10 +485,19 @@ public class RateUserInput : MonoBehaviour
                     taskNextLeft();
                 }
                 currentLeftTask.finished = true;
-                //Deliver Event
-                if(deliverPackageLeft != null)
+                //Deliver events
+                if(score > 1500)
                 {
-                    deliverPackageLeft();
+                    if(deliverPackageLeft != null)
+                    {
+                        deliverPackageLeft();
+                    }
+                }
+                else{
+                    if(deliverPackageLeftBad != null)
+                    {
+                        deliverPackageLeftBad();
+                    }
                 }
             }
             else
@@ -490,10 +533,19 @@ public class RateUserInput : MonoBehaviour
                     taskNextRight();
                 }
                 currentRightTask.finished = true;
-                //Deliver Event
-                if(deliverPackageRight != null)
+                //Deliver events
+                if(score > 1500)
                 {
-                    deliverPackageRight();
+                    if(deliverPackageRight != null)
+                    {
+                        deliverPackageRight();
+                    }
+                }
+                else{
+                    if(deliverPackageRightBad != null)
+                    {
+                        deliverPackageRightBad();
+                    }
                 }
             }
             else
@@ -680,24 +732,24 @@ public class RateUserInput : MonoBehaviour
                 score = 800;
                 //currentScore += 800;
                 break;
-            case <= 0.3:
+            case <= 0.25:
                 feedback = "Good";
                 score = 500;
                 //currentScore += 500;
                 break;
-            case <= 0.4:
+            case <= 0.3:
                 feedback = "OK";
                 score = 0;
                 //currentScore += 0;
                 break;
-            case <= 0.5:
+            case <= 0.4:
                 feedback = "Bad";
-                score = -500;
+                score = -250;
                 //currentScore -= 500;
                 break;
             default:
                 feedback = "You big Noob";
-                score = -1000;
+                score = -500;
                 //currentScore -= 1000;
                 break;
         }
