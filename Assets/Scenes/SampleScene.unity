@@ -1705,13 +1705,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9809ecedc5fdba1408ee3ff58f4ec94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 756655912}
   audioManager: {fileID: 1716581794}
   userInputRater: {fileID: 1945431454}
   letterArmSprites:
-  - {fileID: 21300000, guid: d9d03ed1b69949340a5e06b8f6b5ef27, type: 3}
+  - {fileID: 21300000, guid: 4b549dc343025fb478dd3f2028daec6b, type: 3}
   - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
   packageArmSprites:
-  - {fileID: 21300000, guid: eecb02e56b08422468b3594cb17e5dbe, type: 3}
+  - {fileID: 21300000, guid: 74b3c972ccfc603418dbea2e628bf0b3, type: 3}
+  - {fileID: 21300000, guid: f3acfb630a2980641971519a89314127, type: 3}
+  - {fileID: 21300000, guid: 148cde62335b6654dadbb1c14675d242, type: 3}
+  - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
+  letterArmSpritesGlow:
+  - {fileID: 21300000, guid: 48547dee1f2adf147be6372b89e2c98b, type: 3}
+  - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
+  packageArmSpritesGlow:
+  - {fileID: 21300000, guid: bf75f04dcb0ba614eb5ee4a7b3935ad0, type: 3}
   - {fileID: 21300000, guid: f3acfb630a2980641971519a89314127, type: 3}
   - {fileID: 21300000, guid: 148cde62335b6654dadbb1c14675d242, type: 3}
   - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
@@ -242972,6 +242981,7 @@ MonoBehaviour:
   beatsPerTile: 4
   hitsPerPackage: 4
   hitsPerLetter: 2
+  glowEnabled: 0
 --- !u!43 &760876255
 Mesh:
   m_ObjectHideFlags: 0
@@ -323890,11 +323900,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <playingSong>k__BackingField:
     Guid:
-      Data1: -919313101
-      Data2: 1265421782
-      Data3: 1721214857
-      Data4: 1384071021
-    Path: event:/OnARoadToTheEighties
+      Data1: -587736542
+      Data2: 1333981063
+      Data3: -1298550398
+      Data4: -753706671
+    Path: event:/Numb
   <glassBreak>k__BackingField:
     Guid:
       Data1: -1810674057
@@ -331412,6 +331422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466cf07f76b70184f967387896be7996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 756655912}
   audioManager: {fileID: 1716581794}
   userInputRater: {fileID: 1945431454}
   letterArmSprites:
@@ -331419,6 +331430,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
   packageArmSprites:
   - {fileID: 21300000, guid: aad0f70ef664acf4e969e2b9ae0e2344, type: 3}
+  - {fileID: 21300000, guid: f83aa234732ee6e4f9bbb30c914a901c, type: 3}
+  - {fileID: 21300000, guid: a9433b6d6bd299f4a8a2660b1594169d, type: 3}
+  - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
+  letterArmSpritesGlow:
+  - {fileID: 21300000, guid: e6072ee525ac87a4ba227c4277a82977, type: 3}
+  - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
+  packageArmSpritesGlow:
+  - {fileID: 21300000, guid: 9985c6b0379097f46ae905f73b3d0109, type: 3}
   - {fileID: 21300000, guid: f83aa234732ee6e4f9bbb30c914a901c, type: 3}
   - {fileID: 21300000, guid: a9433b6d6bd299f4a8a2660b1594169d, type: 3}
   - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
@@ -365689,7 +365708,7 @@ Transform:
   m_GameObject: {fileID: 1087433759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 20}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -582101,6 +582120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bpm: 0
   nBeats: 0
+  effectsVolume: 0.1
+  songVolume: 0.1
 --- !u!4 &1716581795
 Transform:
   m_ObjectHideFlags: 0
@@ -643261,7 +643282,7 @@ MonoBehaviour:
   parentObject: {fileID: 313168267}
   minSpecialDistances: 05000000
   nStartingTiles: 20
-  tileBeatOffset: 5.5
+  tileBeatOffset: 9.5
 --- !u!43 &1900781193
 Mesh:
   m_ObjectHideFlags: 0

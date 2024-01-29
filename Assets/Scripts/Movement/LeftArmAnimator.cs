@@ -3,10 +3,15 @@ using UnityEngine;
 public class LeftArmAnimator : MonoBehaviour
 {
 
+    public LevelManager levelManager;
     public AudioManager audioManager;
     public RateUserInput userInputRater;
     public Sprite[] letterArmSprites;
     public Sprite[] packageArmSprites;  
+
+    public Sprite[] letterArmSpritesGlow;
+    public Sprite[] packageArmSpritesGlow;  
+
 
     public Sprite idleSprite;
     private int currentSpriteIdx = 0;
@@ -54,6 +59,13 @@ public class LeftArmAnimator : MonoBehaviour
 
         spriteRenderer.sprite = idleSprite;
 
+        //Check if glow enabled
+        Debug.Log(levelManager.glowEnabled);
+        if(levelManager.glowEnabled)
+        {
+            letterArmSprites = letterArmSpritesGlow;
+            packageArmSprites = packageArmSpritesGlow;
+        }
     }
 
     void Update()

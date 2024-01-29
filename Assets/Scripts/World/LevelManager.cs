@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
 
     public int hitsPerLetter = 2;
 
+    public bool glowEnabled = false;
+
     private void Start()
     {
 
