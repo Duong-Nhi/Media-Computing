@@ -11,40 +11,39 @@ public class MainMenu : MonoBehaviour
     public GameObject LevelSelector;
     public TextMeshProUGUI text;
 
-    private void Start()
+ private void Start()
+    {
+        SetInitialUIState();
+    }
+
+ public void SetInitialUIState()
     {
         buttonContainer.SetActive(true);
         Menu.SetActive(true);
         buttonContainerSetting.SetActive(false);
         LevelSelector.SetActive(false);
+        text.text = "Special Delivery";
     }
+    
+public void Play()
+{
+    Menu.SetActive(!Menu.activeSelf);
+    LevelSelector.SetActive(!LevelSelector.activeSelf);
+    text.text = "Level Selector";
+}
 
-    public void Play()
-    {
-        Menu.SetActive(!Menu.activeSelf);
-        LevelSelector.SetActive(!LevelSelector.activeSelf);
-
-        // Corrected variable name
-        text.text = "Level Selector";
-    }
 
     public void Setting()
     {
         buttonContainer.SetActive(!buttonContainer.activeSelf);
         buttonContainerSetting.SetActive(!buttonContainerSetting.activeSelf);
+        text.text = "Settings";
     }
 
     public void Quit()
     {
         Application.Quit();
         Debug.Log("Quit");
-    }
-
-    public void Back()
-    {
-        buttonContainer.SetActive(!buttonContainer.activeSelf);
-        buttonContainerSetting.SetActive(!buttonContainerSetting.activeSelf);
-        LevelSelector.SetActive(false);
     }
 
     public void GoToScene(string sceneName)
