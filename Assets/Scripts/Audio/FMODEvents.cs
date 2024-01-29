@@ -25,6 +25,10 @@ public class FMODEvents : MonoBehaviour
 
     // Singleton pattern
     public static FMODEvents instance { get; private set; }
+    public int currentLevel;
+    public  EventReference[] playingSongs;
+
+
 
     private void Awake()
     {
@@ -37,5 +41,9 @@ public class FMODEvents : MonoBehaviour
         {
             instance = this;
         }
+
+        currentLevel = PlayerPrefs.GetInt("lvlNum", 0);
+        playingSong = playingSongs[currentLevel];
+        Debug.Log("playingSongs" + currentLevel);
     }
 }

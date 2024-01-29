@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -323940,6 +323940,38 @@ MonoBehaviour:
       Data3: 1568690574
       Data4: 1495104374
     Path: event:/Star
+  currentLevel: 0
+  playingSongs:
+  - Guid:
+      Data1: -1455648539
+      Data2: 1149114424
+      Data3: 70867632
+      Data4: -2121632479
+    Path: event:/Andertons
+  - Guid:
+      Data1: -343726008
+      Data2: 1143505945
+      Data3: 369774725
+      Data4: -1879993975
+    Path: event:/ThroughTheFireAndFlames
+  - Guid:
+      Data1: -1923702885
+      Data2: 1318977649
+      Data3: -267859316
+      Data4: -799136610
+    Path: event:/WelcomeHome
+  - Guid:
+      Data1: -570575726
+      Data2: 1205869752
+      Data3: 1690489506
+      Data4: -14900759
+    Path: event:/WildberryLillet
+  - Guid:
+      Data1: -587736542
+      Data2: 1333981063
+      Data3: -1298550398
+      Data4: -753706671
+    Path: event:/Numb
 --- !u!1 &975630200
 GameObject:
   m_ObjectHideFlags: 0
