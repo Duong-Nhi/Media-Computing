@@ -39,6 +39,8 @@ public class RateUserInput : MonoBehaviour
     private int maximalPossibleScore = 0;
     private int currentStars = 0;
     private int currentCombo = 0;
+
+    private int currentBadCombo = 0;
     private int maxCombo = 0;
 
 
@@ -55,6 +57,8 @@ public class RateUserInput : MonoBehaviour
 
     private Task currentLeftTask;
     private Task currentRightTask;
+
+    private bool feedbackIsInvoked = false;
 
     // EVENTS
     public delegate void TaskDoneLeftEventDelegate();
@@ -199,12 +203,18 @@ public class RateUserInput : MonoBehaviour
                 if(!currentLeftTask.finished && currentLeftTask.type == 1 && dropLetterLeft != null)
                 {
                     dropLetterLeft();
+                    currentCombo = 0;
+                    currentBadCombo += 1;
+                    comboText.text = "";
                 }
                 else
                 {
                     if(!currentLeftTask.finished && currentLeftTask.type == 2 && dropPackageLeft != null)
                     {
                         dropPackageLeft();
+                        currentCombo = 0;
+                        currentBadCombo += 1;
+                        comboText.text = "";
                     }
                     else
                     {
@@ -232,12 +242,18 @@ public class RateUserInput : MonoBehaviour
                 if(!currentRightTask.finished && currentRightTask.type == 1 && dropLetterRight != null)
                 {
                     dropLetterRight();
+                    currentCombo = 0;
+                    currentBadCombo += 1;
+                    comboText.text = "";
                 }
                 else
                 {
                     if(!currentRightTask.finished && currentRightTask.type == 2 && dropPackageRight != null)
                     {
                         dropPackageRight();
+                        currentCombo = 0;
+                        currentBadCombo += 1;
+                        comboText.text = "";
                     }
                     else
                     {
@@ -316,7 +332,7 @@ public class RateUserInput : MonoBehaviour
             }
 
         }
-
+        adaptDistortion(currentBadCombo);
     }
 
 
@@ -347,14 +363,27 @@ public class RateUserInput : MonoBehaviour
                 {
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
                     displayFeedback(feedback);
-                    if(feedback == "Perfect")
+                    if(feedback == "Perfect" || feedback == "Good")
                     {
-                        currentCombo += 1;
-                        Debug.Log("Current Combo: " + currentCombo);
+                        if(currentBadCombo > 0){
+                            currentBadCombo = Mathf.Min(currentBadCombo, 10);
+                            currentBadCombo -= 2;
+                            currentBadCombo = Mathf.Max(currentBadCombo, 0);
+                        }
+                        else
+                        {
+                            currentCombo += 1;
+                            currentBadCombo = 0;
+                        }
+                        
                     }
                     else
                     {
                         currentCombo = 0;
+                        if(feedback == "Miss")
+                        {
+                            currentBadCombo += 1;
+                        }
                     }
                     task.scores[0] = rating;
                     // do something with feedback? Event? 
@@ -384,14 +413,26 @@ public class RateUserInput : MonoBehaviour
                 {
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
                     displayFeedback(feedback);
-                    if(feedback == "Perfect")
+                    if(feedback == "Perfect" || feedback == "Good")
                     {
-                        currentCombo += 1;
-                        Debug.Log("Current Combo: " + currentCombo);
+                        if(currentBadCombo > 0){
+                            currentBadCombo = Mathf.Min(currentBadCombo, 10);
+                            currentBadCombo -= 2;
+                            currentBadCombo = Mathf.Max(currentBadCombo, 0);
+                        }
+                        else
+                        {
+                            currentCombo += 1;
+                            currentBadCombo = 0;
+                        }
                     }
                     else
                     {
                         currentCombo = 0;
+                        if(feedback == "Miss")
+                        {
+                            currentBadCombo += 1;
+                        }
                     }
                     task.scores[hitIndex-1] = rating;
                     // do something with feedback? Event? 
@@ -415,13 +456,26 @@ public class RateUserInput : MonoBehaviour
                 {
                     (string feedback, int rating) = RatingHelper(distance);
                     displayFeedback(feedback);
-                    if(feedback == "Perfect")
+                    if(feedback == "Perfect" || feedback == "Good")
                     {
-                        currentCombo += 1;
+                        if(currentBadCombo > 0){
+                            currentBadCombo = Mathf.Min(currentBadCombo, 10);
+                            currentBadCombo -= 2;
+                            currentBadCombo = Mathf.Max(currentBadCombo, 0);
+                        }
+                        else
+                        {
+                            currentCombo += 1;
+                            currentBadCombo = 0;
+                        }
                     }
                     else
                     {
                         currentCombo = 0;
+                        if(feedback == "Miss")
+                        {
+                            currentBadCombo += 1;
+                        }
                     }
 
                     task.scores[hitIndex] = rating;
@@ -474,6 +528,9 @@ public class RateUserInput : MonoBehaviour
         {
             comboText.text = "";
         }
+
+        adaptDistortion(currentBadCombo);
+
         return (completed, score, animation);
     }
 
@@ -899,12 +956,33 @@ public class RateUserInput : MonoBehaviour
                 Debug.Log("Unknow Feedback to be displayed");
                 break;
         }
-        Invoke("resetImage", 0.5f);
+        
+
+        if (!feedbackIsInvoked)
+        {
+            // Call YourFunction and set isFunctionInvoked to true
+            Invoke("resetImage", 0.5f);
+            feedbackIsInvoked = true;
+        }
+        else
+        {
+            // If the function is already invoked, reset the timer
+            CancelInvoke("resetImage");
+            Invoke("resetImage", 0.5f);
+        }
     }
 
     void resetImage()
     {
         feedBackImage.enabled = false;
+        feedbackIsInvoked = false;
+    }
+
+    void adaptDistortion(int pCurrentBadCombo)
+    {  
+        float strength = Mathf.Min(pCurrentBadCombo/10f, 1f);
+        audioManager.applyEffect(strength);
+
     }
 
 }

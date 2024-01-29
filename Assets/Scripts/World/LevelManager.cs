@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 
     public bool glowEnabled = false;
 
-    private void Start()
+    private void Awake()
     {
 
         //easy

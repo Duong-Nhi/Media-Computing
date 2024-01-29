@@ -88,6 +88,7 @@ public class AudioManager : MonoBehaviour
         // get bpm and start by accessing parameters of the instance
         playingSongEventInstance.getParameterByName("bpm", out bpm);
         playingSongEventInstance.getParameterByName("nBeats", out nBeats);
+        playingSongEventInstance.setParameterByName("reverb", 1f);
     }
 
 
@@ -328,6 +329,11 @@ public class AudioManager : MonoBehaviour
 
         }
         return FMOD.RESULT.OK;
+    }
+
+    public void applyEffect(float strength)
+    {
+        playingSongEventInstance.setParameterByName("reverb", 1f-strength);
     }
 
 }

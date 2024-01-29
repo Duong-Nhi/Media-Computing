@@ -324169,14 +324169,8 @@ MonoBehaviour:
       Data3: 1568690574
       Data4: 1495104374
     Path: event:/Star
-  currentLevel: 0
+  currentLevel: 1
   playingSongs:
-  - Guid:
-      Data1: -587736542
-      Data2: 1333981063
-      Data3: -1298550398
-      Data4: -753706671
-    Path: event:/Numb
   - Guid:
       Data1: -919313101
       Data2: 1265421782
@@ -324195,6 +324189,12 @@ MonoBehaviour:
       Data3: 1690489506
       Data4: -14900759
     Path: event:/WildberryLillet
+  - Guid:
+      Data1: -587736542
+      Data2: 1333981063
+      Data3: -1298550398
+      Data4: -753706671
+    Path: event:/Numb
   - Guid:
       Data1: -587736542
       Data2: 1333981063
