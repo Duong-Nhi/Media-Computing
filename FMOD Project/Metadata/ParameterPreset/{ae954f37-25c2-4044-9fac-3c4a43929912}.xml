@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{ae954f37-25c2-4044-9fac-3c4a43929912}">
+		<property name="name">
+			<value>bpm</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7d31324c-c424-49b5-ba06-cb8de13abe76}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{a1fe8d24-96d6-4a48-b896-a4faa70a09c1}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{a1fe8d24-96d6-4a48-b896-a4faa70a09c1}">
+		<property name="maximum">
+			<value>999</value>
+		</property>
+		<property name="isReadOnly">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>140</value>
+		</property>
+	</object>
+</objects>

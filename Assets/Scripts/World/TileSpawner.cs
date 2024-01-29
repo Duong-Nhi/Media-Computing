@@ -205,7 +205,7 @@ public class TileSpawner : MonoBehaviour
                 }
             }*/
 
-            if(currentBeat >= audioManager.nBeats-12 && currentBeat < audioManager.nBeats-8)
+            if(currentBeat >= audioManager.nBeats-8 && currentBeat < audioManager.nBeats-4)
             {
                 //spawn finishline
                 spawnGameObject(finishRoad, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));

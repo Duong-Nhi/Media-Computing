@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{905bffba-d34d-4e46-8a5f-f73a4c119fbf}">
+		<property name="assetPath">
+			<value>on-the-road-to-the-eighties.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>99.91836734693878</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7516ca39-4e53-4881-851d-cee0f2f17dc8}</destination>
+		</relationship>
+	</object>
+</objects>

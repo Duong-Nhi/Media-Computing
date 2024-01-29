@@ -18,6 +18,8 @@ public class RateUserInput : MonoBehaviour
 
     public Text starsText;
 
+    public Canvas endScreen;
+
     public string lastFeedback;
     private int currentScore = 0;
 
@@ -140,6 +142,8 @@ public class RateUserInput : MonoBehaviour
         
         currentLeftTask = null;
         currentRightTask = null;
+
+        endScreen.enabled = false;
     }
 
     // Display the current score every frame -> Maybe instead of every frame, only every user input (only time it changes)
@@ -152,6 +156,11 @@ public class RateUserInput : MonoBehaviour
     void onBeat()
     {
         currentBeat +=1;
+        // On last beat display the endscreen after 1 sec
+        if(currentBeat >= audioManager.nBeats-1){
+            displayEndScreen();
+        }
+
         //int currentBeat = AudioManager.lastBeat;
         if (currentLeftTask != null)
         {
@@ -423,7 +432,7 @@ public class RateUserInput : MonoBehaviour
         }
         else {
             // Idea is to implement some kind of auto attacks to trigger events in scene
-            if(autoAttackLeftLetter != null)
+            if(autoAttackLeftLetter != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackLeftLetter();
             }
@@ -473,7 +482,7 @@ public class RateUserInput : MonoBehaviour
         }
         else {
             // Idea is to implement some kind of auto attacks to trigger events in scene
-            if(autoAttackRightLetter != null)
+            if(autoAttackRightLetter != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackRightLetter();
             }
@@ -522,7 +531,7 @@ public class RateUserInput : MonoBehaviour
         }
         else {
             // Idea is to implement some kind of auto attacks to trigger events in scene
-            if(autoAttackLeftPackage != null)
+            if(autoAttackLeftPackage != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackLeftPackage();
             }
@@ -560,7 +569,7 @@ public class RateUserInput : MonoBehaviour
             }
             else
             {
-                if(animation && taskNextRight != null)
+                if(animation && taskNextRight != null )
                 {
                     taskNextRight();
                 }
@@ -569,7 +578,7 @@ public class RateUserInput : MonoBehaviour
         }
         else {
             // Idea is to implement some kind of auto attacks to trigger events in scene
-            if(autoAttackRightPackage != null)
+            if(autoAttackRightPackage != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackRightPackage();
             }
@@ -772,5 +781,14 @@ public class RateUserInput : MonoBehaviour
         return (feedback, score);
     }
 
+    void displayEndScreen()
+    {
+        Text endText = endScreen.gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
+        if (endText != null)
+        {
+            endText.text = "Finished!\n\nScore: "+ currentScore.ToString()+ "\nStars: " + currentStars.ToString();
+        }
+        endScreen.enabled = true;
+    }
 
 }

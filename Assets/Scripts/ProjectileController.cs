@@ -77,7 +77,7 @@ public class ProjectileController : MonoBehaviour
             {
                 Debug.Log("Glass collision detected");
                 //Sound Effect
-                audioManager.playBreakingGlass(transform.position);
+                audioManager.playBreakingGlass(Camera.main.transform.position);//;transform.position);
 
                 // Destroy the projectile
                 Destroy(gameObject);
@@ -87,7 +87,7 @@ public class ProjectileController : MonoBehaviour
             {
                 Debug.Log("Car collision detected");
                 //Sound Effect
-                audioManager.playCarCrash(transform.position);
+                audioManager.playCarCrash(Camera.main.transform.position);//transform.position);
 
                 // Destroy the projectile
                 Destroy(gameObject);
@@ -96,7 +96,7 @@ public class ProjectileController : MonoBehaviour
             {
                 Debug.Log("Tree collision detected");
                 //Sound Effect
-                audioManager.playTreeRattle(transform.position);
+                audioManager.playTreeRattle(Camera.main.transform.position);//transform.position);
 
                 // Destroy the projectile
                 Destroy(gameObject);
@@ -106,7 +106,7 @@ public class ProjectileController : MonoBehaviour
             {
                 Debug.Log("NPC collision detected");
                 //Sound Effect
-                audioManager.playHit(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
+                audioManager.playHit(Camera.main.transform.position + 0f*(transform.position - Camera.main.transform.position));  //0.5
                 GameObject hitNPC = collision.gameObject.transform.GetChild(0).gameObject;
                 NPCRandomizer npcRandomizer = hitNPC.GetComponent<NPCRandomizer>();
                 if(npcRandomizer != null)
@@ -127,13 +127,13 @@ public class ProjectileController : MonoBehaviour
                 {
                     if(!starController.isCollected()){
                         starController.makeCollected();
-                        audioManager.playStar(Camera.main.transform.position + 0.2f*(transform.position - Camera.main.transform.position));
+                        audioManager.playStar(Camera.main.transform.position + 0f*(transform.position - Camera.main.transform.position)); //0.2
                         Debug.Log("Coin Collected");
                     }
                     else
                     {
                         // Already collected: play basic hit sound but dont count as a collected star
-                        audioManager.playHit(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
+                        audioManager.playHit(Camera.main.transform.position + 0f*(transform.position - Camera.main.transform.position)); //0.5
                     }
                 }
                 // Destroy the projectile
