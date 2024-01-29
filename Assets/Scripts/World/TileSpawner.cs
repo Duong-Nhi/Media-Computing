@@ -36,10 +36,10 @@ public class TileSpawner : MonoBehaviour
         };
 
     // How many tiles should be generated before music starts
-    public int nStartingTiles = 4;
+    public int nStartingTiles = 25;
     
     // How are the tiles positioned relative to the beat lines in distance per line
-    public float tileBeatOffset = 0.5F;
+    public float tileBeatOffset = 5.5F;
 
     // Used to record distance to last Spawn of each tile to avoid same tile close to each other
     private int[] currHouseDistances;
@@ -129,8 +129,8 @@ public class TileSpawner : MonoBehaviour
         {
             genNextTile();
         }
-        //spawn indicators
-        spawnIndicators(new Vector3(0, 0, (currentBeat-1) * levelManager.distancePerBeat));
+        //spawn indicators or dont
+        //spawnIndicators(new Vector3(0, 0, (currentBeat-1) * levelManager.distancePerBeat));
     }
     void genNextTile()
     {

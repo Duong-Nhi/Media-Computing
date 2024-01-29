@@ -12,7 +12,8 @@ public class AudioManager : MonoBehaviour
     public float bpm;           //think if i can replace with a scriptable object to store the data... but singleton is fine for audio manager
     public float nBeats;    //Maybe removed, not used yet
 
-
+    public float effectsVolume = 1f;
+    public float songVolume = 1f;
 
     // Struct for storing timeline information (using FMOD Callbacks)
     [StructLayout(LayoutKind.Sequential)] 
@@ -67,6 +68,7 @@ public class AudioManager : MonoBehaviour
         timelineInfo = new TimelineInfo();
         beatCallback = new EVENT_CALLBACK(BeatEventCallback);
         playingSongEventInstance = CreateInstance(FMODEvents.instance.playingSong);
+    
 
         // Beat and Marker Callbacks
         // pin in memory to prevent it from being garbage collected (actually needed in our case? - We should have a reference to that object in unity while native code (FMOD) accesses the object)
@@ -108,6 +110,7 @@ public class AudioManager : MonoBehaviour
         playingSongEventInstance.getParameterByName("nBeats", out nBeats);*/
 
         // start song
+        playingSongEventInstance.setVolume(songVolume);
         playingSongEventInstance.start();
     }
 
@@ -175,27 +178,108 @@ public class AudioManager : MonoBehaviour
 
     public void playBreakingGlass(Vector3 worldPos)
     {
-        RuntimeManager.PlayOneShot(FMODEvents.instance.glassBreak, worldPos);
+        EventInstance eventInstance = CreateInstance(FMODEvents.instance.glassBreak);
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        eventInstance.getPlaybackState(out playbackState);
+        if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
+            attributes.position = FMODUnity.RuntimeUtils.ToFMODVector(worldPos); // Set your desired position here
+            attributes.velocity = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.zero); // Set your desired velocity here
+            attributes.forward = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.forward); // Set your desired forward vector here
+            attributes.up = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.up); // Set your desired up vector here
+            eventInstance.set3DAttributes(attributes);
+        }
+
+
+        eventInstance.setVolume(effectsVolume*4f);
+        eventInstance.start();
+        //RuntimeManager.PlayOneShot(FMODEvents.instance.glassBreak, worldPos);
     }
 
     public void playTreeRattle(Vector3 worldPos)
     {
-        RuntimeManager.PlayOneShot(FMODEvents.instance.treeRattle, worldPos);
+        EventInstance eventInstance = CreateInstance(FMODEvents.instance.treeRattle);
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        eventInstance.getPlaybackState(out playbackState);
+        if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
+            attributes.position = FMODUnity.RuntimeUtils.ToFMODVector(worldPos); // Set your desired position here
+            attributes.velocity = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.zero); // Set your desired velocity here
+            attributes.forward = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.forward); // Set your desired forward vector here
+            attributes.up = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.up); // Set your desired up vector here
+            eventInstance.set3DAttributes(attributes);
+        }
+
+
+        eventInstance.setVolume(effectsVolume*1f);
+        eventInstance.start();
+        //RuntimeManager.PlayOneShot(FMODEvents.instance.treeRattle, worldPos);
     }
 
     public void playCarCrash(Vector3 worldPos)
     {
-        RuntimeManager.PlayOneShot(FMODEvents.instance.carCrash, worldPos);
+        EventInstance eventInstance = CreateInstance(FMODEvents.instance.carCrash);
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        eventInstance.getPlaybackState(out playbackState);
+        if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
+            attributes.position = FMODUnity.RuntimeUtils.ToFMODVector(worldPos); // Set your desired position here
+            attributes.velocity = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.zero); // Set your desired velocity here
+            attributes.forward = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.forward); // Set your desired forward vector here
+            attributes.up = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.up); // Set your desired up vector here
+            eventInstance.set3DAttributes(attributes);
+        }
+
+
+        eventInstance.setVolume(effectsVolume*2f);
+        eventInstance.start();
+        //RuntimeManager.PlayOneShot(FMODEvents.instance.carCrash, worldPos);
     }
 
     public void playHit(Vector3 worldPos)
     {
-        RuntimeManager.PlayOneShot(FMODEvents.instance.hit, worldPos);
+        EventInstance eventInstance = CreateInstance(FMODEvents.instance.hit);
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        eventInstance.getPlaybackState(out playbackState);
+        if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
+            attributes.position = FMODUnity.RuntimeUtils.ToFMODVector(worldPos); // Set your desired position here
+            attributes.velocity = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.zero); // Set your desired velocity here
+            attributes.forward = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.forward); // Set your desired forward vector here
+            attributes.up = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.up); // Set your desired up vector here
+            eventInstance.set3DAttributes(attributes);
+        }
+
+
+        eventInstance.setVolume(effectsVolume*4f);
+        eventInstance.start();
+        //RuntimeManager.PlayOneShot(FMODEvents.instance.hit, worldPos);
     }
 
     public void playStar(Vector3 worldPos)
     {
-        RuntimeManager.PlayOneShot(FMODEvents.instance.starCollect, worldPos);
+        EventInstance eventInstance = CreateInstance(FMODEvents.instance.starCollect);
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        eventInstance.getPlaybackState(out playbackState);
+        if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
+            attributes.position = FMODUnity.RuntimeUtils.ToFMODVector(worldPos); // Set your desired position here
+            attributes.velocity = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.zero); // Set your desired velocity here
+            attributes.forward = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.forward); // Set your desired forward vector here
+            attributes.up = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.up); // Set your desired up vector here
+            eventInstance.set3DAttributes(attributes);
+        }
+
+
+        eventInstance.setVolume(effectsVolume*15f);
+        eventInstance.start();
+        //eventInstance.release();
+        //RuntimeManager.PlayOneShot(FMODEvents.instance.starCollect, worldPos);
     }
 
     // FMOD Callbacks (Source: https://www.fmod.com/docs/2.00/unity/examples-timeline-callbacks.html)

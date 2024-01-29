@@ -106,7 +106,7 @@ public class ProjectileController : MonoBehaviour
             {
                 Debug.Log("NPC collision detected");
                 //Sound Effect
-                audioManager.playHit(Camera.main.transform.position + 0f*(transform.position - Camera.main.transform.position));  //0.5
+                audioManager.playHit(Camera.main.transform.position);  //0.5
                 GameObject hitNPC = collision.gameObject.transform.GetChild(0).gameObject;
                 NPCRandomizer npcRandomizer = hitNPC.GetComponent<NPCRandomizer>();
                 if(npcRandomizer != null)
