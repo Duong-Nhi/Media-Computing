@@ -451,7 +451,6 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
-  - SFX
   - Songs
   BanksToLoad: []
   LiveUpdatePort: 9264
