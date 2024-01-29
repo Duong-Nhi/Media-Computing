@@ -13,12 +13,12 @@ public class PlayerMovement : MonoBehaviour
     private float currentPosition = 0;
     private float correctPosition = 0;
 
+    private float currBeat = 0;
+
     void Awake()
     {
         //Subscribe events
-        AudioManager.beatUpdated += startMoving;
-        //AudioManager.barUpdated += checkSync;
-        AudioManager.beatUpdated += checkSync;
+        AudioManager.beatUpdated += onBeat;
     }
     void Start()
     {
@@ -34,9 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         //Unsubscribe events
-        AudioManager.beatUpdated -= startMoving;
-        //AudioManager.barUpdated -= checkSync;
-        AudioManager.beatUpdated -= checkSync;
+        AudioManager.beatUpdated -= onBeat;
     }
 
      void OnGUI()
@@ -46,12 +44,26 @@ public class PlayerMovement : MonoBehaviour
         //GUILayout.EndArea();
     }
 
+    private void onBeat()
+    {
+        currBeat += 1;
+        //checkSync()  Not needed anymore. We are very accurate
+        if (currBeat == 1) {
+            startMoving();
+        }
+        if (currBeat >= audioManager.nBeats-1)
+        {
+            speed = 0;
+        }
+        else{
+            Debug.Log("currentBeat="+currBeat+", still less than " + audioManager.nBeats);
+        }
+
+    }
+
     private void startMoving()
     {
-        if (speed == 0)
-        {
-            speed = ((audioManager.bpm * levelManager.distancePerBeat)/60);
-        }
+        speed = ((audioManager.bpm * levelManager.distancePerBeat)/60);
     }
 
     // For debug purposes

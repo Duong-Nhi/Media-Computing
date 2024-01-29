@@ -11,6 +11,15 @@ public class FMODEvents : MonoBehaviour
     [field: Header("GlassBreak Sound")]
     [field: SerializeField] public EventReference glassBreak { get; private set; }
 
+    [field: Header("TreeRattle Sound")]
+    [field: SerializeField] public EventReference treeRattle { get; private set; }
+
+    [field: Header("CarCrash Sound")]
+    [field: SerializeField] public EventReference carCrash { get; private set; }
+
+    [field: Header("Hit Sound")]
+    [field: SerializeField] public EventReference hit { get; private set; }
+
     // Singleton pattern
     public static FMODEvents instance { get; private set; }
 

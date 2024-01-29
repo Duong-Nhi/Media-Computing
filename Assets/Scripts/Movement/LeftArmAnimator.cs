@@ -23,10 +23,13 @@ public class LeftArmAnimator : MonoBehaviour
         //Subscribe events
         //AudioManager.beatUpdated += onBeat;
         RateUserInput.taskStartLetterLeft += onTaskStartLetterLeft;
-
         RateUserInput.taskStartPackageLeft += onTaskStartPackageLeft;
+
+
         RateUserInput.taskDoneLeft += onTaskDoneLeft;
         RateUserInput.taskNextLeft += onTaskNextLeft;
+        RateUserInput.taskThrowLeft += onTaskThrowLeft;
+
 
         RateUserInput.autoAttackLeftLetter += onAutoAttackLeftLetter;
         RateUserInput.autoAttackLeftPackage += onAutoAttackLeftPackage;
@@ -82,6 +85,23 @@ public class LeftArmAnimator : MonoBehaviour
         else{
             if(taskId == 2){
                 spriteRenderer.sprite = packageArmSprites[Mathf.Min(currentSpriteIdx+1, packageArmSprites.Length-1)];
+                currentSpriteIdx ++;
+            }
+            else
+            {
+                // Add here if new tasks added
+            }
+        }
+    }
+
+    void onTaskThrowLeft(){
+        if(taskId == 1){
+            spriteRenderer.sprite = letterArmSprites[letterArmSprites.Length-1];
+            currentSpriteIdx ++;
+        }
+        else{
+            if(taskId == 2){
+                spriteRenderer.sprite = packageArmSprites[packageArmSprites.Length-1];
                 currentSpriteIdx ++;
             }
             else

@@ -3,14 +3,38 @@ using UnityEngine;
 public class SpriteChangeController : MonoBehaviour
 {
     public Sprite newSprite;  // Reference to the new sprite
-
+    
+    public AudioManager audioManager;
     private Animator animator;
     private int animationCount = 0;
 
+    private int currBeat = 0;
+    /*void Awake()
+    {
+        AudioManager.beatUpdated += onBeat;
+    }*/
     void Start()
     {
         animator = GetComponent<Animator>();
+        //animator.speed = 0f;
     }
+
+
+
+    /*void onBeat()
+    {
+        currBeat += 1;
+        if(currBeat ==1)
+        {
+            animator.Play("Entry");
+            animator.speed = 1f;
+        }
+        if(currBeat >1 && (currBeat-1)%16 == 0)
+        {
+            animator.Play("Entry");
+        }
+        
+    }*/
 
     void Update()
     {

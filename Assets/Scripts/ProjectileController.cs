@@ -34,7 +34,7 @@ public class ProjectileController : MonoBehaviour
                 Debug.Log("BadDeliveryGlass collision detected");
 
                 gameObject.layer = 0;
-                audioManager.playBreakingGlass(Camera.main.transform.position + 0.3f*(transform.position - Camera.main.transform.position));
+                audioManager.playBreakingGlass(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCSad();
                 // Destroy the projectile
@@ -44,6 +44,7 @@ public class ProjectileController : MonoBehaviour
             if (collision.gameObject.CompareTag("BadDeliveryTree"))
             {
                 Debug.Log("BadDeliveryTree collision detected");
+                audioManager.playTreeRattle(Camera.main.transform.position + 0.85f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCSad();
                 // Destroy the projectile
@@ -52,6 +53,7 @@ public class ProjectileController : MonoBehaviour
             if (collision.gameObject.CompareTag("BadDeliveryCar"))
             {
                 Debug.Log("BadDeliveryCar collision detected");
+                audioManager.playCarCrash(Camera.main.transform.position + 0.75f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCSad();
                 // Destroy the projectile
@@ -60,6 +62,7 @@ public class ProjectileController : MonoBehaviour
             if (collision.gameObject.CompareTag("BadDeliveryNPC"))
             {
                 Debug.Log("BadDeliveryNPC collision detected");
+                audioManager.playHit(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCDizzy();
                 // Destroy the projectile
@@ -70,13 +73,46 @@ public class ProjectileController : MonoBehaviour
         else
         {
             //Here consider the cases where the projectile is thrown by an autoattack
-
             if (collision.gameObject.CompareTag("Glass"))
             {
                 Debug.Log("Glass collision detected");
                 //Sound Effect
                 audioManager.playBreakingGlass(transform.position);
 
+                // Destroy the projectile
+                Destroy(gameObject);
+            }
+
+            if (collision.gameObject.CompareTag("Car"))
+            {
+                Debug.Log("Car collision detected");
+                //Sound Effect
+                audioManager.playCarCrash(transform.position);
+
+                // Destroy the projectile
+                Destroy(gameObject);
+            }
+            if (collision.gameObject.CompareTag("Tree"))
+            {
+                Debug.Log("Tree collision detected");
+                //Sound Effect
+                audioManager.playTreeRattle(transform.position);
+
+                // Destroy the projectile
+                Destroy(gameObject);
+            }
+
+            if (collision.gameObject.CompareTag("NPC"))
+            {
+                Debug.Log("Tree collision detected");
+                //Sound Effect
+                audioManager.playHit(transform.position);
+                GameObject hitNPC = collision.gameObject.transform.GetChild(0).gameObject;
+                NPCRandomizer npcRandomizer = hitNPC.GetComponent<NPCRandomizer>();
+                if(npcRandomizer != null)
+                {
+                    npcRandomizer.makeDizzy();
+                }
                 // Destroy the projectile
                 Destroy(gameObject);
             }

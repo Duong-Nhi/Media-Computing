@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileSpawner : MonoBehaviour
 {
+    public AudioManager audioManager;
     public LevelManager levelManager;
     public GameObject[] tileHouses;
 
@@ -14,8 +15,10 @@ public class TileSpawner : MonoBehaviour
 
     public GameObject road;
     public GameObject roadFlipped;
+    public GameObject finishRoad;
     public GameObject LetterObject;
     public GameObject PackageObject;
+
 
     public Transform parentObject;
     private System.Random randomGen = new System.Random();
@@ -102,9 +105,6 @@ public class TileSpawner : MonoBehaviour
             //spawn house right
 
         }
-        
-        
-
     }
 
     // Update is called once per frame
@@ -190,8 +190,29 @@ public class TileSpawner : MonoBehaviour
         }
         else
         {
-            //spawn road
-            spawnGameObject(road, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));   
+            
+            
+            //Check if finish beat is on the next 4 beats
+            /*bool finish = false;
+            for(int i=0; i<levelManager.beatsPerTile; i++)
+            {
+                if (levelManager.levelSequence[currentBeat-1+i].Item1 == 4 && levelManager.levelSequence[currentBeat-1+i].Item2 == 4)
+                {
+                    finish = true;
+                    break;
+                }
+            }*/
+
+            if(currentBeat >= audioManager.nBeats-12 && currentBeat < audioManager.nBeats-8)
+            {
+                //spawn finishline
+                spawnGameObject(finishRoad, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));
+            }
+            else
+            {
+                //spawn road
+                spawnGameObject(road, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));
+            }
 
             // for left and right: choose random tile with distance > min distance
             bool sceneryLeft = true;

@@ -59,6 +59,12 @@ public class RateUserInput : MonoBehaviour
     public delegate void TaskNextRightEventDelegate();
     public static event TaskNextRightEventDelegate taskNextRight;
 
+    public delegate void TaskThrowLeftEventDelegate();
+    public static event TaskThrowLeftEventDelegate taskThrowLeft;
+
+    public delegate void TaskThrowRightEventDelegate();
+    public static event TaskThrowRightEventDelegate taskThrowRight;
+
     public delegate void DropPackageLeftEventDelegate();
     public static event DropPackageLeftEventDelegate dropPackageLeft;
 
@@ -300,7 +306,7 @@ public class RateUserInput : MonoBehaviour
             if(hitIndex <= -1 )
             {
                 //Treat as a bad attempt to hit first index
-                if(task.scores[0] == 0)
+                /*if(task.scores[0] == 0)
                 {
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
                     task.scores[0] = rating;
@@ -315,7 +321,7 @@ public class RateUserInput : MonoBehaviour
 
                     animation = true;
                     completed = true;
-                }
+                }*/
                 
             }
             else if (hitIndex >= task.totalHits-1) {
@@ -380,9 +386,9 @@ public class RateUserInput : MonoBehaviour
                 //currentLeftTask = null;
                 currentScore += score;
                 //EVENT: TASK DONE LEFT -> LeftArm: Back to idle position left
-                if(animation && taskDoneLeft != null)
+                if(animation && taskThrowLeft != null)
                 {
-                    taskNextLeft();
+                    taskThrowLeft();
                 }
                 currentLeftTask.finished = true;
 
@@ -431,9 +437,9 @@ public class RateUserInput : MonoBehaviour
                 //currentRightTask = null;
                 currentScore += score;
 
-                if(animation && taskDoneRight!= null)
+                if(animation && taskThrowRight!= null)
                 {
-                    taskNextRight();
+                    taskThrowRight();
                 }
                 currentRightTask.finished = true;
 
@@ -480,9 +486,9 @@ public class RateUserInput : MonoBehaviour
                 //currentLeftTask = null;
                 currentScore += score;
 
-                if(animation && taskDoneLeft != null)
+                if(animation && taskThrowLeft != null)
                 {
-                    taskNextLeft();
+                    taskThrowLeft();
                 }
                 currentLeftTask.finished = true;
                 //Deliver events
@@ -528,9 +534,9 @@ public class RateUserInput : MonoBehaviour
             {
                 //currentRightTask = null;
                 currentScore += score;
-                if(animation && taskDoneRight!= null)
+                if(animation && taskThrowRight!= null)
                 {
-                    taskNextRight();
+                    taskThrowRight();
                 }
                 currentRightTask.finished = true;
                 //Deliver events
