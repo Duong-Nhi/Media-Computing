@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class NPCRandomizer : MonoBehaviour
 {
-    public Transform player;
     public Sprite[] idleSprites;
     public Sprite[] happySprites;
     public Sprite[] sadSprites;
     public Sprite[] dizzySprites;
 
     public float percentSpawn = 1f;
-
-    public float renderDistance = 100f;
 
     private System.Random randomGen = new System.Random();
     private int characterIndex = 0;
@@ -38,17 +35,7 @@ public class NPCRandomizer : MonoBehaviour
 
     void Update()
     {
-        // Check the distance between the player and NPC
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= renderDistance)
-        {
-            GetComponent<SpriteRenderer>().enabled = true;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().enabled = false;
-        }
     }
 
     public void makeHappy()

@@ -27,6 +27,8 @@ public class TileSpawner : MonoBehaviour
 
     private List<GameObject> tileObjPerBeatRight = new List<GameObject>();
 
+    private int starsSpawned = 0;
+
 
     // Minimum distances between special tiles
     public int[] minSpecialDistances = new int[] {
@@ -214,31 +216,63 @@ public class TileSpawner : MonoBehaviour
                 spawnGameObject(road, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));
             }
 
-            // for left and right: choose random tile with distance > min distance
+            
+            // Check if house or scenery is spawned for left and right
             bool sceneryLeft = true;
             bool houseLeft = false;
             bool sceneryRight = true;
+
+            bool starLeft = false;
+            bool starRight = false;
+
             for(int i=0; i<levelManager.beatsPerTile; i++)
             {
-                if (levelManager.levelSequence[currentBeat-1+i].Item1 != 0)
+                if (levelManager.levelSequence[currentBeat-1+i].Item1 != 0 )
                 {
-                    sceneryLeft = false;
-                    houseLeft = true;
-                    break;
+                    if(levelManager.levelSequence[currentBeat-1+i].Item1 == 5)
+                    {
+                        starLeft = true;
+                    }
+                    else{
+                        sceneryLeft = false;
+                        houseLeft = true;
+                        break;
+                    }
+                }
+                if(levelManager.levelSequence[currentBeat-1+i].Item1 == 5)
+                {
+                    starLeft = true;
                 }
             }
             for(int i=0; i<levelManager.beatsPerTile; i++)
             {
-                if (levelManager.levelSequence[currentBeat-1+i].Item2 != 0)
+                if (levelManager.levelSequence[currentBeat-1+i].Item2 != 0 )
                 {
-                    sceneryRight = false;
-                    break;
+                    if(levelManager.levelSequence[currentBeat-1+i].Item2 == 5)
+                    {
+                        starRight = true;
+                    }
+                    else{
+                        sceneryRight = false;
+                        break;
+                    }
                 }
             }
 
+            // Spawn tiles depending on results
+            GameObject spawnedLeft = null;
+            GameObject spawnedRight = null;
+
             if (sceneryLeft)
             {
-                GameObject spawnedLeft = spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), true);
+                if(starLeft && (float)randomGen.NextDouble() < 0.5f)
+                {
+                    spawnedLeft = spawnGameObject(tileHouses[randomGen.Next(0, tileScenery.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), true);
+                }
+                else {
+                    spawnedLeft = spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), true);
+                }
+                
                 spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(-35F, -1F, tileBeatOffset * levelManager.distancePerBeat), true);
                 spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(-52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat), true);
 
@@ -246,10 +280,9 @@ public class TileSpawner : MonoBehaviour
                 {
                     tileObjPerBeatLeft.Add(spawnedLeft);
                 }
-
             }
             else{
-                GameObject spawnedLeft = spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), houseLeft);
+                spawnedLeft = spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), houseLeft);
                 spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-35F, -1F, tileBeatOffset * levelManager.distancePerBeat));
                 spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat));
 
@@ -260,7 +293,14 @@ public class TileSpawner : MonoBehaviour
             }
             if (sceneryRight)
             {
-                GameObject spawnedRight = spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
+                if(starLeft && (float)randomGen.NextDouble() < 0.5f)
+                {
+                    spawnedRight = spawnGameObject(tileHouses[randomGen.Next(0, tileScenery.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
+                }
+                else
+                {
+                    spawnedRight = spawnGameObject(tileScenery[randomGen.Next(0, tileScenery.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
+                }
                 spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(35F, -1F, tileBeatOffset * levelManager.distancePerBeat));
                 spawnGameObject(tileScenery2[randomGen.Next(0, tileScenery2.Length)], new Vector3(52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat));
 
@@ -270,7 +310,7 @@ public class TileSpawner : MonoBehaviour
                 }
             }
             else{
-                GameObject spawnedRight = spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
+                spawnedRight = spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat));
                 spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(35F, -1F, tileBeatOffset * levelManager.distancePerBeat));
                 spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(52.5F, -1F, tileBeatOffset * levelManager.distancePerBeat));
 
@@ -280,7 +320,27 @@ public class TileSpawner : MonoBehaviour
                 }
             }
 
+            if(starRight && starsSpawned<3)
+            {
+                GameObject star = spawnedRight.transform.Find("StarSpawn").gameObject;
+                StarSpawn starSpawnScript = star.GetComponent<StarSpawn>();
+                if (starSpawnScript != null)
+                {
+                    starSpawnScript.spawnStar(starsSpawned);
+                }
+                starsSpawned += 1;
+            }
 
+            if(starLeft && starsSpawned<3)
+            {
+                GameObject star = spawnedLeft.transform.Find("StarSpawn").gameObject;
+                StarSpawn starSpawnScript = star.GetComponent<StarSpawn>();
+                if (starSpawnScript != null)
+                {
+                    starSpawnScript.spawnStar(starsSpawned);
+                }
+                starsSpawned += 1;
+            }
         }
     }
 

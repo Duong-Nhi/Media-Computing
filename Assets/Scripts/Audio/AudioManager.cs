@@ -193,6 +193,11 @@ public class AudioManager : MonoBehaviour
         RuntimeManager.PlayOneShot(FMODEvents.instance.hit, worldPos);
     }
 
+    public void playStar(Vector3 worldPos)
+    {
+        RuntimeManager.PlayOneShot(FMODEvents.instance.starCollect, worldPos);
+    }
+
     // FMOD Callbacks (Source: https://www.fmod.com/docs/2.00/unity/examples-timeline-callbacks.html)
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
     static FMOD.RESULT BeatEventCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)

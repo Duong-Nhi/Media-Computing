@@ -104,9 +104,9 @@ public class ProjectileController : MonoBehaviour
 
             if (collision.gameObject.CompareTag("NPC"))
             {
-                Debug.Log("Tree collision detected");
+                Debug.Log("NPC collision detected");
                 //Sound Effect
-                audioManager.playHit(transform.position);
+                audioManager.playHit(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
                 GameObject hitNPC = collision.gameObject.transform.GetChild(0).gameObject;
                 NPCRandomizer npcRandomizer = hitNPC.GetComponent<NPCRandomizer>();
                 if(npcRandomizer != null)
@@ -117,7 +117,28 @@ public class ProjectileController : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            // Cars? NPC's ...
+            if (collision.gameObject.CompareTag("Star"))
+            {
+                Debug.Log("Star collision detected");
+                //Sound Effect
+                GameObject hitStar = collision.gameObject;//.transform.GetChild(0).gameObject;
+                StarController starController = hitStar.GetComponent<StarController>();
+                if(starController != null)
+                {
+                    if(!starController.isCollected()){
+                        starController.makeCollected();
+                        audioManager.playStar(Camera.main.transform.position + 0.2f*(transform.position - Camera.main.transform.position));
+                        Debug.Log("Coin Collected");
+                    }
+                    else
+                    {
+                        // Already collected: play basic hit sound but dont count as a collected star
+                        audioManager.playHit(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
+                    }
+                }
+                // Destroy the projectile
+                Destroy(gameObject);
+            }
         }
         
     }
@@ -137,7 +158,6 @@ public class ProjectileController : MonoBehaviour
                 {
                     npcRandomizer.makeHappy();
                 }
-                Debug.Log("Found object with tag: NPC - Name: " + foundObject.name);
             }
         }
     }
@@ -158,7 +178,6 @@ public class ProjectileController : MonoBehaviour
                 {
                     npcRandomizer.makeSad();
                 }
-                Debug.Log("Found object with tag: NPC - Name: " + foundObject.name);
             }
         }
     }
@@ -178,7 +197,6 @@ public class ProjectileController : MonoBehaviour
                 {
                     npcRandomizer.makeDizzy();
                 }
-                Debug.Log("Found object with tag: NPC - Name: " + foundObject.name);
             }
         }
     }

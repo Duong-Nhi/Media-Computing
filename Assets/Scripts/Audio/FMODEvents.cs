@@ -20,6 +20,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Hit Sound")]
     [field: SerializeField] public EventReference hit { get; private set; }
 
+    [field: Header("StarCollect Sound")]
+    [field: SerializeField] public EventReference starCollect { get; private set; }
+
     // Singleton pattern
     public static FMODEvents instance { get; private set; }
 

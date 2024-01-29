@@ -16,8 +16,12 @@ public class RateUserInput : MonoBehaviour
 
     public Text scoreText;
 
+    public Text starsText;
+
     public string lastFeedback;
     private int currentScore = 0;
+
+    private int currentStars = 0;
 
 
     // Task per side (i.e. 2 for package and 1 for letter) Maybe extebd with different package types (large takes more hits)
@@ -132,7 +136,7 @@ public class RateUserInput : MonoBehaviour
     void Start()
     {
         //scoreText = GetComponent<Text>();
-        scoreText.text = "0 Points";
+        scoreText.text = "0";
         
         currentLeftTask = null;
         currentRightTask = null;
@@ -299,14 +303,14 @@ public class RateUserInput : MonoBehaviour
             // some event ? Incorrect input type, maybe sound or visual error
 
             //extra custom penalty for thowing wrong thing
-            score -= 200; 
+            score -= 1000; 
         }
         else {
             // Only update if that beat not scored already -> First input counts
             if(hitIndex <= -1 )
             {
                 //Treat as a bad attempt to hit first index
-                /*if(task.scores[0] == 0)
+                if(task.scores[0] == 0)
                 {
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
                     task.scores[0] = rating;
@@ -321,7 +325,7 @@ public class RateUserInput : MonoBehaviour
 
                     animation = true;
                     completed = true;
-                }*/
+                }
                 
             }
             else if (hitIndex >= task.totalHits-1) {
@@ -585,6 +589,11 @@ public class RateUserInput : MonoBehaviour
             GUILayout.EndArea();
         }
 
+    public void collectedStart()
+    {
+        currentStars += 1;
+        starsText.text = "Stars: " + currentStars.ToString();
+    }
 /*
     void onMailLeft()
     {

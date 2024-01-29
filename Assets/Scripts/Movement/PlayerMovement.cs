@@ -55,9 +55,6 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = 0;
         }
-        else{
-            Debug.Log("currentBeat="+currBeat+", still less than " + audioManager.nBeats);
-        }
 
     }
 
