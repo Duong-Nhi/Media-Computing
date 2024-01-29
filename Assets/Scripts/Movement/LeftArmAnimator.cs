@@ -60,7 +60,6 @@ public class LeftArmAnimator : MonoBehaviour
         spriteRenderer.sprite = idleSprite;
 
         //Check if glow enabled
-        Debug.Log(levelManager.glowEnabled);
         if(levelManager.glowEnabled)
         {
             letterArmSprites = letterArmSpritesGlow;

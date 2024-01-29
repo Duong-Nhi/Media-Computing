@@ -22,7 +22,7 @@ public class ProjectileController : MonoBehaviour
             //Here consider projectiles for delivery
             if (collision.gameObject.CompareTag("Delivery"))
             {
-                Debug.Log("Delivery collision detected");
+                //Debug.Log("Delivery collision detected");
                 //Sound Effect?
                 makeSurroundingNPCHappy();
                 // Destroy the projectile
@@ -31,7 +31,7 @@ public class ProjectileController : MonoBehaviour
             //Here consider projectiles for delivery
             if (collision.gameObject.CompareTag("BadDeliveryGlass"))
             {
-                Debug.Log("BadDeliveryGlass collision detected");
+                //Debug.Log("BadDeliveryGlass collision detected");
 
                 gameObject.layer = 0;
                 audioManager.playBreakingGlass(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
@@ -43,7 +43,7 @@ public class ProjectileController : MonoBehaviour
             //Here consider projectiles for delivery
             if (collision.gameObject.CompareTag("BadDeliveryTree"))
             {
-                Debug.Log("BadDeliveryTree collision detected");
+                //Debug.Log("BadDeliveryTree collision detected");
                 audioManager.playTreeRattle(Camera.main.transform.position + 0.85f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCSad();
@@ -52,7 +52,7 @@ public class ProjectileController : MonoBehaviour
             }
             if (collision.gameObject.CompareTag("BadDeliveryCar"))
             {
-                Debug.Log("BadDeliveryCar collision detected");
+                //Debug.Log("BadDeliveryCar collision detected");
                 audioManager.playCarCrash(Camera.main.transform.position + 0.75f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCSad();
@@ -61,7 +61,7 @@ public class ProjectileController : MonoBehaviour
             }
             if (collision.gameObject.CompareTag("BadDeliveryNPC"))
             {
-                Debug.Log("BadDeliveryNPC collision detected");
+                //Debug.Log("BadDeliveryNPC collision detected");
                 audioManager.playHit(Camera.main.transform.position + 0.5f*(transform.position - Camera.main.transform.position));
                 //Sound Effect?
                 makeSurroundingNPCDizzy();
@@ -75,7 +75,7 @@ public class ProjectileController : MonoBehaviour
             //Here consider the cases where the projectile is thrown by an autoattack
             if (collision.gameObject.CompareTag("Glass"))
             {
-                Debug.Log("Glass collision detected");
+                //Debug.Log("Glass collision detected");
                 //Sound Effect
                 audioManager.playBreakingGlass(Camera.main.transform.position);//;transform.position);
 
@@ -85,7 +85,7 @@ public class ProjectileController : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Car"))
             {
-                Debug.Log("Car collision detected");
+                //Debug.Log("Car collision detected");
                 //Sound Effect
                 audioManager.playCarCrash(Camera.main.transform.position);//transform.position);
 
@@ -94,7 +94,7 @@ public class ProjectileController : MonoBehaviour
             }
             if (collision.gameObject.CompareTag("Tree"))
             {
-                Debug.Log("Tree collision detected");
+                //Debug.Log("Tree collision detected");
                 //Sound Effect
                 audioManager.playTreeRattle(Camera.main.transform.position);//transform.position);
 
@@ -104,7 +104,7 @@ public class ProjectileController : MonoBehaviour
 
             if (collision.gameObject.CompareTag("NPC"))
             {
-                Debug.Log("NPC collision detected");
+                //Debug.Log("NPC collision detected");
                 //Sound Effect
                 audioManager.playHit(Camera.main.transform.position);  //0.5
                 GameObject hitNPC = collision.gameObject.transform.GetChild(0).gameObject;
@@ -119,7 +119,7 @@ public class ProjectileController : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Star"))
             {
-                Debug.Log("Star collision detected");
+                //Debug.Log("Star collision detected");
                 //Sound Effect
                 GameObject hitStar = collision.gameObject;//.transform.GetChild(0).gameObject;
                 StarController starController = hitStar.GetComponent<StarController>();

@@ -8,6 +8,12 @@ using UnityEngine.UI;
 public class RateUserInput : MonoBehaviour
 
 {
+
+    public Image feedBackImage;
+
+    public Image starFeedBackImage;
+
+    public Image[] feedBackImages;
     public AudioManager audioManager;
     public LevelManager levelManager;
     public InputManager inputManager;
@@ -18,15 +24,25 @@ public class RateUserInput : MonoBehaviour
 
     public Text starsText;
 
+    public Text comboText;
+
     public Canvas endScreen;
 
+    public int[] multiplicatorThresholds = new int[] {5, 10 , 20, 50};
+    public float[] trophyThresholds = new float[] {0.15f, 0.3f, 0.4f, 0.6f, 0.8f, 0.9f};
+
+    public int throphiesEarned = 0;
     public string lastFeedback;
+
+    public float playerOffset = 20;
     private int currentScore = 0;
-
+    private int maximalPossibleScore = 0;
     private int currentStars = 0;
+    private int currentCombo = 0;
+    private int maxCombo = 0;
 
 
-    // Task per side (i.e. 2 for package and 1 for letter) Maybe extebd with different package types (large takes more hits)
+    // Task per side (i.e. 2 for package and 1 for letter) Maybe extended with different package types (large takes more hits)
     private class Task {
         public int type;
         public int startBeat;
@@ -144,6 +160,12 @@ public class RateUserInput : MonoBehaviour
         currentRightTask = null;
 
         endScreen.enabled = false;
+
+        maximalPossibleScore = calcMaxPossiblePoints();
+        Debug.Log("Maximum Possible Score: "+ maximalPossibleScore.ToString());
+
+        feedBackImage.enabled = false;
+        starFeedBackImage.enabled = false;
     }
 
     // Display the current score every frame -> Maybe instead of every frame, only every user input (only time it changes)
@@ -158,6 +180,7 @@ public class RateUserInput : MonoBehaviour
         currentBeat +=1;
         // On last beat display the endscreen after 1 sec
         if(currentBeat >= audioManager.nBeats-1){
+            throphiesEarned = calcTrophiesEarned();
             displayEndScreen();
         }
 
@@ -312,7 +335,8 @@ public class RateUserInput : MonoBehaviour
             // some event ? Incorrect input type, maybe sound or visual error
 
             //extra custom penalty for thowing wrong thing
-            score -= 1000; 
+            score -= 1000;
+            currentCombo = 0;
         }
         else {
             // Only update if that beat not scored already -> First input counts
@@ -322,12 +346,28 @@ public class RateUserInput : MonoBehaviour
                 if(task.scores[0] == 0)
                 {
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
+                    displayFeedback(feedback);
+                    if(feedback == "Perfect")
+                    {
+                        currentCombo += 1;
+                        Debug.Log("Current Combo: " + currentCombo);
+                    }
+                    else
+                    {
+                        currentCombo = 0;
+                    }
                     task.scores[0] = rating;
                     // do something with feedback? Event? 
 
                     animation = true;
 
                     
+                }
+                else{
+                    // This beat was already hit! So penalty for additional throw
+                    currentCombo = 0;
+                    task.scores[0] = -1000;
+
                 }
                 if (0 == task.totalHits-2){
                     // throw package event as task is already done
@@ -343,11 +383,28 @@ public class RateUserInput : MonoBehaviour
                 if(task.scores[hitIndex-1] == 0)
                 {
                     (string feedback, int rating) = RatingHelper(levelManager.distancePerBeat - distance);
+                    displayFeedback(feedback);
+                    if(feedback == "Perfect")
+                    {
+                        currentCombo += 1;
+                        Debug.Log("Current Combo: " + currentCombo);
+                    }
+                    else
+                    {
+                        currentCombo = 0;
+                    }
                     task.scores[hitIndex-1] = rating;
                     // do something with feedback? Event? 
                     // throw package event
                     animation = true;
                     completed = true;
+                }
+                else{
+                    // This beat was already hit! So penalty for additional throw
+                    // Can this be even reached? Task should be finished already
+                    currentCombo = 0;
+                    task.scores[hitIndex-1] = -1000;
+
                 }
 
                 
@@ -357,6 +414,16 @@ public class RateUserInput : MonoBehaviour
                 if(task.scores[hitIndex] == 0)
                 {
                     (string feedback, int rating) = RatingHelper(distance);
+                    displayFeedback(feedback);
+                    if(feedback == "Perfect")
+                    {
+                        currentCombo += 1;
+                    }
+                    else
+                    {
+                        currentCombo = 0;
+                    }
+
                     task.scores[hitIndex] = rating;
                     animation = true;
                     // do something with feedback? Event? 
@@ -364,7 +431,8 @@ public class RateUserInput : MonoBehaviour
                 else
                 {
                     // HERE FEEDBACK FOR WRONG INPUT -> EVENT?
-                    task.scores[hitIndex] -= 200;
+                    currentCombo = 0;
+                    task.scores[hitIndex] = -1000;
                 }
 
                 if(hitIndex == task.totalHits-2)
@@ -383,7 +451,28 @@ public class RateUserInput : MonoBehaviour
             {
                 score += task.scores[i];
             }
+            // Apply multiplicator of combo
+            float multiplicator = 1f;
+            for(int i=0; i< multiplicatorThresholds.Length; i++)
+            {
+                if(currentCombo >= multiplicatorThresholds[i])
+                {
+                    multiplicator += 0.25f;
+                }
+            }
+            score = (int) multiplicator * score;
             
+        }
+        if (currentCombo > 0){
+            comboText.text = "Combo " + currentCombo.ToString() +"x";
+            if(currentCombo > maxCombo)
+            {
+                maxCombo = currentCombo;
+            }
+        }
+        else
+        {
+            comboText.text = "";
         }
         return (completed, score, animation);
     }
@@ -602,73 +691,16 @@ public class RateUserInput : MonoBehaviour
     {
         currentStars += 1;
         starsText.text = "Stars: " + currentStars.ToString();
+
+        starFeedBackImage.enabled = true;
+        Invoke("resetImageStar", 0.5f);
     }
-/*
-    void onMailLeft()
+
+    void resetImageStar()
     {
-        (float distance, int beat) = distanceToClosestBeat();
-        (int task,_) = getTaskFromLevel(beat);
-        if (task == 1){
-            // TODO: do something with feedback. maybe move rate user input somewhere else (input manager) and make events if score changes
-            (string feedback, int score) = RatingHelper(distance); 
-            lastFeedback = feedback;
-        }
-        else
-        {
-            lastFeedback = "Wrong Delivery";
-            currentScore -= 1000;
-        }
-        scoreText.text = currentScore.ToString();
+        starFeedBackImage.enabled = false;
     }
-    void onMailRight()
-    {
-        (float distance, int beat) = distanceToClosestBeat();
-        (_, int task) = getTaskFromLevel(beat);
-        if (task == 1){
-            // TODO: do something with feedback. maybe move rate user input somewhere else (input manager) and make events if score changes
-            (string feedback, int score) = RatingHelper(distance); 
-            lastFeedback = feedback;
-        }
-        else
-        {
-            lastFeedback = "Wrong Delivery";
-            currentScore -= 1000;
-        }
-        scoreText.text = currentScore.ToString();
-        
-    }
-    void onPackageLeft()
-    {
-        (float distance, int beat) = distanceToClosestBeat();
-        (int task,_) = getTaskFromLevel(beat);
-        if (task == 2){
-            // TODO: do something with feedback. maybe move rate user input somewhere else (input manager) and make events if score changes
-            (string feedback, int score) = RatingHelper(distance); 
-            lastFeedback = feedback;
-        }
-        else
-        {
-            lastFeedback = "Wrong Delivery";
-            currentScore -= 1000;
-        }
-        scoreText.text = currentScore.ToString();
-    }
-    void onPackageRight()
-    {
-        (float distance, int beat) = distanceToClosestBeat();
-        (_, int task) = getTaskFromLevel(beat);
-        if (task == 2){
-            // TODO: do something with feedback. maybe move rate user input somewhere else (input manager) and make events if score changes
-            (string feedback, int score) = RatingHelper(distance); 
-            lastFeedback = feedback;
-        }
-        else
-        {
-            lastFeedback = "Wrong Delivery";
-            currentScore -= 1000;
-        }
-        scoreText.text = currentScore.ToString();
-    }*/
+
 
     // Rename? With task i mean the elements of the level i.e. (1,0)
     private (int, int) getTaskFromLevel(int beat)
@@ -703,10 +735,6 @@ public class RateUserInput : MonoBehaviour
         }
 
         return (leftTask, rightTask);
-
-        // -1 because we index beats starting from 1, array from 0
-        //return levelManager.levelSequence[beat-1];
-
     }
 
     // Calculates distance between player and the closest beat
@@ -719,7 +747,7 @@ public class RateUserInput : MonoBehaviour
         float lastBeatPos = (audioManager.timelineInfo.elapsedBeats-1) * levelManager.distancePerBeat;
         float nextBeatPos = (audioManager.timelineInfo.elapsedBeats) * levelManager.distancePerBeat;
 
-        float playerPosition = player.transform.position.z;
+        float playerPosition = player.transform.position.z - playerOffset;
 
         // minimum distance from player to next or latest beat
         if (nextBeatPos - playerPosition < playerPosition - lastBeatPos)
@@ -737,43 +765,35 @@ public class RateUserInput : MonoBehaviour
     }
     
 
-    private (string, int) RatingHelper(double distance) 
+    private (string, int) RatingHelper(double pDistance) 
     {   
         //Normalize distance
-        distance = distance/levelManager.distancePerBeat;
+        float distance = Mathf.Abs((float) pDistance)/(float) levelManager.distancePerBeat;
+
+        //Debug.Log("Distance to closest beat: " + Mathf.Abs((float) pDistance).ToString() + "; Normalized: " + distance.ToString());
         string feedback;
         int score;
         switch (distance) 
         {
-            case <= 0.1:
+            case <= 0.1f:
                 //Add bonuspoints for streaks?
                 feedback = "Perfect";
                 score = 1000;
                 //currentScore += 1000;
                 break;
-            case <= 0.2:
-                feedback = "Great";
-                score = 800;
-                //currentScore += 800;
-                break;
-            case <= 0.25:
+            case <= 0.15f:
                 feedback = "Good";
                 score = 500;
+                //currentScore += 800;
+                break;
+            case <= 0.3f:
+                feedback = "Okay";
+                score = 250;
                 //currentScore += 500;
                 break;
-            case <= 0.3:
-                feedback = "OK";
-                score = 0;
-                //currentScore += 0;
-                break;
-            case <= 0.4:
-                feedback = "Bad";
-                score = -250;
-                //currentScore -= 500;
-                break;
             default:
-                feedback = "You big Noob";
-                score = -500;
+                feedback = "Miss";
+                score = -1000;
                 //currentScore -= 1000;
                 break;
         }
@@ -781,14 +801,110 @@ public class RateUserInput : MonoBehaviour
         return (feedback, score);
     }
 
+    private int calcTrophiesEarned()
+    {
+        int trophies = 0;
+        for(int i=0; i<trophyThresholds.Length; i++)
+        {
+            if((float) currentScore/ (float) maximalPossibleScore > trophyThresholds[i])
+            {
+                trophies += 1;
+            }
+        }
+        return trophies;
+    }
+
     void displayEndScreen()
     {
         Text endText = endScreen.gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
         if (endText != null)
         {
-            endText.text = "Finished!\n\nScore: "+ currentScore.ToString()+ "\nStars: " + currentStars.ToString();
+            endText.text = "Finished!\n\nScore: "+ currentScore.ToString()+ "\nStars: " + currentStars.ToString() + "\nMax Combo: " + maxCombo.ToString() + "\n Trophies: " + throphiesEarned;
         }
         endScreen.enabled = true;
+    }
+
+    private int calcMaxPossiblePoints(){
+        int maxPoints = 0;
+        int maxPossibleCombo = 0;
+        for(int i=0; i<audioManager.nBeats; i++){
+            (int taskLeftId, int taskRightId) = levelManager.levelSequence[i];
+
+            if (taskLeftId == 1)
+            {
+                maxPossibleCombo += 1;
+            }
+            if (taskLeftId == 2)
+            {
+                maxPossibleCombo += 3;
+            }
+            if (taskRightId == 1)
+            {
+                maxPossibleCombo += 1;
+            }
+            if (taskRightId == 2)
+            {
+                maxPossibleCombo += 3;
+            }
+
+            // Apply multiplicator of combo
+            float multiplicator = 1f;
+            for(int j=0; j< multiplicatorThresholds.Length; j++)
+            {
+                if(maxPossibleCombo >= multiplicatorThresholds[j])
+                {
+                    multiplicator += 0.25f;
+                }
+            }
+
+            if (taskLeftId == 1)
+            {
+                maxPoints += (int) (1000f * multiplicator);
+            }
+            if (taskLeftId == 2)
+            {
+                maxPoints += (int) (3000f * multiplicator);
+            }
+            if (taskRightId == 1)
+            {
+                maxPoints += (int) (1000f * multiplicator);
+            }
+            if (taskRightId == 2)
+            {
+                maxPoints += (int) (3000f * multiplicator);
+            }
+        }
+        return maxPoints;
+    }
+
+    void displayFeedback(string feedback)
+    {
+        feedBackImage.enabled = true;
+        switch (feedback)
+        {
+            case "Perfect":
+                feedBackImage.sprite = feedBackImages[0].sprite;
+                break;
+            case "Good":
+                feedBackImage.sprite = feedBackImages[1].sprite;
+                break;
+            case "Okay":
+                feedBackImage.sprite = feedBackImages[2].sprite;
+                break;
+            case "Miss":
+                feedBackImage.sprite = feedBackImages[3].sprite;
+                break;
+            default:
+                feedBackImage.sprite = feedBackImages[3].sprite;
+                Debug.Log("Unknow Feedback to be displayed");
+                break;
+        }
+        Invoke("resetImage", 0.5f);
+    }
+
+    void resetImage()
+    {
+        feedBackImage.enabled = false;
     }
 
 }
