@@ -582153,7 +582153,7 @@ MonoBehaviour:
   bpm: 0
   nBeats: 0
   effectsVolume: 0.1
-  songVolume: 0.1
+  songVolume: 0.5
 --- !u!4 &1716581795
 Transform:
   m_ObjectHideFlags: 0

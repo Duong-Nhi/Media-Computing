@@ -54,6 +54,10 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        effectsVolume = PlayerPrefs.GetFloat("EffectsVolume", 1f);
+        songVolume = PlayerPrefs.GetFloat("SoundVolume", 1f);
+        Debug.Log("Effects Volume: " + effectsVolume);
+        Debug.Log("Sound Volume: " + songVolume);
         // Make sure only one instance exists
         if (instance != null && instance != this)
         {

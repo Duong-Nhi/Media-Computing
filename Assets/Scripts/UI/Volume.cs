@@ -1,39 +1,26 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class VolumeController : MonoBehaviour
+public class Volume : MonoBehaviour
 {
-    [SerializeField] Slider volSlider;
+    [SerializeField] Slider effectsVolumeSlider;
+    [SerializeField] Slider soundVolumeSlider;
 
     void Start()
     {
-        if (!PlayerPrefs.HasKey("Volume"))
-        {
-            PlayerPrefs.SetFloat("Volume", 1);
-            Load();
-        }
-        else
-        {
-            Load();
-        }
+        effectsVolumeSlider.value = PlayerPrefs.GetFloat("EffectsVolume", 1f);
+        soundVolumeSlider.value = PlayerPrefs.GetFloat("SoundVolume", 1f);
     }
 
-    private void Load()
+    public void OnEffectsVolumeChanged()
     {
-        volSlider.value = PlayerPrefs.GetFloat("Volume");
+        AudioListener.volume = effectsVolumeSlider.value;
+        PlayerPrefs.SetFloat("EffectsVolume", effectsVolumeSlider.value);
     }
 
-    private void Save()
+    public void OnSoundVolumeChanged()
     {
-        PlayerPrefs.SetFloat("Volume", volSlider.value);
-    }
-
-    public void SetVolume(float volume)
-    {
-        AudioListener.volume = volume;
-        Save();
+        AudioListener.volume = soundVolumeSlider.value;
+        PlayerPrefs.SetFloat("SoundVolume", soundVolumeSlider.value);
     }
 }
