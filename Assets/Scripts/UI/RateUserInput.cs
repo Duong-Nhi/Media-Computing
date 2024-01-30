@@ -186,9 +186,14 @@ public class RateUserInput : MonoBehaviour
     void onBeat()
     {
         currentBeat +=1;
+        int newThrophiesEarned = calcTrophiesEarned();
+        if (newThrophiesEarned > throphiesEarned)
+        {
+            // Play Sound Effect?
+        }
         // On last beat display the endscreen after 1 sec
         if(currentBeat >= audioManager.nBeats-1){
-            throphiesEarned = calcTrophiesEarned();
+            //throphiesEarned = calcTrophiesEarned();
             displayEndScreen();
         }
 
@@ -872,11 +877,11 @@ public class RateUserInput : MonoBehaviour
             {
                 trophies += 1;
 
-                if(throphiesEarned > 3){
-                    trophyImages[throphiesEarned-4].sprite = trophySprites[1];
+                if(trophies > 3){
+                    trophyImages[trophies-4].sprite = trophySprites[1];
 
                 }else{
-                    trophyImages[throphiesEarned-1].sprite = trophySprites[0];
+                    trophyImages[trophies-1].sprite = trophySprites[0];
                 }
 
 

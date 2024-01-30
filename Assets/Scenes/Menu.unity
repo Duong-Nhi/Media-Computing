@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectsVolumeSlider: {fileID: 2003628674}
   soundVolumeSlider: {fileID: 2106092314}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 2042178142}
 --- !u!1 &91809395
 GameObject:
   m_ObjectHideFlags: 0
@@ -7532,8 +7532,8 @@ GameObject:
   - component: {fileID: 2042178138}
   - component: {fileID: 2042178137}
   - component: {fileID: 2042178139}
-  - component: {fileID: 2042178141}
   - component: {fileID: 2042178142}
+  - component: {fileID: 2042178141}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged

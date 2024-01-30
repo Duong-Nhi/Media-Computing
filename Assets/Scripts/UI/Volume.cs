@@ -10,18 +10,19 @@ public class Volume : MonoBehaviour
     void Start()
     {
         // Try to get the AudioSource component
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = gameObject.GetComponent<AudioSource>();
 
         // Check if AudioSource is present
         if (audioSource == null)
         {
+            Debug.Log(audioSource);
             Debug.LogError("AudioSource component not found. Please attach an AudioSource to the same GameObject as the Volume script.");
             return;
         }
 
-        audioSource.volume = PlayerPrefs.GetFloat("SoundVolume", 1f);
-        effectsVolumeSlider.value = PlayerPrefs.GetFloat("EffectsVolume", 1f);
-        soundVolumeSlider.value = PlayerPrefs.GetFloat("SoundVolume", 1f);
+        //audioSource.volume = PlayerPrefs.GetFloat("SoundVolume", 1f);
+        //effectsVolumeSlider.value = PlayerPrefs.GetFloat("EffectsVolume", 1f);
+        //soundVolumeSlider.value = PlayerPrefs.GetFloat("SoundVolume", 1f);
     }
 
     public void OnEffectsVolumeChanged()
