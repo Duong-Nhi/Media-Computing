@@ -32,6 +32,8 @@ public class RateUserInput : MonoBehaviour
     public float[] trophyThresholds = new float[] {0.15f, 0.3f, 0.4f, 0.6f, 0.8f, 0.9f};
 
     public Image[] trophyImages;
+    public Image[] trophyImagesEnd;
+
     public Sprite[] trophySprites;
     public int throphiesEarned = 0;
     public string lastFeedback;
@@ -40,6 +42,7 @@ public class RateUserInput : MonoBehaviour
     private int currentScore = 0;
     private int maximalPossibleScore = 0;
     public Image[] starImages;
+    public Image[] starImagesEnd;
     public Sprite[] starSprites;
     public int currentStars = 0;
     private int currentCombo = 0;
@@ -900,6 +903,13 @@ public class RateUserInput : MonoBehaviour
             endText.text = "Finished!\n\nScore: "+ currentScore.ToString()+ "\nStars: " + currentStars.ToString() + "\nMax Combo: " + maxCombo.ToString() + "\n Trophies: " + throphiesEarned;
         }
         endScreen.enabled = true;
+        
+
+        for(int i = 0; i < 3; i++){
+            starImagesEnd[i].sprite = starImages[i].sprite;
+            trophyImagesEnd[i].sprite = trophyImages[i].sprite;
+
+        }
     }
 
     private int calcMaxPossiblePoints(){
