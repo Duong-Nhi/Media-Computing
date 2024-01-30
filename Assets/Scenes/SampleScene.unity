@@ -1717,10 +1717,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 148cde62335b6654dadbb1c14675d242, type: 3}
   - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
   letterArmSpritesGlow:
-  - {fileID: 21300000, guid: 48547dee1f2adf147be6372b89e2c98b, type: 3}
+  - {fileID: 21300000, guid: 5070585373ee7bb40a96549829ab9ae7, type: 3}
   - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
   packageArmSpritesGlow:
-  - {fileID: 21300000, guid: bf75f04dcb0ba614eb5ee4a7b3935ad0, type: 3}
+  - {fileID: 21300000, guid: f5fd2c36d5de53341aa1d72b0b47a683, type: 3}
   - {fileID: 21300000, guid: f3acfb630a2980641971519a89314127, type: 3}
   - {fileID: 21300000, guid: 148cde62335b6654dadbb1c14675d242, type: 3}
   - {fileID: 21300000, guid: 6e63d998b8ec67646b6555473a1d67b2, type: 3}
@@ -332778,10 +332778,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a9433b6d6bd299f4a8a2660b1594169d, type: 3}
   - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
   letterArmSpritesGlow:
-  - {fileID: 21300000, guid: e6072ee525ac87a4ba227c4277a82977, type: 3}
+  - {fileID: 21300000, guid: bef3a7e0b3811b746a8d93dd281f68b0, type: 3}
   - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
   packageArmSpritesGlow:
-  - {fileID: 21300000, guid: 9985c6b0379097f46ae905f73b3d0109, type: 3}
+  - {fileID: 21300000, guid: a7f76c4e9aa98e742867e1fc3a532409, type: 3}
   - {fileID: 21300000, guid: f83aa234732ee6e4f9bbb30c914a901c, type: 3}
   - {fileID: 21300000, guid: a9433b6d6bd299f4a8a2660b1594169d, type: 3}
   - {fileID: 21300000, guid: 28af5131bac58b04fb282c85934a0f6c, type: 3}
