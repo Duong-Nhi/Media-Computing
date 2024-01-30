@@ -9,9 +9,9 @@ public class LevelComplete : MonoBehaviour
 
     void Awake()
     {
-        PlayerPrefs.GetInt("UnlockedLevels", 1);
+        PlayerPrefs.GetInt("UnlockedLevels");
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         

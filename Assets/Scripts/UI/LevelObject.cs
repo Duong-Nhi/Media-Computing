@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LevelObject : MonoBehaviour
 {
     public Button lvlButton;
+    public int starAmount;
     public Image[] stars;
     public Image[] trophy;
 
