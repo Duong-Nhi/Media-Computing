@@ -35,6 +35,41 @@ public class LevelSelector : MonoBehaviour
         {
             lvlObj[2].stars[i].sprite = starSprites[0];
         }
+
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy"); i++)
+        {
+            if(i > 3){
+            lvlObj[0].trophy[i-4].sprite = starSprites[1];
+
+            }else{
+            lvlObj[0].trophy[i].sprite = starSprites[0];
+            }
+
+        }
+
+
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy1"); i++)
+        {
+            if(i > 3){
+            lvlObj[1].trophy[i-4].sprite = starSprites[1];
+
+            }else{
+            lvlObj[1].trophy[i].sprite = starSprites[0];
+            }
+
+        }
+        
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy2"); i++)
+        {
+            if(i > 3){
+            lvlObj[2].trophy[i-4].sprite = starSprites[1];
+
+            }else{
+            lvlObj[2].trophy[i].sprite = starSprites[0];
+            }
+
+        }
+
     }
 
     public void OnClickLevel(int lvlNum)
