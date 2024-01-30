@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("My speed is " + speed.ToString());
         speed = 0;
-        
+        // Due to issues with FMod
         Invoke("setBeatZero", 0.5f);
     }
 
