@@ -26,6 +26,8 @@ public class RateUserInput : MonoBehaviour
 
     public Text comboText;
 
+    public Text endText;
+
     public Canvas endScreen;
 
     public int[] multiplicatorThresholds = new int[] {5, 10 , 20, 50};
@@ -761,11 +763,13 @@ public class RateUserInput : MonoBehaviour
     public void collectedStart()
     {
         currentStars += 1;
+        currentScore += 10000;
         starImages[currentStars-1].sprite = starSprites[1];
         starsText.text = "Stars: " + currentStars.ToString();
 
         starFeedBackImage.enabled = true;
         Invoke("resetImageStar", 0.5f);
+
     }
 
     void resetImageStar()
@@ -897,10 +901,10 @@ public class RateUserInput : MonoBehaviour
 
     void displayEndScreen()
     {
-        Text endText = endScreen.gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
+        //Text endText = endScreen.gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
         if (endText != null)
         {
-            endText.text = "Finished!\n\nScore: "+ currentScore.ToString()+ "\nStars: " + currentStars.ToString() + "\nMax Combo: " + maxCombo.ToString() + "\n Trophies: " + throphiesEarned;
+            endText.text = "Score: "+ currentScore.ToString();
         }
         endScreen.enabled = true;
         
