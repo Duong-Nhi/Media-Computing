@@ -764,7 +764,9 @@ public class RateUserInput : MonoBehaviour
     {
         currentStars += 1;
         currentScore += 10000;
-        starImages[currentStars-1].sprite = starSprites[1];
+        starImages[currentStars-2].sprite = starSprites[1];
+        PlayerPrefs.SetInt("stars",currentStars);
+
         starsText.text = "Stars: " + currentStars.ToString();
 
         starFeedBackImage.enabled = true;
@@ -885,6 +887,8 @@ public class RateUserInput : MonoBehaviour
             if((float) currentScore/ (float) maximalPossibleScore > trophyThresholds[i])
             {
                 trophies += 1;
+                PlayerPrefs.SetInt("trophies",trophies);
+
 
                 if(trophies > 3){
                     trophyImages[trophies-4].sprite = trophySprites[1];

@@ -7,8 +7,37 @@ using UnityEngine.UI;
 public class LevelSelector : MonoBehaviour
 {
     public LevelObject[] lvlObj;
+    public Sprite[] starSprites;
     public int UnlockedLvl;
     public int currentLevel;
+    int s; 
+
+    void Awake()
+    {
+        s = PlayerPrefs.GetInt("stars", 0);
+    }
+
+    void Start()
+    {
+        // Set UnlockedLvl to 0 so only the first level is initially unlocked
+        UnlockedLvl = 0;
+        UnlockedLvl = PlayerPrefs.GetInt("UnlockedLevels", 0);
+        // Update level buttons based on UnlockedLvl
+        UpdateLevelButtons();
+
+        // Ensure currentLevel is within the bounds of lvlObj array
+        if (currentLevel >= 0 && currentLevel < lvlObj.Length)
+        {
+            // Loop through stars array and set the sprite based on starsEarned
+            for (int i = 0; i < s; i++)
+            {
+                if (i < lvlObj[currentLevel].stars.Length)
+                {
+                    lvlObj[currentLevel].stars[i].sprite = starSprites[0];
+                }
+            }
+        }
+    }
 
     public void OnClickLevel(int lvlNum)
     {
@@ -40,14 +69,5 @@ public class LevelSelector : MonoBehaviour
                 lvlObj[i].lvlButton.interactable = false;
             }
         }
-    }
-
-    void Start()
-    {
-        // Set UnlockedLvl to 0 so only the first level is initially unlocked
-        UnlockedLvl = 0;
-        UnlockedLvl = PlayerPrefs.GetInt("UnlockedLevels",0);
-        // Update level buttons based on UnlockedLvl
-        UpdateLevelButtons();
     }
 }
