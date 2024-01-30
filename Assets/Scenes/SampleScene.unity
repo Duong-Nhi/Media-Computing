@@ -325217,6 +325217,12 @@ MonoBehaviour:
   currentLevel: 1
   playingSongs:
   - Guid:
+      Data1: -204667427
+      Data2: 1197759611
+      Data3: 1216709014
+      Data4: 1143241596
+    Path: event:/Neon Genesis Evangelion - Opening
+  - Guid:
       Data1: -919313101
       Data2: 1265421782
       Data3: 1721214857
@@ -325234,12 +325240,6 @@ MonoBehaviour:
       Data3: 1690489506
       Data4: -14900759
     Path: event:/WildberryLillet
-  - Guid:
-      Data1: -587736542
-      Data2: 1333981063
-      Data3: -1298550398
-      Data4: -753706671
-    Path: event:/Numb
   - Guid:
       Data1: -587736542
       Data2: 1333981063
