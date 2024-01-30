@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour
         // (0,0), (0,0), (0,0), (2, 2), (0,0), (0,0), (0,1), (2, 0), (0,0), (0,0), (1,0), (0, 2), (0,0), (0,0), (0,0), (1, 1),
         // (0,0), (0,0), (0,0), (0, 2), (0,0), (0,1), (0,0), (2, 0), (0,0), (1,0), (0,0), (0, 1), (0,0), (0,0), (0,0), (1, 1),
 
-        levelSequence = levelSequences[Math.Min(PlayerPrefs.GetInt("lvlNum", 0), levelSequences.Count)];
+        levelSequence = levelSequences[Math.Min(PlayerPrefs.GetInt("lvlNum"), levelSequences.Count)];
     }
 
     public int idToHits(int id){

@@ -197,7 +197,7 @@ public class RateUserInput : MonoBehaviour
         feedBackImage.enabled = false;
         starFeedBackImage.enabled = false;
 
-        Invoke("setBeatZero", 0.1f);
+        Invoke("setBeatZero", 0.5f);
     }
 
     void setBeatZero()
