@@ -14,7 +14,7 @@ public class LevelSelector : MonoBehaviour
 
     void Awake()
     {
-        s = PlayerPrefs.GetInt("stars", 0);
+        s = PlayerPrefs.GetInt("stars");
     }
 
     void Start()
@@ -25,17 +25,9 @@ public class LevelSelector : MonoBehaviour
         // Update level buttons based on UnlockedLvl
         UpdateLevelButtons();
 
-        // Ensure currentLevel is within the bounds of lvlObj array
-        if (currentLevel >= 0 && currentLevel < lvlObj.Length)
+        for (int i = 0; i < s; i++)
         {
-            // Loop through stars array and set the sprite based on starsEarned
-            for (int i = 0; i < s; i++)
-            {
-                if (i < lvlObj[currentLevel].stars.Length)
-                {
-                    lvlObj[currentLevel].stars[i].sprite = starSprites[0];
-                }
-            }
+            lvlObj[currentLevel].stars[i].sprite = starSprites[0];
         }
     }
 

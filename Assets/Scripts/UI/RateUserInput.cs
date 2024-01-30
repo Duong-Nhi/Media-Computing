@@ -787,6 +787,10 @@ public class RateUserInput : MonoBehaviour
     public void collectedStart()
     {
         currentStars += 1;
+
+        PlayerPrefs.SetInt("stars", currentStars-1);
+        Debug.Log(PlayerPrefs.GetInt("stars"));
+
         currentScore += 10000;
         starImages[currentStars-2].sprite = starSprites[1];
         PlayerPrefs.SetInt("stars",currentStars);

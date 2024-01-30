@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
     private void onBeat()
     {
         currBeat += 1;
-        Debug.Log("Beat: " + currBeat.ToString());
         //checkSync()  Not needed anymore. We are very accurate
         if (currBeat >= 1 && currBeat< audioManager.nBeats-1) {
             startMoving();
@@ -70,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void startMoving()
     {
-        Debug.Log("Start moving was called");
         speed = ((audioManager.bpm * levelManager.distancePerBeat)/60);
     }
 
