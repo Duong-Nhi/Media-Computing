@@ -20,9 +20,6 @@ public class LevelSelector : MonoBehaviour
         // Update level buttons based on UnlockedLvl
         UpdateLevelButtons();
 
-
-
-
         for (int i = 0; i < PlayerPrefs.GetInt("stars"); i++)
         {
             lvlObj[0].stars[i].sprite = starSprites[0];
@@ -36,13 +33,16 @@ public class LevelSelector : MonoBehaviour
             lvlObj[2].stars[i].sprite = starSprites[0];
         }
 
+      
+
+
         for (int i = 0; i < PlayerPrefs.GetInt("trophy"); i++)
         {
-            if(i > 3){
-            lvlObj[0].trophy[i-4].sprite = starSprites[1];
+            if(i < 3){
+            lvlObj[0].trophy[i].sprite = starSprites[0];
 
             }else{
-            lvlObj[0].trophy[i].sprite = starSprites[0];
+            lvlObj[0].trophy[i-3].sprite = starSprites[1];
             }
 
         }
@@ -50,25 +50,29 @@ public class LevelSelector : MonoBehaviour
 
         for (int i = 0; i < PlayerPrefs.GetInt("trophy1"); i++)
         {
-            if(i > 3){
-            lvlObj[1].trophy[i-4].sprite = starSprites[1];
+            if(i < 3){
+            lvlObj[1].trophy[i].sprite = starSprites[0];
 
             }else{
-            lvlObj[1].trophy[i].sprite = starSprites[0];
+            lvlObj[1].trophy[i-3].sprite = starSprites[1];
             }
 
         }
         
+        
         for (int i = 0; i < PlayerPrefs.GetInt("trophy2"); i++)
         {
-            if(i > 3){
-            lvlObj[2].trophy[i-4].sprite = starSprites[1];
+            if(i < 3){
+            lvlObj[2].trophy[i].sprite = starSprites[0];
 
             }else{
-            lvlObj[2].trophy[i].sprite = starSprites[0];
+            lvlObj[2].trophy[i-3].sprite = starSprites[1];
             }
 
         }
+
+
+
 
     }
 

@@ -925,17 +925,7 @@ public class RateUserInput : MonoBehaviour
             if((float) currentScore/ (float) maximalPossibleScore > trophyThresholds[i])
             {
                 trophies += 1;
-                if(PlayerPrefs.GetInt("lvlNum")==0){
-                    PlayerPrefs.SetInt("trophy", trophies-1);
-                }
-                if(PlayerPrefs.GetInt("lvlNum")==1){
-                    PlayerPrefs.SetInt("trophy1", trophies-1);
-                }
-                if(PlayerPrefs.GetInt("lvlNum")==2){
-                    PlayerPrefs.SetInt("trophy2", trophies-1);
-                }                
-
-
+               
                 if(trophies > 3){
                     trophyImages[trophies-4].sprite = trophySprites[1];
 
@@ -946,6 +936,16 @@ public class RateUserInput : MonoBehaviour
 
             }
         }
+
+        if(PlayerPrefs.GetInt("lvlNum")==0){
+            PlayerPrefs.SetInt("trophy", trophies);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==1){
+            PlayerPrefs.SetInt("trophy1", trophies);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==2){
+            PlayerPrefs.SetInt("trophy2", trophies);
+        } 
         return trophies;
     }
 
