@@ -10,12 +10,7 @@ public class LevelSelector : MonoBehaviour
     public Sprite[] starSprites;
     public int UnlockedLvl;
     public int currentLevel;
-    int s; 
 
-    void Awake()
-    {
-        s = PlayerPrefs.GetInt("stars", 0);
-    }
 
     void Start()
     {
@@ -25,18 +20,60 @@ public class LevelSelector : MonoBehaviour
         // Update level buttons based on UnlockedLvl
         UpdateLevelButtons();
 
-        // Ensure currentLevel is within the bounds of lvlObj array
-        if (currentLevel >= 0 && currentLevel < lvlObj.Length)
+        for (int i = 0; i < PlayerPrefs.GetInt("stars"); i++)
         {
-            // Loop through stars array and set the sprite based on starsEarned
-            for (int i = 0; i < s; i++)
-            {
-                if (i < lvlObj[currentLevel].stars.Length)
-                {
-                    lvlObj[currentLevel].stars[i].sprite = starSprites[0];
-                }
-            }
+            lvlObj[0].stars[i].sprite = starSprites[0];
         }
+        for (int i = 0; i < PlayerPrefs.GetInt("stars1"); i++)
+        {
+            lvlObj[1].stars[i].sprite = starSprites[0];
+        }
+        for (int i = 0; i < PlayerPrefs.GetInt("stars2"); i++)
+        {
+            lvlObj[2].stars[i].sprite = starSprites[0];
+        }
+
+      
+
+
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy"); i++)
+        {
+            if(i < 3){
+            lvlObj[0].trophy[i].sprite = starSprites[0];
+
+            }else{
+            lvlObj[0].trophy[i-3].sprite = starSprites[1];
+            }
+
+        }
+
+
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy1"); i++)
+        {
+            if(i < 3){
+            lvlObj[1].trophy[i].sprite = starSprites[0];
+
+            }else{
+            lvlObj[1].trophy[i-3].sprite = starSprites[1];
+            }
+
+        }
+        
+        
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy2"); i++)
+        {
+            if(i < 3){
+            lvlObj[2].trophy[i].sprite = starSprites[0];
+
+            }else{
+            lvlObj[2].trophy[i-3].sprite = starSprites[1];
+            }
+
+        }
+
+
+
+
     }
 
     public void OnClickLevel(int lvlNum)

@@ -790,6 +790,20 @@ public class RateUserInput : MonoBehaviour
     public void collectedStart()
     {
         currentStars += 1;
+
+
+        if(PlayerPrefs.GetInt("lvlNum")==0){
+            PlayerPrefs.SetInt("stars", currentStars-1);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==1){
+            PlayerPrefs.SetInt("stars1", currentStars-1);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==2){
+            PlayerPrefs.SetInt("stars2", currentStars-1);
+        }
+
+
+
         currentScore += 10000;
         starImages[currentStars-2].sprite = starSprites[1];
         PlayerPrefs.SetInt("stars",currentStars);
@@ -914,9 +928,7 @@ public class RateUserInput : MonoBehaviour
             if((float) currentScore/ (float) maximalPossibleScore > trophyThresholds[i])
             {
                 trophies += 1;
-                PlayerPrefs.SetInt("trophies",trophies);
-
-
+               
                 if(trophies > 3){
                     trophyImages[trophies-4].sprite = trophySprites[1];
 
@@ -927,6 +939,16 @@ public class RateUserInput : MonoBehaviour
 
             }
         }
+
+        if(PlayerPrefs.GetInt("lvlNum")==0){
+            PlayerPrefs.SetInt("trophy", trophies);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==1){
+            PlayerPrefs.SetInt("trophy1", trophies);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==2){
+            PlayerPrefs.SetInt("trophy2", trophies);
+        } 
         return trophies;
     }
 

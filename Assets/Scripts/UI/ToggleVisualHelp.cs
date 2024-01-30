@@ -5,19 +5,15 @@ public class ToggleVisualHelp : MonoBehaviour
 {
     public void OnToggleValueChanged(bool isOn)
     {
-        Debug.Log("GlowEnabled:");
         if (isOn)
         {
-            // Set GlowEnabled to 1 in PlayerPrefs
-            Debug.Log("GlowEnabled: " + PlayerPrefs.GetInt("GlowEnabled"));
             PlayerPrefs.SetInt("GlowEnabled", 1);
+            Debug.Log("GlowEnabled: " + PlayerPrefs.GetInt("GlowEnabled"));
         }
         else
         {
-
-            // Set GlowEnabled to 0 in PlayerPrefs
-            Debug.Log("GlowEnabled: " + PlayerPrefs.GetInt("GlowEnabled"));
             PlayerPrefs.SetInt("GlowEnabled", 0);
+            Debug.Log("GlowEnabled: " + PlayerPrefs.GetInt("GlowEnabled"));
         }
 
         // Save PlayerPrefs immediately to ensure the data is stored
