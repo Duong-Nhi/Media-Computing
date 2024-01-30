@@ -40,7 +40,7 @@ public class LevelSelector : MonoBehaviour
         {
             if(i < 3){
             lvlObj[0].trophy[i].sprite = starSprites[0];
-
+            
             }else{
             lvlObj[0].trophy[i-3].sprite = starSprites[1];
             }

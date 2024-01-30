@@ -218,6 +218,17 @@ public class RateUserInput : MonoBehaviour
         int newThrophiesEarned = calcTrophiesEarned();
         if (newThrophiesEarned > throphiesEarned)
         {
+
+        if(PlayerPrefs.GetInt("lvlNum")==0){
+            PlayerPrefs.SetInt("trophy", Math.Min(newThrophiesEarned, PlayerPrefs.GetInt("trophy")));
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==1){
+            PlayerPrefs.SetInt("trophy1", Math.Min(newThrophiesEarned, PlayerPrefs.GetInt("trophy1")));
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==2){
+            PlayerPrefs.SetInt("trophy2", Math.Min(newThrophiesEarned, PlayerPrefs.GetInt("trophy2")));
+        }
+
             // Play Sound Effect?
             audioManager.playTrophy(Camera.main.transform.position);
             throphiesEarned = newThrophiesEarned;
@@ -936,16 +947,6 @@ public class RateUserInput : MonoBehaviour
 
             }
         }
-
-        if(PlayerPrefs.GetInt("lvlNum")==0){
-            PlayerPrefs.SetInt("trophy", trophies);
-        }
-        if(PlayerPrefs.GetInt("lvlNum")==1){
-            PlayerPrefs.SetInt("trophy1", trophies);
-        }
-        if(PlayerPrefs.GetInt("lvlNum")==2){
-            PlayerPrefs.SetInt("trophy2", trophies);
-        } 
         return trophies;
     }
 
