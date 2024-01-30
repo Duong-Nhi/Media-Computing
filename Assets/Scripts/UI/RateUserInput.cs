@@ -31,7 +31,7 @@ public class RateUserInput : MonoBehaviour
     public Canvas endScreen;
 
     public int[] multiplicatorThresholds = new int[] {5, 10 , 20, 50};
-    public float[] trophyThresholds = new float[] {0.15f, 0.3f, 0.4f, 0.6f, 0.8f, 0.9f};
+    public float[] trophyThresholds = new float[] {0.15f, 0.25f, 0.4f, 0.6f, 0.8f, 0.9f};
 
     public Image[] trophyImages;
     public Image[] trophyImagesEnd;
@@ -197,7 +197,7 @@ public class RateUserInput : MonoBehaviour
         feedBackImage.enabled = false;
         starFeedBackImage.enabled = false;
 
-        Invoke("setBeatZero", 0.5f);
+        Invoke("setBeatZero", 0.1f);
     }
 
     void setBeatZero()
@@ -208,7 +208,10 @@ public class RateUserInput : MonoBehaviour
     // Display the current score every frame -> Maybe instead of every frame, only every user input (only time it changes)
     void Update()
     {
-
+        if (currentScore < 0)
+        {
+            currentScore = 0;
+        }
     }
 
 
@@ -895,7 +898,7 @@ public class RateUserInput : MonoBehaviour
                 break;
             default:
                 feedback = "Miss";
-                score = -1000;
+                score = -500;
                 //currentScore -= 1000;
                 break;
         }
