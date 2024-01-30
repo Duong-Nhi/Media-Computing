@@ -150,19 +150,19 @@ public class RateUserInput : MonoBehaviour
     public delegate void DeliverLetterRightBadEventDelegate();
     public static event DeliverLetterRightBadEventDelegate deliverLetterRightBad;
 
-    private static RateUserInput instance;
-    int currentBeat = 0;
+    //private static RateUserInput instance;
+    int currentBeat = -1;
 
     void Awake()
     {
-        if (instance != null && instance != this)
+        /*if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
             instance = this;
-        }
+        }*/
         //Subscribe events
         InputManager.onMailLeft += onMailLeft;
         InputManager.onMailRight += onMailRight;
@@ -196,6 +196,13 @@ public class RateUserInput : MonoBehaviour
 
         feedBackImage.enabled = false;
         starFeedBackImage.enabled = false;
+
+        Invoke("setBeatZero", 0.5f);
+    }
+
+    void setBeatZero()
+    {
+        currentBeat = 0;
     }
 
     // Display the current score every frame -> Maybe instead of every frame, only every user input (only time it changes)

@@ -152,13 +152,14 @@ public class AudioManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        playingSongEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         CleanUp();
     }
 
-    void OnGUI()
+    /*void OnGUI()
     {
         GUILayout.Box(String.Format("Current Bar = {0}, Current Beat = {1}, Last Marker = {2}", timelineInfo.currentBar, timelineInfo.currentBeat, (string)timelineInfo.currentMarker));
-    }
+    }*/
 
 
     public void playBreakingGlass(Vector3 worldPos)
