@@ -15,7 +15,7 @@ public class LevelSelector : MonoBehaviour
         currentLevel = lvlNum;
         PlayerPrefs.SetInt("lvlNum", lvlNum);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
     }
 
     public void UnlockNextLevel()

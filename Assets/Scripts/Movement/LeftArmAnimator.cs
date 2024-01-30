@@ -49,8 +49,9 @@ public class LeftArmAnimator : MonoBehaviour
     }
     void Start()
     {
+        
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        DontDestroyOnLoad(spriteRenderer);
         // Check if the SpriteRenderer component is found
         if (spriteRenderer == null)
         {

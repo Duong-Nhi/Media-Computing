@@ -24,7 +24,10 @@ public class LevelComplete : MonoBehaviour
             unlockedlvl++;
             PlayerPrefs.SetInt("UnlockedLevels", unlockedlvl);
         }
-        SceneManager.LoadScene("Menu");
+
+
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("SampleScene");
     }
 
     // Update is called once per frame
