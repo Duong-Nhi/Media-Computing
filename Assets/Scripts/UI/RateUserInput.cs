@@ -190,6 +190,8 @@ public class RateUserInput : MonoBehaviour
         if (newThrophiesEarned > throphiesEarned)
         {
             // Play Sound Effect?
+            audioManager.playTrophy(Camera.main.transform.position);
+            throphiesEarned = newThrophiesEarned;
         }
         // On last beat display the endscreen after 1 sec
         if(currentBeat >= audioManager.nBeats-1){

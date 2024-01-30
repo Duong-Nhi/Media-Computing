@@ -23,6 +23,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header("StarCollect Sound")]
     [field: SerializeField] public EventReference starCollect { get; private set; }
 
+    [field: Header("Trophy")]
+    [field: SerializeField] public EventReference trophy { get; private set; }
+
     // Singleton pattern
     public static FMODEvents instance { get; private set; }
     public int currentLevel;

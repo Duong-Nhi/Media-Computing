@@ -131,7 +131,11 @@
 	</object>
 	<object class="MixerBusFader" id="{80df02d7-4072-4b47-8f09-9c8f998830b6}" />
 	<object class="MixerBusFader" id="{f61ebbfb-909c-4b23-8768-202dd1fe2190}" />
-	<object class="SpatialiserEffect" id="{beb15e0c-2137-4c19-9628-ef1a8a6a6951}" />
+	<object class="SpatialiserEffect" id="{beb15e0c-2137-4c19-9628-ef1a8a6a6951}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+	</object>
 	<object class="RandomizerModulator" id="{443162ea-59b2-4faa-8d0d-5f06074dcaa8}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>volume</value>

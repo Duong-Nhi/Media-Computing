@@ -100,6 +100,7 @@
 		<relationship name="effects">
 			<destination>{b5dbea64-0066-485c-b3fa-5c0be7280f7f}</destination>
 			<destination>{50d1b998-7457-4629-807f-e60a39e6b3f3}</destination>
+			<destination>{6e1e570e-7201-445b-a1c6-68b8a3a7705b}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{a6e2a09b-8ddd-4c90-bfc8-da0006f35759}" />
@@ -119,7 +120,22 @@
 	</object>
 	<object class="MixerBusFader" id="{0fdfb147-8591-42cb-95ab-a13ded9a31b0}" />
 	<object class="MixerBusFader" id="{b5dbea64-0066-485c-b3fa-5c0be7280f7f}" />
-	<object class="SpatialiserEffect" id="{50d1b998-7457-4629-807f-e60a39e6b3f3}" />
+	<object class="SpatialiserEffect" id="{50d1b998-7457-4629-807f-e60a39e6b3f3}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{6e1e570e-7201-445b-a1c6-68b8a3a7705b}">
+		<property name="decayTime">
+			<value>4300</value>
+		</property>
+		<property name="lateDelay">
+			<value>71</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>67.5</value>
+		</property>
+	</object>
 	<object class="RandomizerModulator" id="{42773ba7-46df-4aec-8d41-80f1273fa6c4}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>pitch</value>

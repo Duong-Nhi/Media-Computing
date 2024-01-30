@@ -94,26 +94,6 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {   
-
-        /*timelineInfo = new TimelineInfo();
-        beatCallback = new EVENT_CALLBACK(BeatEventCallback);
-        playingSongEventInstance = CreateInstance(FMODEvents.instance.playingSong);
-
-        // Beat and Marker Callbacks
-        // pin in memory to prevent it from being garbage collected (actually needed in our case? - We should have a reference to that object in unity while native code (FMOD) accesses the object)
-        timelineHandle = GCHandle.Alloc(timelineInfo, GCHandleType.Pinned);
-
-        // pass object pointer through userdata of instance
-        playingSongEventInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
-
-        // set callback
-        playingSongEventInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
-
-        
-        // get bpm and start by accessing parameters of the instance
-        playingSongEventInstance.getParameterByName("bpm", out bpm);
-        playingSongEventInstance.getParameterByName("nBeats", out nBeats);*/
-
         // start song
         playingSongEventInstance.setVolume(songVolume);
         playingSongEventInstance.start();
@@ -268,6 +248,28 @@ public class AudioManager : MonoBehaviour
     public void playStar(Vector3 worldPos)
     {
         EventInstance eventInstance = CreateInstance(FMODEvents.instance.starCollect);
+        FMOD.Studio.PLAYBACK_STATE playbackState;
+        eventInstance.getPlaybackState(out playbackState);
+        if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
+            attributes.position = FMODUnity.RuntimeUtils.ToFMODVector(worldPos); // Set your desired position here
+            attributes.velocity = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.zero); // Set your desired velocity here
+            attributes.forward = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.forward); // Set your desired forward vector here
+            attributes.up = FMODUnity.RuntimeUtils.ToFMODVector(Vector3.up); // Set your desired up vector here
+            eventInstance.set3DAttributes(attributes);
+        }
+
+
+        eventInstance.setVolume(effectsVolume*15f);
+        eventInstance.start();
+        //eventInstance.release();
+        //RuntimeManager.PlayOneShot(FMODEvents.instance.starCollect, worldPos);
+    }
+
+    public void playTrophy(Vector3 worldPos)
+    {
+        EventInstance eventInstance = CreateInstance(FMODEvents.instance.trophy);
         FMOD.Studio.PLAYBACK_STATE playbackState;
         eventInstance.getPlaybackState(out playbackState);
         if (playbackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)

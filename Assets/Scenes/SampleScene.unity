@@ -325207,6 +325207,13 @@ MonoBehaviour:
       Data3: 1568690574
       Data4: 1495104374
     Path: event:/Star
+  <trophy>k__BackingField:
+    Guid:
+      Data1: -1410996974
+      Data2: 1087668111
+      Data3: -2104320079
+      Data4: -782836020
+    Path: event:/Trophy
   currentLevel: 1
   playingSongs:
   - Guid:
