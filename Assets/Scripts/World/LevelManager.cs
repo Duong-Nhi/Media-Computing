@@ -17,9 +17,10 @@ public class LevelManager : MonoBehaviour
 
     public bool glowEnabled = false;
 
+
     private void Awake()
     {
-
+        glowEnabled = PlayerPrefs.GetInt("GlowEnabled", 0) == 1;
         //easy
         /*
         levelSequence = new (int,int)[] 

@@ -46,7 +46,7 @@ public class LevelSelector : MonoBehaviour
     {
         // Set UnlockedLvl to 0 so only the first level is initially unlocked
         UnlockedLvl = 0;
-
+        UnlockedLvl = PlayerPrefs.GetInt("UnlockedLevels",0);
         // Update level buttons based on UnlockedLvl
         UpdateLevelButtons();
     }

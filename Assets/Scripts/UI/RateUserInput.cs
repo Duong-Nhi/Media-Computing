@@ -31,13 +31,17 @@ public class RateUserInput : MonoBehaviour
     public int[] multiplicatorThresholds = new int[] {5, 10 , 20, 50};
     public float[] trophyThresholds = new float[] {0.15f, 0.3f, 0.4f, 0.6f, 0.8f, 0.9f};
 
+    public Image[] trophyImages;
+    public Sprite[] trophySprites;
     public int throphiesEarned = 0;
     public string lastFeedback;
 
     public float playerOffset = 20;
     private int currentScore = 0;
     private int maximalPossibleScore = 0;
-    private int currentStars = 0;
+    public Image[] starImages;
+    public Sprite[] starSprites;
+    public int currentStars = 0;
     private int currentCombo = 0;
 
     private int currentBadCombo = 0;
@@ -747,6 +751,7 @@ public class RateUserInput : MonoBehaviour
     public void collectedStart()
     {
         currentStars += 1;
+        starImages[currentStars-1].sprite = starSprites[1];
         starsText.text = "Stars: " + currentStars.ToString();
 
         starFeedBackImage.enabled = true;
@@ -866,6 +871,15 @@ public class RateUserInput : MonoBehaviour
             if((float) currentScore/ (float) maximalPossibleScore > trophyThresholds[i])
             {
                 trophies += 1;
+
+                if(throphiesEarned > 3){
+                    trophyImages[throphiesEarned-4].sprite = trophySprites[1];
+
+                }else{
+                    trophyImages[throphiesEarned-1].sprite = trophySprites[0];
+                }
+
+
             }
         }
         return trophies;
