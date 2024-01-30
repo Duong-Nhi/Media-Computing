@@ -15,6 +15,11 @@ public class PlayerAnimator : MonoBehaviour
         //Subscribe events
         AudioManager.beatUpdated += onBeat;
     }
+    void OnDestroy()
+    {
+        //Subscribe events
+        AudioManager.beatUpdated -= onBeat;
+    }
 
     void Start()
     {

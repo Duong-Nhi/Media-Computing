@@ -27,7 +27,6 @@ public class LevelComplete : MonoBehaviour
 
 
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);
-        SceneManager.UnloadSceneAsync("SampleScene");
     }
 
     // Update is called once per frame

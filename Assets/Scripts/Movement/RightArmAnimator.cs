@@ -35,8 +35,21 @@ public class RightArmAnimator : MonoBehaviour
 
         RateUserInput.autoAttackRightLetter += onAutoAttackRightLetter;
         RateUserInput.autoAttackRightPackage += onAutoAttackRightPackage;
+    }
 
+    void OnDestroy()
+    {
+        //Subscribe events
+        //AudioManager.beatUpdated += onBeat;
+        RateUserInput.taskStartLetterRight -= onTaskStartLetterRight;
 
+        RateUserInput.taskStartPackageRight -= onTaskStartPackageRight;
+        RateUserInput.taskDoneRight -= onTaskDoneRight;
+        RateUserInput.taskNextRight -= onTaskNextRight;
+        RateUserInput.taskThrowRight -= onTaskThrowRight;
+
+        RateUserInput.autoAttackRightLetter -= onAutoAttackRightLetter;
+        RateUserInput.autoAttackRightPackage -= onAutoAttackRightPackage;
     }
 
     void onBeat()

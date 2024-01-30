@@ -30,6 +30,20 @@ public class PlayerDelivery : MonoBehaviour
         RateUserInput.deliverPackageLeftBad += onDeliverPackageLeftBad;
         RateUserInput.deliverPackageRightBad += onDeliverPackageRightBad;
     }
+    void OnDestroy()
+    {
+        AudioManager.beatUpdated += onBeat;
+        //SubscribeEvents
+        RateUserInput.deliverLetterLeft -= onDeliverLetterLeft;
+        RateUserInput.deliverLetterRight -= onDeliverLetterRight;
+        RateUserInput.deliverPackageLeft -= onDeliverPackageLeft;
+        RateUserInput.deliverPackageRight -= onDeliverPackageRight;
+
+        RateUserInput.deliverLetterLeftBad -= onDeliverLetterLeftBad;
+        RateUserInput.deliverLetterRightBad -= onDeliverLetterRightBad;
+        RateUserInput.deliverPackageLeftBad -= onDeliverPackageLeftBad;
+        RateUserInput.deliverPackageRightBad -= onDeliverPackageRightBad;
+    }
 
     void onBeat()
     {

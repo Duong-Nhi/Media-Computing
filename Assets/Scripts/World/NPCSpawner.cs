@@ -17,6 +17,14 @@ public class NPCSpawner : MonoBehaviour
         RateUserInput.dropLetterRight += onDropLetterRight;
         RateUserInput.dropPackageRight += onDropPackageRight;
     }
+
+    void OnDestroy()
+    {
+        RateUserInput.dropLetterLeft -= onDropLetterLeft;
+        RateUserInput.dropPackageLeft -= onDropPackageLeft;
+        RateUserInput.dropLetterRight -= onDropLetterRight;
+        RateUserInput.dropPackageRight -= onDropPackageRight;
+    }
     // Start is called before the first frame update
     void Start()
     {

@@ -40,6 +40,23 @@ public class LeftArmAnimator : MonoBehaviour
         RateUserInput.autoAttackLeftPackage += onAutoAttackLeftPackage;
 
     }
+    void OnDestroy()
+    {
+        //Subscribe events
+        //AudioManager.beatUpdated += onBeat;
+        RateUserInput.taskStartLetterLeft -= onTaskStartLetterLeft;
+        RateUserInput.taskStartPackageLeft -= onTaskStartPackageLeft;
+
+
+        RateUserInput.taskDoneLeft -= onTaskDoneLeft;
+        RateUserInput.taskNextLeft -= onTaskNextLeft;
+        RateUserInput.taskThrowLeft -= onTaskThrowLeft;
+
+
+        RateUserInput.autoAttackLeftLetter -= onAutoAttackLeftLetter;
+        RateUserInput.autoAttackLeftPackage -= onAutoAttackLeftPackage;
+
+    }
 
     void onBeat()
     {

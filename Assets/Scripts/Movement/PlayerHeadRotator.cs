@@ -17,6 +17,12 @@ public class PlayerHeadRotator : MonoBehaviour
         //Subscribe events
         AudioManager.beatUpdated += onBeat;
     }
+
+    void OnDestroy()
+    {
+        //Subscribe events
+        AudioManager.beatUpdated -= onBeat;
+    }
     void onBeat()
     {
         currentBeat++;

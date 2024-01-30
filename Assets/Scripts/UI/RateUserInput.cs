@@ -150,17 +150,34 @@ public class RateUserInput : MonoBehaviour
     public delegate void DeliverLetterRightBadEventDelegate();
     public static event DeliverLetterRightBadEventDelegate deliverLetterRightBad;
 
-
+    private static RateUserInput instance;
     int currentBeat = 0;
 
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
         //Subscribe events
         InputManager.onMailLeft += onMailLeft;
         InputManager.onMailRight += onMailRight;
         InputManager.onPackageLeft += onPackageLeft;
         InputManager.onPackageRight += onPackageRight;
         AudioManager.beatUpdated += onBeat;
+    }
+    void OnDestroy()
+    {
+        //Subscribe events
+        InputManager.onMailLeft -= onMailLeft;
+        InputManager.onMailRight -= onMailRight;
+        InputManager.onPackageLeft -= onPackageLeft;
+        InputManager.onPackageRight -= onPackageRight;
+        AudioManager.beatUpdated -= onBeat;
     }
 
     // Start is called before the first frame update

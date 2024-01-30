@@ -21,6 +21,14 @@ public class AutoAttack : MonoBehaviour
         RateUserInput.autoAttackRightPackage += onAutoAttackRightPackage;
         
     }
+    void OnDestroy()
+    {
+        RateUserInput.autoAttackLeftLetter -= onAutoAttackLeftLetter;
+        RateUserInput.autoAttackLeftPackage -= onAutoAttackLeftPackage;
+        RateUserInput.autoAttackRightLetter -= onAutoAttackRightLetter;
+        RateUserInput.autoAttackRightPackage -= onAutoAttackRightPackage;
+        
+    }
 
     void onAutoAttackLeftLetter()
     {
