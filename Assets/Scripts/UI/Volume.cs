@@ -8,9 +8,8 @@ public class Volume : MonoBehaviour
 
     void Start()
     {
-        //audioSource.volume = PlayerPrefs.GetFloat("SoundVolume", 1f);
-        //effectsVolumeSlider.value = PlayerPrefs.GetFloat("EffectsVolume", 1f);
-        //soundVolumeSlider.value = PlayerPrefs.GetFloat("SoundVolume", 1f);
+        effectsVolumeSlider.value = PlayerPrefs.GetFloat("EffectsVolume", 1f);
+        soundVolumeSlider.value = PlayerPrefs.GetFloat("SoundVolume", 1f);
     }
 
     public void OnEffectsVolumeChanged()
