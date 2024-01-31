@@ -123,15 +123,15 @@ public class LevelSelector : MonoBehaviour
         lvlObj[2].stars[1].sprite = starSprites[2];
         lvlObj[2].stars[2].sprite = starSprites[2];  
 
-        lvlObj[0].trophy[0].sprite = starSprites[2];
-        lvlObj[0].trophy[1].sprite = starSprites[2];
-        lvlObj[0].trophy[2].sprite = starSprites[2];
-        lvlObj[1].trophy[0].sprite = starSprites[2];
-        lvlObj[1].trophy[1].sprite = starSprites[2];
-        lvlObj[1].trophy[2].sprite = starSprites[2];
-        lvlObj[2].trophy[0].sprite = starSprites[2];
-        lvlObj[2].trophy[1].sprite = starSprites[2];
-        lvlObj[2].trophy[2].sprite = starSprites[2]; 
+        lvlObj[0].trophy[0].sprite = trophySprites[2];
+        lvlObj[0].trophy[1].sprite = trophySprites[2];
+        lvlObj[0].trophy[2].sprite = trophySprites[2];
+        lvlObj[1].trophy[0].sprite = trophySprites[2];
+        lvlObj[1].trophy[1].sprite = trophySprites[2];
+        lvlObj[1].trophy[2].sprite = trophySprites[2];
+        lvlObj[2].trophy[0].sprite = trophySprites[2];
+        lvlObj[2].trophy[1].sprite = trophySprites[2];
+        lvlObj[2].trophy[2].sprite = trophySprites[2]; 
 
     }
 
