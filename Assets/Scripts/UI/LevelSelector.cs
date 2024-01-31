@@ -8,6 +8,7 @@ public class LevelSelector : MonoBehaviour
 {
     public LevelObject[] lvlObj;
     public Sprite[] starSprites;
+    public Sprite[] trophySprites;
     public int UnlockedLvl;
     public int currentLevel;
 
@@ -47,10 +48,10 @@ public class LevelSelector : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("trophy"); i++)
         {
             if(i < 3){
-            lvlObj[0].trophy[i].sprite = starSprites[0];
+            lvlObj[0].trophy[i].sprite = trophySprites[0];
             
             }else{
-            lvlObj[0].trophy[i-3].sprite = starSprites[1];
+            lvlObj[0].trophy[i-3].sprite = trophySprites[1];
             }
 
         }
@@ -59,10 +60,10 @@ public class LevelSelector : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("trophy1"); i++)
         {
             if(i < 3){
-            lvlObj[1].trophy[i].sprite = starSprites[0];
+            lvlObj[1].trophy[i].sprite = trophySprites[0];
 
             }else{
-            lvlObj[1].trophy[i-3].sprite = starSprites[1];
+            lvlObj[1].trophy[i-3].sprite = trophySprites[1];
             }
 
         }
@@ -71,10 +72,10 @@ public class LevelSelector : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("trophy2"); i++)
         {
             if(i < 3){
-            lvlObj[2].trophy[i].sprite = starSprites[0];
+            lvlObj[2].trophy[i].sprite = trophySprites[0];
 
             }else{
-            lvlObj[2].trophy[i-3].sprite = starSprites[1];
+            lvlObj[2].trophy[i-3].sprite = trophySprites[1];
             }
 
         }
@@ -103,7 +104,13 @@ public class LevelSelector : MonoBehaviour
 
     public void ResetValues(){
         PlayerPrefs.SetInt("stars", 0);
+        PlayerPrefs.SetInt("stars1", 0);
+        PlayerPrefs.SetInt("stars2", 0);
+
         PlayerPrefs.SetInt("trophy", 0);
+        PlayerPrefs.SetInt("trophy1", 0);
+        PlayerPrefs.SetInt("trophy2", 0);
+        
         UnlockedLvl = 0;
         UpdateLevelButtons();
         lvlObj[0].stars[0].sprite = starSprites[2];
