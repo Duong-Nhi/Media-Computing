@@ -217,6 +217,7 @@ public class RateUserInput : MonoBehaviour
 
     void onBeat()
     {
+
         currentBeat +=1;
         int newThrophiesEarned = calcTrophiesEarned();
         if (newThrophiesEarned > throphiesEarned)
@@ -240,6 +241,7 @@ public class RateUserInput : MonoBehaviour
         if(currentBeat >= audioManager.nBeats-1){
             //throphiesEarned = calcTrophiesEarned();
             displayEndScreen();
+            return;
         }
 
         //int currentBeat = AudioManager.lastBeat;

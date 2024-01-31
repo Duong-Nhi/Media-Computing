@@ -63,6 +63,11 @@ public class PlayerMovement : MonoBehaviour
         if (currBeat >= audioManager.nBeats-1)
         {
             speed = 0;
+            // Disable all scripts on the current GameObject
+            DisableScriptsOnObject(gameObject);
+
+            // Disable all scripts on child GameObjects
+            DisableScriptsOnChildren(transform);
         }
 
     }
@@ -87,5 +92,26 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3 (0,1, correctPosition);
         }
         */
+    }
+
+    void DisableScriptsOnObject(GameObject obj)
+    {
+        MonoBehaviour[] scripts = obj.GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour script in scripts)
+        {
+            script.enabled = false;
+        }
+    }
+
+    void DisableScriptsOnChildren(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            // Disable scripts on the child
+            DisableScriptsOnObject(child.gameObject);
+
+            // Recursively disable scripts on grandchildren
+            DisableScriptsOnChildren(child);
+        }
     }
 }
