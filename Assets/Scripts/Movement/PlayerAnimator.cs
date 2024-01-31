@@ -43,6 +43,9 @@ public class PlayerAnimator : MonoBehaviour
     void onBeat()
     {
         currentBeat++;
+        if(currentBeat >= audioManager.nBeats-1){
+            return;
+        }
         animatePlayer();
     }
 

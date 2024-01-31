@@ -26,6 +26,9 @@ public class PlayerHeadRotator : MonoBehaviour
     void onBeat()
     {
         currentBeat++;
+        if(currentBeat >= audioManager.nBeats-1){
+            return;
+        }
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, rotations[currentBeat%rotations.Length]));
         transform.Translate(new Vector3(0f, translations[currentBeat%translations.Length] ,0f));
     }
