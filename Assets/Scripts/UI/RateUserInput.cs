@@ -223,13 +223,13 @@ public class RateUserInput : MonoBehaviour
         {
 
         if(PlayerPrefs.GetInt("lvlNum")==0){
-            PlayerPrefs.SetInt("trophy", Math.Min(newThrophiesEarned, PlayerPrefs.GetInt("trophy")));
+            PlayerPrefs.SetInt("trophy", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy")));
         }
         if(PlayerPrefs.GetInt("lvlNum")==1){
-            PlayerPrefs.SetInt("trophy1", Math.Min(newThrophiesEarned, PlayerPrefs.GetInt("trophy1")));
+            PlayerPrefs.SetInt("trophy1", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy1")));
         }
         if(PlayerPrefs.GetInt("lvlNum")==2){
-            PlayerPrefs.SetInt("trophy2", Math.Min(newThrophiesEarned, PlayerPrefs.GetInt("trophy2")));
+            PlayerPrefs.SetInt("trophy2", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy2")));
         }
 
             // Play Sound Effect?
@@ -817,7 +817,7 @@ public class RateUserInput : MonoBehaviour
 
         currentScore += 10000;
         starImages[currentStars-2].sprite = starSprites[1];
-        PlayerPrefs.SetInt("stars",currentStars);
+        //PlayerPrefs.SetInt("stars",currentStars);
 
         starsText.text = "Stars: " + currentStars.ToString();
 
