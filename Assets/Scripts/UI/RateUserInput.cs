@@ -232,6 +232,12 @@ public class RateUserInput : MonoBehaviour
         if(PlayerPrefs.GetInt("lvlNum")==2){
             PlayerPrefs.SetInt("trophy2", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy2")));
         }
+        if(PlayerPrefs.GetInt("lvlNum")==3){
+            PlayerPrefs.SetInt("trophy3", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy3")));
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==4){
+            PlayerPrefs.SetInt("trophy4", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy4")));
+        }
 
             // Play Sound Effect?
             audioManager.playTrophy(Camera.main.transform.position);
@@ -813,6 +819,12 @@ public class RateUserInput : MonoBehaviour
         }
         if(PlayerPrefs.GetInt("lvlNum")==2){
             PlayerPrefs.SetInt("stars2", currentStars-1);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==3){
+            PlayerPrefs.SetInt("stars3", currentStars-1);
+        }
+        if(PlayerPrefs.GetInt("lvlNum")==4){
+            PlayerPrefs.SetInt("stars4", currentStars-1);
         }
 
 

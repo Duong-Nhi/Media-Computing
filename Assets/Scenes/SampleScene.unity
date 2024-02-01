@@ -325249,6 +325249,18 @@ MonoBehaviour:
   currentLevel: 1
   playingSongs:
   - Guid:
+      Data1: -1315912268
+      Data2: 1336142355
+      Data3: 17161620
+      Data4: -1149347811
+    Path: event:/OnARoadToTheEightiesSlow
+  - Guid:
+      Data1: 811108826
+      Data2: 1270050144
+      Data3: -1415055987
+      Data4: -152824951
+    Path: event:/NEFFEX-Go!
+  - Guid:
       Data1: -204667427
       Data2: 1197759611
       Data3: 1216709014

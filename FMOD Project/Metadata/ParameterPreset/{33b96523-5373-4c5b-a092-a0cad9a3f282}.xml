@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{33b96523-5373-4c5b-a092-a0cad9a3f282}">
+		<property name="name">
+			<value>nBeats</value>
+		</property>
+		<relationship name="folder">
+			<destination>{eb82dc4b-777a-4724-9b64-88b996bc270d}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{a2a0dc04-c0fd-4400-a632-799d80a01e84}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{a2a0dc04-c0fd-4400-a632-799d80a01e84}">
+		<property name="maximum">
+			<value>999</value>
+		</property>
+		<property name="isReadOnly">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>127</value>
+		</property>
+	</object>
+</objects>

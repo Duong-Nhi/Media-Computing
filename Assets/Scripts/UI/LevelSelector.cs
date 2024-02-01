@@ -26,6 +26,12 @@ public class LevelSelector : MonoBehaviour
         if(PlayerPrefs.GetInt("trophy1")>=2){
             UnlockedLvl = 2;
         }
+        if(PlayerPrefs.GetInt("trophy2")>=2){
+            UnlockedLvl = 3;
+        }
+        if(PlayerPrefs.GetInt("trophy3")>=2){
+            UnlockedLvl = 4;
+        }
         // Update level buttons based on UnlockedLvl
         UpdateLevelButtons();
 
@@ -40,6 +46,14 @@ public class LevelSelector : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("stars2"); i++)
         {
             lvlObj[2].stars[i].sprite = starSprites[0];
+        }
+        for (int i = 0; i < PlayerPrefs.GetInt("stars3"); i++)
+        {
+            lvlObj[3].stars[i].sprite = starSprites[0];
+        }
+        for (int i = 0; i < PlayerPrefs.GetInt("stars4"); i++)
+        {
+            lvlObj[4].stars[i].sprite = starSprites[0];
         }
 
       
@@ -77,7 +91,26 @@ public class LevelSelector : MonoBehaviour
             }else{
             lvlObj[2].trophy[i-3].sprite = trophySprites[1];
             }
+        }
 
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy3"); i++)
+        {
+            if(i < 3){
+            lvlObj[3].trophy[i].sprite = trophySprites[0];
+
+            }else{
+            lvlObj[3].trophy[i-3].sprite = trophySprites[1];
+            }
+        }
+
+        for (int i = 0; i < PlayerPrefs.GetInt("trophy4"); i++)
+        {
+            if(i < 3){
+            lvlObj[4].trophy[i].sprite = trophySprites[0];
+
+            }else{
+            lvlObj[4].trophy[i-3].sprite = trophySprites[1];
+            }
         }
 
 
@@ -106,10 +139,14 @@ public class LevelSelector : MonoBehaviour
         PlayerPrefs.SetInt("stars", 0);
         PlayerPrefs.SetInt("stars1", 0);
         PlayerPrefs.SetInt("stars2", 0);
+        PlayerPrefs.SetInt("stars3", 0);
+        PlayerPrefs.SetInt("stars4", 0);
 
         PlayerPrefs.SetInt("trophy", 0);
         PlayerPrefs.SetInt("trophy1", 0);
         PlayerPrefs.SetInt("trophy2", 0);
+        PlayerPrefs.SetInt("trophy3", 0);
+        PlayerPrefs.SetInt("trophy4", 0);
         
         UnlockedLvl = 0;
         UpdateLevelButtons();
