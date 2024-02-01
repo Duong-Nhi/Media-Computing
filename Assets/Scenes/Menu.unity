@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2136,7 +2136,7 @@ GameObject:
   - component: {fileID: 471186961}
   - component: {fileID: 471186960}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2270,7 +2270,7 @@ GameObject:
   - component: {fileID: 474533511}
   - component: {fileID: 474533510}
   m_Layer: 5
-  m_Name: ButtonContainer (1)
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6602,7 +6602,7 @@ GameObject:
   - component: {fileID: 1497841298}
   - component: {fileID: 1497841297}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7371,7 +7371,7 @@ GameObject:
   - component: {fileID: 1690025635}
   - component: {fileID: 1690025634}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9163,7 +9163,7 @@ GameObject:
   - component: {fileID: 2033782492}
   - component: {fileID: 2033782491}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

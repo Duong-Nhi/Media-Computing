@@ -12,11 +12,6 @@ public class LevelComplete : MonoBehaviour
         PlayerPrefs.GetInt("UnlockedLevels");
     }
 
-    void Start()
-    {
-        
-    }
-
     public void LevelCompleted()
     {
         if (PlayerPrefs.GetInt("lvlNum", 1) == PlayerPrefs.GetInt("UnlockedLevels", 1))
@@ -29,9 +24,4 @@ public class LevelComplete : MonoBehaviour
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

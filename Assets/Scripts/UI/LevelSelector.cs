@@ -20,6 +20,10 @@ public class LevelSelector : MonoBehaviour
         // Set UnlockedLvl to 0 so only the first level is initially unlocked
         UnlockedLvl = 0;
 
+
+
+        // Unlock Levels if the previous Level you had collected at least 2 trophies
+
         if(PlayerPrefs.GetInt("trophy")>=2){
             UnlockedLvl = 1;
         }
@@ -32,8 +36,11 @@ public class LevelSelector : MonoBehaviour
         if(PlayerPrefs.GetInt("trophy3")>=2){
             UnlockedLvl = 4;
         }
+
         // Update level buttons based on UnlockedLvl
         UpdateLevelButtons();
+
+        // Update Stars in Menu
 
         for (int i = 0; i < PlayerPrefs.GetInt("stars"); i++)
         {
@@ -57,6 +64,7 @@ public class LevelSelector : MonoBehaviour
         }
 
       
+        // Update Trophy in Menu (3 Golden then they turn Purple)
 
 
         for (int i = 0; i < PlayerPrefs.GetInt("trophy"); i++)
@@ -118,6 +126,7 @@ public class LevelSelector : MonoBehaviour
 
     }
 
+    //Button Click, Gives back lvlNum to choose the Level
     public void OnClickLevel(int lvlNum)
     {
         currentLevel = lvlNum;
@@ -135,6 +144,7 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
+    //Resets Trophy/Stars
     public void ResetValues(){
         PlayerPrefs.SetInt("stars", 0);
         PlayerPrefs.SetInt("stars1", 0);
@@ -172,6 +182,7 @@ public class LevelSelector : MonoBehaviour
 
     }
 
+    //Enables LevelButtons
     void UpdateLevelButtons()
     {
         for (int i = 0; i < lvlObj.Length; i++)
