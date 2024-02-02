@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     public GameObject buttonContainerSetting;
     public GameObject Menu;
     public GameObject LevelSelector;
+    public GameObject howToPlay;
     public TextMeshProUGUI text;
 
  private void Start()
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour
         Menu.SetActive(true);
         buttonContainerSetting.SetActive(false);
         LevelSelector.SetActive(false);
+        howToPlay.SetActive(false);
         text.text = "Special Delivery";
     }
     
@@ -31,7 +33,12 @@ public void Play()
     LevelSelector.SetActive(!LevelSelector.activeSelf);
     text.text = "Level Selector";
 }
-
+public void HowToPlay()
+{
+    Menu.SetActive(!Menu.activeSelf);
+    howToPlay.SetActive(!howToPlay.activeSelf);
+    text.text = "How To Play";
+}
 
     public void Setting()
     {
