@@ -10,7 +10,6 @@ public class PlayerHeadRotator : MonoBehaviour
     public float[] rotations = new float[] {0f, -10f, 0f, 10f};
     public float[] translations = new float[] {0f, -10f, 0f, 10f};
     private int currentBeat = 0;
-    // Start is called before the first frame update
 
     void Awake()
     {
@@ -20,9 +19,11 @@ public class PlayerHeadRotator : MonoBehaviour
 
     void OnDestroy()
     {
-        //Subscribe events
+        //Unsubscribe events
         AudioManager.beatUpdated -= onBeat;
     }
+
+    // Wobble head -> Change sprites and apply slight rotations every beat
     void onBeat()
     {
         currentBeat++;

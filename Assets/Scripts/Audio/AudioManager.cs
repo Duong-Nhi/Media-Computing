@@ -89,14 +89,15 @@ public class AudioManager : MonoBehaviour
         playingSongEventInstance.getParameterByName("bpm", out bpm);
         playingSongEventInstance.getParameterByName("nBeats", out nBeats);
         playingSongEventInstance.setParameterByName("reverb", 1f);
-    }
 
+    }
 
     private void Start()
     {   
         // start song
         playingSongEventInstance.setVolume(songVolume);
         playingSongEventInstance.start();
+        lastBeat = 0;
     }
 
 
@@ -138,6 +139,7 @@ public class AudioManager : MonoBehaviour
 
     private void CleanUp()
     {   
+        lastBeat = 0;
         playingSongEventInstance.setUserData(IntPtr.Zero);
         foreach (EventInstance eventInstance in eventInstances)
         {
@@ -148,6 +150,8 @@ public class AudioManager : MonoBehaviour
         }
         //Remove GC handle so memory can free memory
         timelineHandle.Free();
+        playingSongEventInstance.setCallback(null, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
+        Debug.Log("reached");
     }
 
     private void OnDestroy()

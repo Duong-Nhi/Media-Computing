@@ -12,6 +12,7 @@ public class LevelComplete : MonoBehaviour
         PlayerPrefs.GetInt("UnlockedLevels");
     }
 
+    // Called on back to menu button press 
     public void LevelCompleted()
     {
         if (PlayerPrefs.GetInt("lvlNum", 1) == PlayerPrefs.GetInt("UnlockedLevels", 1))
@@ -19,8 +20,6 @@ public class LevelComplete : MonoBehaviour
             unlockedlvl++;
             PlayerPrefs.SetInt("UnlockedLevels", unlockedlvl);
         }
-
-
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
 

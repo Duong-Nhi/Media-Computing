@@ -15,29 +15,25 @@ public class NPCRandomizer : MonoBehaviour
     private int characterIndex = 0;
     private SpriteRenderer spriteRenderer;
 
-    // Start is called before the first frame update
+    // Spawn a random NPC with a random chance (default 100% chance)
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         int randomIndex = randomGen.Next(0, idleSprites.Length);
 
-        //  Check if we want to spawn
+        //  Only spawn NPC with a random chance
         float randomValue = (float)randomGen.NextDouble();
         if (randomValue > percentSpawn)
         {
             Destroy(gameObject);
         }
+        // Spawn random NPC
         spriteRenderer.sprite = idleSprites[randomIndex];
         characterIndex = randomIndex;
     }
 
-    // Implement functionalities for changing between sprites including animation
-
-    void Update()
-    {
-
-    }
-
+  
+    // Functions that control the sprite of the NPC (Happy sad dizzy)
     public void makeHappy()
     {
         // add animation

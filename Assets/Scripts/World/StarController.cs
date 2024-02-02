@@ -10,24 +10,19 @@ public class StarController : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
-    
-
     private bool collected = false;
-    // Start is called before the first frame update
+
+    // Get SpriteRenderer Component
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+    // Make NPC Happy and call collectedStar function to include it in rating
     public void makeCollected()
     {
-        // add animation
+        // Idea: Add special animation
         spriteRenderer.sprite = collectedSprite;
         collected = true;
         rateUserInput.collectedStart();

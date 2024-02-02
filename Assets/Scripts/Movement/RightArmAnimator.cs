@@ -19,13 +19,9 @@ public class RightArmAnimator : MonoBehaviour
 
     private bool throwingIsInvoked = false;
 
-    //Test
-    private int currentBeat = 0;
-
     void Awake()
     {
         //Subscribe events
-        //AudioManager.beatUpdated += onBeat;
         RateUserInput.taskStartLetterRight += onTaskStartLetterRight;
 
         RateUserInput.taskStartPackageRight += onTaskStartPackageRight;
@@ -40,7 +36,6 @@ public class RightArmAnimator : MonoBehaviour
     void OnDestroy()
     {
         //Subscribe events
-        //AudioManager.beatUpdated += onBeat;
         RateUserInput.taskStartLetterRight -= onTaskStartLetterRight;
 
         RateUserInput.taskStartPackageRight -= onTaskStartPackageRight;
@@ -52,12 +47,6 @@ public class RightArmAnimator : MonoBehaviour
         RateUserInput.autoAttackRightPackage -= onAutoAttackRightPackage;
     }
 
-    void onBeat()
-    {
-        currentBeat++;
-        spriteRenderer.sprite = packageArmSprites[currentBeat%packageArmSprites.Length];
-
-    }
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -79,13 +68,9 @@ public class RightArmAnimator : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        //smth
-    }
+    // Following functions handle the displayed sprites on all events related to the left arm
 
-    // Called by an Animation Event at the end of the animation
-    
+    // Called by an Animation Event at the end of the animation -> Indicate the new task
     void onTaskStartLetterRight(){
         spriteRenderer.sprite = letterArmSprites[0];
         currentSpriteIdx = 0;
@@ -100,6 +85,7 @@ public class RightArmAnimator : MonoBehaviour
         CancelInvoke("BackToIdle");
     }
 
+    // Displays the next sprite in the array
     void onTaskNextRight(){
         if(taskId == 1){
             spriteRenderer.sprite = letterArmSprites[Mathf.Min(currentSpriteIdx+1, letterArmSprites.Length-1)];
@@ -117,6 +103,7 @@ public class RightArmAnimator : MonoBehaviour
         }
     }
 
+    // display the last sprite, as the item is thrown
     void onTaskThrowRight(){
         if(taskId == 1){
             spriteRenderer.sprite = letterArmSprites[letterArmSprites.Length-1];
@@ -134,47 +121,51 @@ public class RightArmAnimator : MonoBehaviour
         }
     }
 
+    // go back to idle sprite if task is done
     void onTaskDoneRight(){
         spriteRenderer.sprite = idleSprite;
         currentSpriteIdx = 0;
         taskId = 0;
     }
     
+    // Animate autoattacks by displaying throwsprite for 0.5 seconds
     void onAutoAttackRightLetter()
     {
         spriteRenderer.sprite = letterArmSprites[letterArmSprites.Length-1];
         if (!throwingIsInvoked)
         {
-            // Call YourFunction and set isFunctionInvoked to true
+            // display thrown hand for 0.5 seconds
             Invoke("BackToIdle", 0.5f);
             throwingIsInvoked = true;
         }
         else
         {
-            // If the function is already invoked, reset the timer
+            // reset timer and display thrown hand for 0.5 seconds
             CancelInvoke("BackToIdle");
             Invoke("BackToIdle", 0.5f);
         }
         
     }
 
+    // Animate autoattacks by displaying throwsprite for 0.5 seconds
     void onAutoAttackRightPackage()
     {
         spriteRenderer.sprite = packageArmSprites[packageArmSprites.Length-1];
         if (!throwingIsInvoked)
         {
-            // Call YourFunction and set isFunctionInvoked to true
+            // display thrown hand for 0.5 seconds
             Invoke("BackToIdle", 0.5f);
             throwingIsInvoked = true;
         }
         else
         {
-            // If the function is already invoked, reset the timer
+            // reset timer and display thrown hand for 0.5 seconds
             CancelInvoke("BackToIdle");
             Invoke("BackToIdle", 0.5f);
         }
     }
 
+    // Go back to idle animation
     void BackToIdle()
     {
         spriteRenderer.sprite = idleSprite;

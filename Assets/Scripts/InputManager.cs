@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    // Check every frame if there is a user input -> trigger events that are then handled in rateUserInput
     void Update()
     {
         if (Input.GetKeyDown("q")) 

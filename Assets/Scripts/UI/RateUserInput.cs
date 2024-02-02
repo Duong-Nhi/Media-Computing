@@ -136,8 +136,6 @@ public class RateUserInput : MonoBehaviour
     public delegate void DeliverLetterRightEventDelegate();
     public static event DeliverLetterRightEventDelegate deliverLetterRight;
 
-    //Same in Bad
-
     public delegate void DeliverPackageLeftBadEventDelegate();
     public static event DeliverPackageLeftBadEventDelegate deliverPackageLeftBad;
 
@@ -151,18 +149,10 @@ public class RateUserInput : MonoBehaviour
     public static event DeliverLetterRightBadEventDelegate deliverLetterRightBad;
 
     //private static RateUserInput instance;
-    int currentBeat = -1;
+    int currentBeat = 0;
 
     void Awake()
     {
-        /*if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }*/
         //Subscribe events
         InputManager.onMailLeft += onMailLeft;
         InputManager.onMailRight += onMailRight;
@@ -183,29 +173,21 @@ public class RateUserInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //scoreText = GetComponent<Text>();
+        // Initializations
         scoreText.text = "0";
-        
         currentLeftTask = null;
         currentRightTask = null;
-
         endScreen.enabled = false;
 
         maximalPossibleScore = calcMaxPossiblePoints();
-        Debug.Log("Maximum Possible Score: "+ maximalPossibleScore.ToString());
+        Debug.Log("Maximum possible Score in this level: "+ maximalPossibleScore.ToString());
 
         feedBackImage.enabled = false;
         starFeedBackImage.enabled = false;
-
-        Invoke("setBeatZero", 0.5f);
     }
 
-    void setBeatZero()
-    {
-        currentBeat = 0;
-    }
 
-    // Display the current score every frame -> Maybe instead of every frame, only every user input (only time it changes)
+    // Makes sure currentScore is always larger than 0; Should be checked when setting instead of every frame here (TODO)
     void Update()
     {
         if (currentScore < 0)
@@ -217,53 +199,55 @@ public class RateUserInput : MonoBehaviour
 
     void onBeat()
     {
-
         currentBeat +=1;
+        // Calculate how many trophies the player unlocked with current score
         int newThrophiesEarned = calcTrophiesEarned();
         if (newThrophiesEarned > throphiesEarned)
         {
+            // Set it in the trophy collection in the playerprefs of the current level
+            if(PlayerPrefs.GetInt("lvlNum")==0){
+                PlayerPrefs.SetInt("trophy", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy")));
+            }
+            if(PlayerPrefs.GetInt("lvlNum")==1){
+                PlayerPrefs.SetInt("trophy1", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy1")));
+            }
+            if(PlayerPrefs.GetInt("lvlNum")==2){
+                PlayerPrefs.SetInt("trophy2", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy2")));
+            }
+            if(PlayerPrefs.GetInt("lvlNum")==3){
+                PlayerPrefs.SetInt("trophy3", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy3")));
+            }
+            if(PlayerPrefs.GetInt("lvlNum")==4){
+                PlayerPrefs.SetInt("trophy4", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy4")));
+            }
 
-        if(PlayerPrefs.GetInt("lvlNum")==0){
-            PlayerPrefs.SetInt("trophy", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy")));
-        }
-        if(PlayerPrefs.GetInt("lvlNum")==1){
-            PlayerPrefs.SetInt("trophy1", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy1")));
-        }
-        if(PlayerPrefs.GetInt("lvlNum")==2){
-            PlayerPrefs.SetInt("trophy2", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy2")));
-        }
-        if(PlayerPrefs.GetInt("lvlNum")==3){
-            PlayerPrefs.SetInt("trophy3", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy3")));
-        }
-        if(PlayerPrefs.GetInt("lvlNum")==4){
-            PlayerPrefs.SetInt("trophy4", Math.Max(newThrophiesEarned, PlayerPrefs.GetInt("trophy4")));
-        }
-
-            // Play Sound Effect?
+            // Play trophy collected Sound Effect
             audioManager.playTrophy(Camera.main.transform.position);
             throphiesEarned = newThrophiesEarned;
         }
-        // On last beat display the endscreen after 1 sec
+        // On last beat display the endscreen
         if(currentBeat >= audioManager.nBeats-1){
-            //throphiesEarned = calcTrophiesEarned();
             displayEndScreen();
             return;
         }
 
-        //int currentBeat = AudioManager.lastBeat;
+        // Deal with all of the possible tasks:
+
+        // If a task is currently active left
         if (currentLeftTask != null)
         {
             if(currentBeat >= currentLeftTask.startBeat + currentLeftTask.totalHits)
             {
-                // Do some event, as package has to be dropped here
-                //EVENT: DROP PACKAGE LEFT -> Left arm should subscribe here and go back to idle; NPC Spawner should spawn package on the ground left of player
+  
+                //Task done event
                 if(taskDoneLeft!=null)
                 {
                     taskDoneLeft();
                 }
-                // Drop event
+                // Drop Letter if of type 1
                 if(!currentLeftTask.finished && currentLeftTask.type == 1 && dropLetterLeft != null)
                 {
+                    //Drop letter event + stop combo
                     dropLetterLeft();
                     currentCombo = 0;
                     currentBadCombo += 1;
@@ -271,8 +255,10 @@ public class RateUserInput : MonoBehaviour
                 }
                 else
                 {
+                    // Drop Package if of type 1
                     if(!currentLeftTask.finished && currentLeftTask.type == 2 && dropPackageLeft != null)
                     {
+                        //Drop package event + stop combo
                         dropPackageLeft();
                         currentCombo = 0;
                         currentBadCombo += 1;
@@ -283,24 +269,21 @@ public class RateUserInput : MonoBehaviour
                         //Add new types here
                     }
                 }
-                
-
-                // Some logic with the score (dropped letter)
+            
                 currentLeftTask = null;
             }
         }
-        //Drop Task if not completed:
+        //Same for right: a task is currently active right
         if (currentRightTask != null)
         {
         if(currentBeat >= currentRightTask.startBeat + currentRightTask.totalHits)
             {
-                // Do some event, as package has to be dropped here
-                //EVENT: DROP PACKAGE RIGHT -> Left arm should subscribe here and go back to idle; NPC Spawner should spawn package on the ground left of player
+                //Task done event
                 if(taskDoneRight!=null)
                 {
                     taskDoneRight();
                 }
-                // Drop event
+                // Drop event left
                 if(!currentRightTask.finished && currentRightTask.type == 1 && dropLetterRight != null)
                 {
                     dropLetterRight();
@@ -310,6 +293,7 @@ public class RateUserInput : MonoBehaviour
                 }
                 else
                 {
+                    // Drop event right
                     if(!currentRightTask.finished && currentRightTask.type == 2 && dropPackageRight != null)
                     {
                         dropPackageRight();
@@ -323,7 +307,6 @@ public class RateUserInput : MonoBehaviour
                     }
                 }
 
-                // Some logic with the score (droppped package)
                 currentRightTask = null;
             }
         }
@@ -332,10 +315,10 @@ public class RateUserInput : MonoBehaviour
         (int taskLeftId, int taskRightId) = getTaskFromLevel(currentBeat);
 
         int leftHits = levelManager.idToHits(taskLeftId);
-        // This means we have to create a task object for this
+        // If this true it means we have to create a task object for this
         if (leftHits>0)
         {
-            //assert currentLeftTask == null;
+            //create a task object
             Task newLeftTask = new Task()
             {
                 type = taskLeftId,
@@ -364,10 +347,10 @@ public class RateUserInput : MonoBehaviour
         }
 
         int rightHits = levelManager.idToHits(taskRightId);
-        // This means we have to create a task object for this
+        // If true this means we have to create a task object for this
         if (rightHits>0)
         {
-            //assert currentLeftTask == null;
+            //create a task object
             Task newRightTask = new Task()
             {
                 type = taskRightId,
@@ -394,11 +377,12 @@ public class RateUserInput : MonoBehaviour
             }
 
         }
+        // apply a distortion effect (different effect for each song) depending on length of badCombo
         adaptDistortion(currentBadCombo);
     }
 
 
-    // HandleTasks -> If task completed return true and the scoring of task
+    // HandleTasks -> If task completed return true, the scoring of task and whether an arm animation should be done
     private (bool, int, bool) handleEvents(Task task, int eventType)
     {
         bool completed = false;
@@ -410,8 +394,6 @@ public class RateUserInput : MonoBehaviour
 
         // Check if task is of correct type
         if (!(task.type == eventType)){
-            // some event ? Incorrect input type, maybe sound or visual error
-
             //extra custom penalty for thowing wrong thing
             score -= 1000;
             currentCombo = 0;
@@ -448,11 +430,7 @@ public class RateUserInput : MonoBehaviour
                         }
                     }
                     task.scores[0] = rating;
-                    // do something with feedback? Event? 
-
                     animation = true;
-
-                    
                 }
                 else{
                     // This beat was already hit! So penalty for additional throw
@@ -462,11 +440,9 @@ public class RateUserInput : MonoBehaviour
                 }
                 if (0 == task.totalHits-2){
                     // throw package event as task is already done
-
                     animation = true;
                     completed = true;
                 }
-                
             }
             else if (hitIndex >= task.totalHits-1) {
 
@@ -497,7 +473,6 @@ public class RateUserInput : MonoBehaviour
                         }
                     }
                     task.scores[hitIndex-1] = rating;
-                    // do something with feedback? Event? 
                     // throw package event
                     animation = true;
                     completed = true;
@@ -507,7 +482,6 @@ public class RateUserInput : MonoBehaviour
                     // Can this be even reached? Task should be finished already
                     currentCombo = 0;
                     task.scores[hitIndex-1] = -1000;
-
                 }
 
                 
@@ -546,7 +520,7 @@ public class RateUserInput : MonoBehaviour
                 }
                 else
                 {
-                    // HERE FEEDBACK FOR WRONG INPUT -> EVENT?
+                    // Add some additional feedback to the player (TODO ?)
                     currentCombo = 0;
                     task.scores[hitIndex] = -1000;
                 }
@@ -554,7 +528,7 @@ public class RateUserInput : MonoBehaviour
                 if(hitIndex == task.totalHits-2)
                 {
                     // throw package event as this was the last action
-                    //EVENT: TASK DONE LEFT -> LeftArm: Back to idle position left
+                    // LeftArm: Back to idle position left
                     completed = true;
                     animation = true;
                 }
@@ -591,11 +565,15 @@ public class RateUserInput : MonoBehaviour
             comboText.text = "";
         }
 
+        // apply a distortion effect (different effect for each song) depending on length of badCombo
         adaptDistortion(currentBadCombo);
 
         return (completed, score, animation);
     }
 
+
+    // Now all functions that are called on the specific events of each user input
+    // Rates the input and triggers events depending on whether the arm should be moved, package thrown or just autoattack
     void onMailLeft()
     {
         if(currentLeftTask != null && !currentLeftTask.finished)
@@ -639,7 +617,7 @@ public class RateUserInput : MonoBehaviour
             scoreText.text = currentScore.ToString();
         }
         else {
-            // Idea is to implement some kind of auto attacks to trigger events in scene
+            // Do an auto attack
             if(autoAttackLeftLetter != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackLeftLetter();
@@ -689,7 +667,7 @@ public class RateUserInput : MonoBehaviour
             scoreText.text = currentScore.ToString();
         }
         else {
-            // Idea is to implement some kind of auto attacks to trigger events in scene
+            // Do an auto attack
             if(autoAttackRightLetter != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackRightLetter();
@@ -738,7 +716,7 @@ public class RateUserInput : MonoBehaviour
             scoreText.text = currentScore.ToString();
         }
         else {
-            // Idea is to implement some kind of auto attacks to trigger events in scene
+            // Do an auto attack
             if(autoAttackLeftPackage != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackLeftPackage();
@@ -785,7 +763,7 @@ public class RateUserInput : MonoBehaviour
             scoreText.text = currentScore.ToString();
         }
         else {
-            // Idea is to implement some kind of auto attacks to trigger events in scene
+            // Do an auto attack
             if(autoAttackRightPackage != null && currentBeat < audioManager.nBeats-1)
             {
                 autoAttackRightPackage();
@@ -793,6 +771,7 @@ public class RateUserInput : MonoBehaviour
         }
     }
 
+    // Display scores of tasks for debug purposes
     void OnGUI()
         {   
             GUILayout.BeginArea(new Rect(500, 0, 475, 900));
@@ -806,11 +785,10 @@ public class RateUserInput : MonoBehaviour
             GUILayout.EndArea();
         }
 
+    //Called when a star is collected. Set the star as collected in the menu via PlayerPrefs 
     public void collectedStart()
     {
         currentStars += 1;
-
-
         if(PlayerPrefs.GetInt("lvlNum")==0){
             PlayerPrefs.SetInt("stars", currentStars-1);
         }
@@ -828,13 +806,12 @@ public class RateUserInput : MonoBehaviour
         }
 
 
-
+        //Additional points flat!
         currentScore += 10000;
+        //Display star collected on GUI
         starImages[currentStars-2].sprite = starSprites[1];
-        //PlayerPrefs.SetInt("stars",currentStars);
 
         starsText.text = "Stars: " + currentStars.ToString();
-
         starFeedBackImage.enabled = true;
         Invoke("resetImageStar", 0.5f);
 
@@ -846,7 +823,7 @@ public class RateUserInput : MonoBehaviour
     }
 
 
-    // Rename? With task i mean the elements of the level i.e. (1,0)
+    // get the task of a certain beat from level (one entry of the levelSequence array of the levelmanager object)
     private (int, int) getTaskFromLevel(int beat)
     {
         int leftTask = 0;
@@ -909,42 +886,38 @@ public class RateUserInput : MonoBehaviour
     }
     
 
+    // Here we define the rating depending on the distance to the beat that the input corresponded to
     private (string, int) RatingHelper(double pDistance) 
     {   
-        //Normalize distance
+        //Normalize distance (so its not dependend on the distance per beat parameter that can be set)
         float distance = Mathf.Abs((float) pDistance)/(float) levelManager.distancePerBeat;
 
-        //Debug.Log("Distance to closest beat: " + Mathf.Abs((float) pDistance).ToString() + "; Normalized: " + distance.ToString());
         string feedback;
         int score;
         switch (distance) 
         {
             case <= 0.1f:
-                //Add bonuspoints for streaks?
                 feedback = "Perfect";
                 score = 1000;
-                //currentScore += 1000;
                 break;
             case <= 0.15f:
                 feedback = "Good";
                 score = 500;
-                //currentScore += 800;
                 break;
             case <= 0.3f:
                 feedback = "Okay";
                 score = 250;
-                //currentScore += 500;
                 break;
             default:
                 feedback = "Miss";
                 score = -500;
-                //currentScore -= 1000;
                 break;
         }
 
         return (feedback, score);
     }
 
+    // Checks how many trophies are currently earned. Depending on the current score and the threshold set (percentages of maximal possible points per level)
     private int calcTrophiesEarned()
     {
         int trophies = 0;
@@ -967,9 +940,9 @@ public class RateUserInput : MonoBehaviour
         return trophies;
     }
 
+    // Displays endscreen and all relevant information about the score
     void displayEndScreen()
     {
-        //Text endText = endScreen.gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
         if (endText != null)
         {
             endText.text = "Score: "+ currentScore.ToString();
@@ -984,6 +957,7 @@ public class RateUserInput : MonoBehaviour
         }
     }
 
+    // simulates a perfect play of the level to determine maximal possible points; probably more efficient solution possible (TODO ?)
     private int calcMaxPossiblePoints(){
         int maxPoints = 0;
         int maxPossibleCombo = 0;
@@ -1037,6 +1011,7 @@ public class RateUserInput : MonoBehaviour
         return maxPoints;
     }
 
+    // Display feedbacksprites
     void displayFeedback(string feedback)
     {
         feedBackImage.enabled = true;
@@ -1063,7 +1038,7 @@ public class RateUserInput : MonoBehaviour
 
         if (!feedbackIsInvoked)
         {
-            // Call YourFunction and set isFunctionInvoked to true
+            //Display for 0.5 seconds and then reset
             Invoke("resetImage", 0.5f);
             feedbackIsInvoked = true;
         }
@@ -1081,6 +1056,7 @@ public class RateUserInput : MonoBehaviour
         feedbackIsInvoked = false;
     }
 
+    // Adapts the special soundeffect applied to playing song when on a bad streak (via call of audioManager.applyEffect)
     void adaptDistortion(int pCurrentBadCombo)
     {  
         float strength = Mathf.Min(pCurrentBadCombo/10f, 1f);

@@ -15,6 +15,7 @@ public class AutoAttack : MonoBehaviour
 
     void Awake()
     {
+        //Subscribe to events
         RateUserInput.autoAttackLeftLetter += onAutoAttackLeftLetter;
         RateUserInput.autoAttackLeftPackage += onAutoAttackLeftPackage;
         RateUserInput.autoAttackRightLetter += onAutoAttackRightLetter;
@@ -23,6 +24,7 @@ public class AutoAttack : MonoBehaviour
     }
     void OnDestroy()
     {
+        //Unsubscribe events
         RateUserInput.autoAttackLeftLetter -= onAutoAttackLeftLetter;
         RateUserInput.autoAttackLeftPackage -= onAutoAttackLeftPackage;
         RateUserInput.autoAttackRightLetter -= onAutoAttackRightLetter;
@@ -30,6 +32,7 @@ public class AutoAttack : MonoBehaviour
         
     }
 
+    // Functions allow player to throw packages and letters when no task is currently active
     void onAutoAttackLeftLetter()
     {
         spawnProjectile(letter, velocity);
@@ -50,6 +53,7 @@ public class AutoAttack : MonoBehaviour
         spawnProjectile(package, -velocity);
     }
 
+    // Spawn projectile with velocity that can hit windows, NPCs, Cars and Trees
     void spawnProjectile(GameObject projectile, float velocity)
     {
         GameObject projectileObj = Instantiate(projectile, transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);

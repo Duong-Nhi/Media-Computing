@@ -10,29 +10,22 @@ public class SpawnNPC : MonoBehaviour
 
     private System.Random randomGen = new System.Random();
 
-    // Start is called before the first frame update
     void Start()
     { 
-        //  Check if we want to spawn
+        //  Check if we want to spawn (possibly by random chance)
         float randomValue = (float)randomGen.NextDouble();
         if (randomValue > spawnChance)
         {
-            //Destroy self including bounding box!!
+            //Destroy self including bounding box
             Destroy(gameObject);
         }
 
-        //spawn instance here
+        //spawn instance
         Vector3 originalPosition = npc.transform.position;
         npc.transform.position = new Vector3(0f,0.1f,0f);
         Instantiate(npc, transform);
         npc.transform.position = originalPosition;
        
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }

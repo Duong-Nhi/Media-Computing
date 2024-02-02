@@ -18,8 +18,8 @@ public class PlayerDelivery : MonoBehaviour
     private int currBeat = 0;
     void Awake()
     {
-        AudioManager.beatUpdated += onBeat;
         //SubscribeEvents
+        AudioManager.beatUpdated += onBeat;
         RateUserInput.deliverLetterLeft += onDeliverLetterLeft;
         RateUserInput.deliverLetterRight += onDeliverLetterRight;
         RateUserInput.deliverPackageLeft += onDeliverPackageLeft;
@@ -32,8 +32,8 @@ public class PlayerDelivery : MonoBehaviour
     }
     void OnDestroy()
     {
-        AudioManager.beatUpdated += onBeat;
-        //SubscribeEvents
+        //UnsubscribeEvents
+        AudioManager.beatUpdated -= onBeat;
         RateUserInput.deliverLetterLeft -= onDeliverLetterLeft;
         RateUserInput.deliverLetterRight -= onDeliverLetterRight;
         RateUserInput.deliverPackageLeft -= onDeliverPackageLeft;
@@ -45,17 +45,20 @@ public class PlayerDelivery : MonoBehaviour
         RateUserInput.deliverPackageRightBad -= onDeliverPackageRightBad;
     }
 
+    // keep track of the beats
     void onBeat()
     {
         currBeat += 1;
     }
+
+    // Find the target tile and find the gameobject delivery marking the delivery destination; currently doors, possibly mailboxes in the future
     void onDeliverLetterLeft()
     {
         GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
         if(currObjLeft.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjLeft.transform.Find("Delivery").gameObject;
-            deliverObject(letter, deliveryLoc.transform.position);
+            deliverObject(letter, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
         }
         else{
             currObjLeft = tileSpawner.getObjectLeft(currBeat);
@@ -63,7 +66,7 @@ public class PlayerDelivery : MonoBehaviour
             {
                
                 GameObject deliveryLoc = currObjLeft.transform.Find("Delivery").gameObject;
-                deliverObject(letter, deliveryLoc.transform.position);
+                deliverObject(letter, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -72,6 +75,7 @@ public class PlayerDelivery : MonoBehaviour
 
     }
 
+    // Find the target tile and find the gameobject delivery marking the delivery destination; currently doors, possibly mailboxes in the future
     void onDeliverLetterRight()
     {
 
@@ -79,14 +83,14 @@ public class PlayerDelivery : MonoBehaviour
         if(currObjRight.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjRight.transform.Find("Delivery").gameObject;
-            deliverObject(letter, deliveryLoc.transform.position);
+            deliverObject(letter, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
         }
         else{
             currObjRight = tileSpawner.getObjectRight(currBeat);
             if(currObjRight.CompareTag("House"))
             {
                 GameObject deliveryLoc = currObjRight.transform.Find("Delivery").gameObject;
-                deliverObject(letter, deliveryLoc.transform.position);
+                deliverObject(letter, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -94,21 +98,21 @@ public class PlayerDelivery : MonoBehaviour
         }
 
     }
-
+    // Find the target tile and find the gameobject delivery marking the delivery destination; currently doors, possibly mailboxes in the future
     void onDeliverPackageLeft()
     {
         GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
         if(currObjLeft.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjLeft.transform.Find("Delivery").gameObject;
-            deliverObject(package, deliveryLoc.transform.position);
+            deliverObject(package, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
         }
         else{
             currObjLeft = tileSpawner.getObjectLeft(currBeat);
             if(currObjLeft.CompareTag("House"))
             {
                 GameObject deliveryLoc = currObjLeft.transform.Find("Delivery").gameObject;
-                deliverObject(package, deliveryLoc.transform.position);
+                deliverObject(package, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -116,20 +120,21 @@ public class PlayerDelivery : MonoBehaviour
         }
     }
 
+    // Find the target tile and find the gameobject delivery marking the delivery destination; currently doors, possibly mailboxes in the future
     void onDeliverPackageRight()
     {
         GameObject currObjRight = tileSpawner.getObjectRight(currBeat+1);
         if(currObjRight.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjRight.transform.Find("Delivery").gameObject;
-            deliverObject(package, deliveryLoc.transform.position);
+            deliverObject(package, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
         }
         else{
             currObjRight = tileSpawner.getObjectRight(currBeat);
             if(currObjRight.CompareTag("House"))
             {
                 GameObject deliveryLoc = currObjRight.transform.Find("Delivery").gameObject;
-                deliverObject(package, deliveryLoc.transform.position);
+                deliverObject(package, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -137,15 +142,15 @@ public class PlayerDelivery : MonoBehaviour
         }
     }
 
-    // Same but bad events
-
+    // Same but bad events (wrong inputs/ low scoring)
+    // Find the target tile and find the gameobject Baddelivery marking the badDelivery destination; currently windows trees, cars and NPCs
     void onDeliverLetterLeftBad()
     {
         GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
         if(currObjLeft.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
-            deliverObject(letter, deliveryLoc.transform.position);
+            deliverObject(letter, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
         }
         else{
             currObjLeft = tileSpawner.getObjectLeft(currBeat);
@@ -153,7 +158,7 @@ public class PlayerDelivery : MonoBehaviour
             {
                
                 GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
-                deliverObject(letter, deliveryLoc.transform.position);
+                deliverObject(letter, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -161,7 +166,7 @@ public class PlayerDelivery : MonoBehaviour
         }
 
     }
-
+    // Find the target tile and find the gameobject Baddelivery marking the badDelivery destination; currently windows trees, cars and NPCs
     void onDeliverLetterRightBad()
     {
 
@@ -169,14 +174,14 @@ public class PlayerDelivery : MonoBehaviour
         if(currObjRight.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
-            deliverObject(letter, deliveryLoc.transform.position);
+            deliverObject(letter, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
         }
         else{
             currObjRight = tileSpawner.getObjectRight(currBeat);
             if(currObjRight.CompareTag("House"))
             {
                 GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
-                deliverObject(letter, deliveryLoc.transform.position);
+                deliverObject(letter, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -184,42 +189,42 @@ public class PlayerDelivery : MonoBehaviour
         }
 
     }
-
+    // Find the target tile and find the gameobject Baddelivery marking the badDelivery destination; currently windows trees, cars and NPCs
     void onDeliverPackageLeftBad()
     {
         GameObject currObjLeft = tileSpawner.getObjectLeft(currBeat+1);
         if(currObjLeft.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
-            deliverObject(package, deliveryLoc.transform.position);
+            deliverObject(package, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
         }
         else{
             currObjLeft = tileSpawner.getObjectLeft(currBeat);
             if(currObjLeft.CompareTag("House"))
             {
                 GameObject deliveryLoc = currObjLeft.transform.Find("BadDelivery").gameObject;
-                deliverObject(package, deliveryLoc.transform.position);
+                deliverObject(package, deliveryLoc.transform.position, new Vector3(-1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
             }
         }
     }
-
+    // Find the target tile and find the gameobject Baddelivery marking the badDelivery destination; currently windows trees, cars and NPCs
     void onDeliverPackageRightBad()
     {
         GameObject currObjRight = tileSpawner.getObjectRight(currBeat+1);
         if(currObjRight.CompareTag("House"))
         {
             GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
-            deliverObject(package, deliveryLoc.transform.position);
+            deliverObject(package, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
         }
         else{
             currObjRight = tileSpawner.getObjectRight(currBeat);
             if(currObjRight.CompareTag("House"))
             {
                 GameObject deliveryLoc = currObjRight.transform.Find("BadDelivery").gameObject;
-                deliverObject(package, deliveryLoc.transform.position);
+                deliverObject(package, deliveryLoc.transform.position, new Vector3(1f, 0f, 0f));
             }
             else{
                 Debug.Log("Incorrect Delivery");
@@ -231,14 +236,14 @@ public class PlayerDelivery : MonoBehaviour
 
 
 
-
-    void deliverObject(GameObject projectile, Vector3 deliveryPosition)
+    // Spawn a projectile and set it on its way to the delivery position
+    void deliverObject(GameObject projectile, Vector3 deliveryPosition, Vector3 offset)
     {
         if(projectile != null)
         {
             
             //spawns projectile at player position; slightly elevated
-            GameObject projectileObj = Instantiate(projectile, transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
+            GameObject projectileObj = Instantiate(projectile, transform.position + new Vector3(0f, 0.5f, 0f) + offset, Quaternion.identity);
             // Set to delivery layer -> does not collide with other objects other than delivery marked 
             projectileObj.layer = 6;
             //set the projectile to delivery state (only detect colisions with delivery collision box)
@@ -252,7 +257,7 @@ public class PlayerDelivery : MonoBehaviour
             Rigidbody projectileRb = projectileObj.GetComponent<Rigidbody>();
             if (projectileRb != null)
             {
-                Vector3 velocity = (deliveryPosition - (transform.position + new Vector3(0f, 0.5f, 0f))).normalized;
+                Vector3 velocity = (deliveryPosition - (transform.position + new Vector3(0f, 0.5f, 0f) + offset)).normalized;
                 // Set constant speed in the x-direction and same velocity in the z-direction as the player
                 projectileRb.velocity = velocity * deliverySpeed;
 

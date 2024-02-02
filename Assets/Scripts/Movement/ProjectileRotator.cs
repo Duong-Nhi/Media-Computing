@@ -5,17 +5,11 @@ using UnityEngine;
 public class ProjectileRotator : MonoBehaviour
 {
     public float rotationSpeed = 720f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
-    // Update is called once per frame
+    // Rotate the projectile every frame
     void Update()
     {
-
-
         Quaternion currentRotation = transform.localRotation;
 
         // Calculate the new rotation around the Y-axis

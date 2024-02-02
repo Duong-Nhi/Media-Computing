@@ -61,7 +61,7 @@ public class TileSpawner : MonoBehaviour
         AudioManager.beatUpdated += onBeat;
         road.transform.localPosition = Vector3.zero;
 
-        //init distances (TODO: Set all to inf unless they should not spawn close to start of the map)
+        //init distances 
         currHouseDistances = new int[tileHouses.Length];
         currSceneryDistances = new int[tileScenery.Length];
         currSpecialDistances = new int[specialTiles.Length];
@@ -73,7 +73,6 @@ public class TileSpawner : MonoBehaviour
         }
 
         // Spawn tiles before beat 1
-
         for(int i=1; i<4; i++)
         {
             int beat = -i*4;
@@ -103,16 +102,7 @@ public class TileSpawner : MonoBehaviour
             newRoad.transform.SetParent(parentObject);
             newHouse1.transform.SetParent(parentObject);
             newHouse2.transform.SetParent(parentObject);
-            //spawnGameObject(tileHouses[randomGen.Next(0, tileHouses.Length)], new Vector3(-17.5F,-1F,tileBeatOffset * levelManager.distancePerBeat), transform.rotation * Quaternion.Euler(0f, 0f, 0f));
-            //spawn house right
-
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDestroy()
@@ -129,9 +119,11 @@ public class TileSpawner : MonoBehaviour
         {
             genNextTile();
         }
-        //spawn indicators or dont
+        //spawn indicators (OLD; Can still be displayed but show only the final input task on the map. thus for package where more required this might be misleading)
         //spawnIndicators(new Vector3(0, 0, (currentBeat-1) * levelManager.distancePerBeat));
     }
+
+    // Generates the next tiles
     void genNextTile()
     {
         //increment distances -> This is not efficient: Better replace distances with last position placed and calculated distance from that
@@ -157,16 +149,13 @@ public class TileSpawner : MonoBehaviour
             if (canSpawnSpecialTile(i))
             {
                 // Spawn tile with probability
-                //Debug.Log("special tile fits");
                 System.Random rand = new System.Random();
                 double randomValue = rand.NextDouble();
-                //Debug.Log($"Random Value: {randomValue}, SpawnProbability: {spawnProbability(currSpecialDistances[i], minSpecialDistances[i], 5)}");
                 if (randomValue < spawnProbability(currSpecialDistances[i], minSpecialDistances[i], 5))
                 {
                     toSpawn = specialTiles[i];
                     specialTileSpawnIndex = i;
                     currSpecialDistances[i] = 0;
-                    //Debug.Log("spawned");
                 }
                 break;
             }
@@ -174,7 +163,7 @@ public class TileSpawner : MonoBehaviour
 
         if (toSpawn != null)
         {
-            // Here a crossroad is spawned? Only special tile we have currently
+            // Here a crossroad is spawned; Only special tile we have currently
             GameObject spawnedSpecial = spawnGameObject(toSpawn, new Vector3(0,-1,tileBeatOffset * levelManager.distancePerBeat));
             spawnGameObject(roadFlipped, new Vector3(-20,-0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
             spawnGameObject(roadFlipped, new Vector3(-40, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
@@ -183,7 +172,6 @@ public class TileSpawner : MonoBehaviour
             spawnGameObject(roadFlipped, new Vector3(40, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
             spawnGameObject(roadFlipped, new Vector3(60, -0.99F, tileBeatOffset * levelManager.distancePerBeat), false, true);
 
-            //for(int i=0; i < levelManager.beatsPerTile; i++)
             for(int i=0; i < specialTileMasks[specialTileSpawnIndex].Length; i++)
             {
                 tileObjPerBeatRight.Add(spawnedSpecial);
@@ -192,19 +180,7 @@ public class TileSpawner : MonoBehaviour
         }
         else
         {
-            
-            
-            //Check if finish beat is on the next 4 beats
-            /*bool finish = false;
-            for(int i=0; i<levelManager.beatsPerTile; i++)
-            {
-                if (levelManager.levelSequence[currentBeat-1+i].Item1 == 4 && levelManager.levelSequence[currentBeat-1+i].Item2 == 4)
-                {
-                    finish = true;
-                    break;
-                }
-            }*/
-
+            //Spawn road or finishline depending on currentBeat
             if(currentBeat >= audioManager.nBeats-8 && currentBeat < audioManager.nBeats-4)
             {
                 //spawn finishline
@@ -217,7 +193,7 @@ public class TileSpawner : MonoBehaviour
             }
 
             
-            // Check if house or scenery is spawned for left and right
+            // Check if house or scenery should be spawned for left and right
             bool sceneryLeft = true;
             bool houseLeft = false;
             bool sceneryRight = true;
@@ -320,6 +296,7 @@ public class TileSpawner : MonoBehaviour
                 }
             }
 
+            // Spawn stars for the corresponding marked tiles in the levelManager (task id 5)
             if(starRight && starsSpawned<3)
             {
                 GameObject star = spawnedRight.transform.Find("StarSpawn").gameObject;
@@ -344,6 +321,7 @@ public class TileSpawner : MonoBehaviour
         }
     }
 
+    // Logic for spawning tiles that applies to every tile type (like scaling, flipping and controlling scripts for scaling)
     GameObject spawnGameObject(GameObject toSpawn, Vector3 offset, bool left = false, bool flipped = false)
     {
         GameObject newTile;
@@ -361,7 +339,6 @@ public class TileSpawner : MonoBehaviour
             newTile = Instantiate(toSpawn, nextPosition, Quaternion.identity);
         }
         newTile.transform.SetParent(parentObject);
-        //newTile.transform.rotation = toSpawn.transform.rotation;
 
         //Disable Scale to plane script for houses
         ScaleToPlane scaleToPlaneScript = newTile.GetComponent<ScaleToPlane>();
@@ -372,7 +349,7 @@ public class TileSpawner : MonoBehaviour
         }
         newTile.transform.SetParent(parentObject);
 
-        // enable spawn npc script for houses
+        // Enable spawn npc script for houses
         if(newTile.transform.Find("NPC") != null)
         {
             GameObject npc = newTile.transform.Find("NPC").gameObject;
@@ -385,24 +362,19 @@ public class TileSpawner : MonoBehaviour
                 }
             }
         }
-        
-
-
-
-
         return newTile;
     }
 
+    // Checks if the special tile with index tileIdx can be spawned
     bool canSpawnSpecialTile(int tileIdx)
     {
         (int,int)[] mask = specialTileMasks[tileIdx];
         bool canSpawn = true;
         for (int i=0; i<mask.Length; i++)
         {
-            //Debug.Log("Here comes a new check if crossroad fits");
+            // If this condition is true, then it cant fit as this beat is different from the specialTileMask
             if (levelManager.levelSequence[currentBeat-1+i] != mask[i])
             {  
-                //Debug.Log($"Tile {i}: {levelManager.levelSequence[currentBeat-1+i]}");
                 canSpawn = false;
                 break;
             }
@@ -410,21 +382,20 @@ public class TileSpawner : MonoBehaviour
         return canSpawn;
     }
 
-    //halfValueDist = parameter that can be tuned to increase how fast the probability increases (at this distance we have 50% spawn chance)
+    //halfValueDist - parameter that can be tuned to increase how fast the probability increases (at this distance we have 50% spawn chance)
     double spawnProbability(int currDistance, int minDistance, int halfValueDist)
     {
         double spawnProbability = 0;
-        //Debug.Log($"currDist = {currDistance}, minDist = {minDistance}");
         if (currDistance > minDistance)
         {
             //After reaching threshold of minimal distance we have a curve starting from 0 and slowly approaching 100%
             double delta = (currDistance-minDistance);
             spawnProbability = (delta/halfValueDist)/(delta/halfValueDist+1);
-            //Debug.Log($"Reached. Probability calculated: {spawnProbability}");
         }
         return spawnProbability;
     }
 
+    // Spawns indicators on beats which actions are required; OLD, does not really fit new gameplay concept. It would only show the position of last required input (in case of packet only last action beat)
     void spawnIndicators(Vector3 nextPosition)
     {
         (int, int) indicators = levelManager.levelSequence[currentBeat-1];
@@ -446,11 +417,10 @@ public class TileSpawner : MonoBehaviour
                 Instantiate(PackageObject, nextPosition + new Vector3(4, -1.8F, 0), Quaternion.identity);
                 break;
         }
-        //TODO: Set parent object so that scene does not get cluttered
     }
 
 
-    //Function that maps beat to its gameobject tile
+    //Functions that maps beat to its gameobject tile
     public GameObject getObjectLeft(int beat)
     {
         GameObject currObjLeft = tileObjPerBeatLeft[beat-1];

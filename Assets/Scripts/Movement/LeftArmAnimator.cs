@@ -20,13 +20,9 @@ public class LeftArmAnimator : MonoBehaviour
 
     private bool throwingIsInvoked = false;
 
-    //Test
-    private int currentBeat = 0;
-
     void Awake()
     {
         //Subscribe events
-        //AudioManager.beatUpdated += onBeat;
         RateUserInput.taskStartLetterLeft += onTaskStartLetterLeft;
         RateUserInput.taskStartPackageLeft += onTaskStartPackageLeft;
 
@@ -42,8 +38,7 @@ public class LeftArmAnimator : MonoBehaviour
     }
     void OnDestroy()
     {
-        //Subscribe events
-        //AudioManager.beatUpdated += onBeat;
+        //Unsubscribe events
         RateUserInput.taskStartLetterLeft -= onTaskStartLetterLeft;
         RateUserInput.taskStartPackageLeft -= onTaskStartPackageLeft;
 
@@ -57,16 +52,9 @@ public class LeftArmAnimator : MonoBehaviour
         RateUserInput.autoAttackLeftPackage -= onAutoAttackLeftPackage;
 
     }
-
-    void onBeat()
-    {
-        currentBeat++;
-        spriteRenderer.sprite = packageArmSprites[currentBeat%packageArmSprites.Length];
-
-    }
     void Start()
     {
-        
+        // initialization and display idlesprite
         spriteRenderer = GetComponent<SpriteRenderer>();
         DontDestroyOnLoad(spriteRenderer);
         // Check if the SpriteRenderer component is found
@@ -85,13 +73,10 @@ public class LeftArmAnimator : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        //smth
-    }
 
-    // Called by an Animation Event at the end of the animation
-    
+    // Following functions handle the displayed sprites on all events related to the left arm
+
+    // Called by an Animation Event at the end of the animation -> Indicate the new task    
     void onTaskStartLetterLeft(){
         spriteRenderer.sprite = letterArmSprites[0];
         currentSpriteIdx = 0;
@@ -106,6 +91,7 @@ public class LeftArmAnimator : MonoBehaviour
         CancelInvoke("BackToIdle");
     }
 
+    // Displays the next sprite in the array
     void onTaskNextLeft(){
         if(taskId == 1){
             spriteRenderer.sprite = letterArmSprites[Mathf.Min(currentSpriteIdx+1, letterArmSprites.Length-1)];
@@ -122,7 +108,7 @@ public class LeftArmAnimator : MonoBehaviour
             }
         }
     }
-
+    // Displays the last sprite as item is thrown now
     void onTaskThrowLeft(){
         if(taskId == 1){
             spriteRenderer.sprite = letterArmSprites[letterArmSprites.Length-1];
@@ -140,47 +126,51 @@ public class LeftArmAnimator : MonoBehaviour
         }
     }
 
+    // go back to idle sprite if task is done
     void onTaskDoneLeft(){
         spriteRenderer.sprite = idleSprite;
         currentSpriteIdx = 0;
         taskId = 0;
     }
 
+    // Animate autoattacks by displaying throwsprite for 0.5 seconds
     void onAutoAttackLeftLetter()
     {
         spriteRenderer.sprite = letterArmSprites[letterArmSprites.Length-1];
         if (!throwingIsInvoked)
         {
-            // Call YourFunction and set isFunctionInvoked to true
+            // display thrown hand for 0.5 seconds
             Invoke("BackToIdle", 0.5f);
             throwingIsInvoked = true;
         }
         else
         {
-            // If the function is already invoked, reset the timer
+            // reset timer and display thrown hand for 0.5 seconds
             CancelInvoke("BackToIdle");
             Invoke("BackToIdle", 0.5f);
         }
         
     }
-
+    
+    // Animate autoattacks by displaying throwsprite for 0.5 seconds
     void onAutoAttackLeftPackage()
     {
         spriteRenderer.sprite = packageArmSprites[packageArmSprites.Length-1];
         if (!throwingIsInvoked)
         {
-            // Call YourFunction and set isFunctionInvoked to true
+            // display thrown hand for 0.5 seconds
             Invoke("BackToIdle", 0.5f);
             throwingIsInvoked = true;
         }
         else
         {
-            // If the function is already invoked, reset the timer
+            // reset timer and display thrown hand for 0.5 seconds
             CancelInvoke("BackToIdle");
             Invoke("BackToIdle", 0.5f);
         }
     }
 
+    // go back to idle sprite
     void BackToIdle()
     {
         spriteRenderer.sprite = idleSprite;

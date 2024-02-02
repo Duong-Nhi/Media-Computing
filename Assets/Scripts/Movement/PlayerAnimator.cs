@@ -6,7 +6,6 @@ public class PlayerAnimator : MonoBehaviour
     public AudioManager audioManager;
     public Sprite[] playerAnimationSprites;  
     private int currentBeat;
-
     private SpriteRenderer spriteRenderer;
 
 
@@ -17,14 +16,13 @@ public class PlayerAnimator : MonoBehaviour
     }
     void OnDestroy()
     {
-        //Subscribe events
+        //Unsubscribe events
         AudioManager.beatUpdated -= onBeat;
     }
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-
         // Check if the SpriteRenderer component is found
         if (spriteRenderer == null)
         {
@@ -33,20 +31,14 @@ public class PlayerAnimator : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        //smth
-    }
 
-    // Called by an Animation Event at the end of the animation
-    
+    // Animate the player by changing sprites every beat until reaching the last beat
     void onBeat()
     {
         currentBeat++;
-        if(currentBeat >= audioManager.nBeats-1){
-            return;
+        if(currentBeat < audioManager.nBeats-1){
+            animatePlayer();
         }
-        animatePlayer();
     }
 
     void animatePlayer()
